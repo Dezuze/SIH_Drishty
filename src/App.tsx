@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Navbar } from './components/Navbar';
+import { CartProvider } from './context/CartContext';
+import { PRODUCTS, type Product, type OrderCustomerDetails } from './data/products';
+import { Navbar, type MainViewType } from './components/Navbar';
+import { Marketplace } from './components/Marketplace';
+import { ProductDetails } from './components/ProductDetails';
+import { Cart } from './components/Cart';
+import { Checkout } from './components/Checkout';
+import { OrderConfirmation } from './components/OrderConfirmation';
+import { ToastContainer } from './components/Toast';
+import { Footer } from './components/Footer';
+
+// Teammate logistics dashboard components
 import { MetricCards } from './components/MetricCards';
 import { MapSection } from './components/MapSection';
 import { ClusterPanel } from './components/ClusterPanel';
@@ -21,14 +32,20 @@ import {
   INITIAL_ACTIVITIES 
 } from './data/demoData';
 
-import { LocationPoint, RouteMetrics, ClusterInfo, ActivityEvent } from './types';
+import type { LocationPoint, RouteMetrics, ClusterInfo, ActivityEvent } from './types';
 
-export const App: React.FC = () => {
+export const MainAppContent: React.FC = () => {
+  // Navigation View State: Defaults to Marketplace, with instant toggle to Logistics
+  const [activeView, setActiveView] = useState<MainViewType>('marketplace');
+  const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Teammate Logistics State
   const [farm] = useState<LocationPoint>(FARM_LOCATION);
   const [customers, setCustomers] = useState<LocationPoint[]>(CUSTOMER_LOCATIONS);
   const [cluster, setCluster] = useState<ClusterInfo>(INITIAL_CLUSTER);
   const [metrics, setMetrics] = useState<RouteMetrics>(INITIAL_METRICS);
-  const [vehicle, setVehicle] = useState(VEHICLE_DETAILS);
+  const [vehicle] = useState(VEHICLE_DETAILS);
   const [weather] = useState(WEATHER_DATA);
   const [activities, setActivities] = useState<ActivityEvent[]>(INITIAL_ACTIVITIES);
 
@@ -41,7 +58,16 @@ export const App: React.FC = () => {
   const [isManifestOpen, setIsManifestOpen] = useState<boolean>(false);
   const [isAddOrderOpen, setIsAddOrderOpen] = useState<boolean>(false);
 
-  // Handle Generate Optimized Route
+  // Navigation Handler
+  const handleNavigate = (view: MainViewType, productId?: number) => {
+    setActiveView(view);
+    if (productId !== undefined) {
+      setSelectedProductId(productId);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Teammate Logistics Handlers
   const handleOptimizeRoute = () => {
     setIsOptimizing(true);
     setShowSuccessToast(false);
@@ -78,7 +104,6 @@ export const App: React.FC = () => {
   const handleAddOrder = (newOrder: LocationPoint) => {
     setCustomers((prev) => [...prev, newOrder]);
     
-    // Update cluster info
     const updatedWeight = cluster.totalWeightKg + newOrder.weightKg;
     const updatedCount = cluster.ordersCount + 1;
     
@@ -89,7 +114,6 @@ export const App: React.FC = () => {
       orderIds: [...prev.orderIds, newOrder.orderId || 'ORD-NEW'],
     }));
 
-    // Update metrics
     setMetrics((prev) => ({
       ...prev,
       totalOrders: updatedCount,
@@ -100,7 +124,6 @@ export const App: React.FC = () => {
       unoptimizedTimeMin: 92,
     }));
 
-    // Add activity event
     const newAct: ActivityEvent = {
       id: `act-${Date.now()}`,
       timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true }),
@@ -112,6 +135,35 @@ export const App: React.FC = () => {
     setActivities((prev) => [newAct, ...prev]);
   };
 
+  // Bridge buyer checkout order directly into logistics cluster & map
+  const handleBuyerOrderPlaced = (customerDetails?: OrderCustomerDetails) => {
+    if (customerDetails) {
+      const randomOffsetLat = (Math.random() - 0.5) * 0.04;
+      const randomOffsetLng = (Math.random() - 0.5) * 0.04;
+      
+      const newLogisticsPoint: LocationPoint = {
+        id: `cust-${Date.now()}`,
+        name: customerDetails.fullName,
+        type: 'customer',
+        lat: 8.5241 + randomOffsetLat,
+        lng: 76.9366 + randomOffsetLng,
+        address: `${customerDetails.address}, ${customerDetails.city}`,
+        orderId: `ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+        weightKg: 12,
+        contactPerson: customerDetails.fullName,
+        phone: customerDetails.phoneNumber,
+        deliveryWindow: customerDetails.deliverySlot || '7:00 AM - 11:00 AM',
+        expectedDelivery: 'Tomorrow, 08:30 AM',
+        priority: 'High',
+        status: 'Pending',
+        otp: String(Math.floor(1000 + Math.random() * 9000))
+      };
+      
+      handleAddOrder(newLogisticsPoint);
+    }
+    handleNavigate('confirmation');
+  };
+
   const handleSelectCustomer = (cust: LocationPoint) => {
     setSelectedCustomerId(cust.id);
   };
@@ -120,177 +172,214 @@ export const App: React.FC = () => {
     setSimulationStep((index + 1) * 4);
   };
 
+  const selectedProduct: Product | undefined = PRODUCTS.find((p) => p.id === selectedProductId);
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-slate-950">
       
-      {/* Top Navigation */}
+      {/* Top Merged Navigation */}
       <Navbar 
         onOpenManifest={() => setIsManifestOpen(true)}
         onOpenAddOrder={() => setIsAddOrderOpen(true)}
         isSimulating={isSimulating}
+        activeView={activeView}
+        onNavigate={handleNavigate}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
+      {/* Main View Router */}
+      <main className="flex-1">
         
-        {/* Top Hero Banner & Hackathon Pitch */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-950/80 via-slate-900/90 to-teal-950/80 border border-emerald-500/30 p-5 sm:p-6 shadow-2xl">
-          <div className="absolute -top-16 -right-16 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-md">
-                  Smart India Hackathon 2026
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
-                  Farmer-to-Consumer Direct Supply Chain
-                </span>
-              </div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
-                Smart Logistics & Route Optimization Command Center
-              </h1>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-3xl mt-1">
-                Empowering regional farmers with intelligent micro-clustering, capacity-constrained vehicle routing, and real-time cold-chain telematics for same-morning delivery.
-              </p>
-            </div>
-
-            {/* Quick Stats Pill */}
-            <div className="flex items-center gap-3 bg-slate-950/80 p-3 rounded-2xl border border-slate-800 shrink-0">
-              <div className="text-center px-2">
-                <span className="text-[10px] uppercase text-slate-400 font-bold block">Efficiency Gain</span>
-                <span className="text-base sm:text-lg font-extrabold text-emerald-400 font-mono">+28.1%</span>
-              </div>
-              <div className="h-7 w-px bg-slate-800" />
-              <div className="text-center px-2">
-                <span className="text-[10px] uppercase text-slate-400 font-bold block">Carbon Offset</span>
-                <span className="text-base sm:text-lg font-extrabold text-teal-300 font-mono">6.4 kg</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* 1. Logistics Overview Cards */}
-        <section aria-label="Logistics Overview Cards">
-          <MetricCards 
-            metrics={metrics} 
-            vehicle={vehicle}
-            isOptimizing={isOptimizing}
+        {/* 1. MARKETPLACE PAGE */}
+        {activeView === 'marketplace' && (
+          <Marketplace
+            products={PRODUCTS}
+            onViewProduct={(id) => handleNavigate('details', id)}
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
           />
-        </section>
+        )}
 
-        {/* 2. Interactive Map & Clustered Orders Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          
-          {/* Left / Center: Interactive Map & Route Optimization Section (7 Cols) */}
-          <div className="lg:col-span-7 space-y-6">
+        {/* 2. PRODUCT DETAILS PAGE */}
+        {activeView === 'details' && selectedProduct && (
+          <ProductDetails
+            product={selectedProduct}
+            onBack={() => handleNavigate('marketplace')}
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {/* 3. CART PAGE */}
+        {activeView === 'cart' && (
+          <Cart onNavigate={handleNavigate} />
+        )}
+
+        {/* 4. CHECKOUT PAGE */}
+        {activeView === 'checkout' && (
+          <Checkout
+            onNavigate={handleNavigate}
+            onOrderSuccess={handleBuyerOrderPlaced}
+          />
+        )}
+
+        {/* 5. ORDER CONFIRMATION PAGE */}
+        {activeView === 'confirmation' && (
+          <OrderConfirmation onNavigate={handleNavigate} />
+        )}
+
+        {/* 6. TEAMMATE LOGISTICS & ROUTE AI COMMAND CENTER */}
+        {activeView === 'logistics' && (
+          <div className="max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
             
-            {/* Interactive OpenStreetMap */}
-            <section aria-label="Interactive Map with Leaflet">
-              <div className="flex items-center justify-between mb-2 px-1">
-                <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                  Live GIS Logistics Map (OpenStreetMap Leaflet)
-                </h2>
-                <span className="text-xs text-slate-400 font-mono">
-                  Farm: 8.5241, 76.9366 • Corridor: 3.4 km
-                </span>
+            {/* Top Hero Banner */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-950/80 via-slate-900/90 to-teal-950/80 border border-emerald-500/30 p-5 sm:p-6 shadow-2xl">
+              <div className="absolute -top-16 -right-16 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                    <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-md">
+                      Smart India Hackathon 2026
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
+                      Farmer-to-Consumer Direct Supply Chain
+                    </span>
+                  </div>
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+                    Smart Logistics & Route Optimization Command Center
+                  </h1>
+                  <p className="text-xs sm:text-sm text-slate-300 max-w-3xl mt-1">
+                    Empowering regional farmers with intelligent micro-clustering, capacity-constrained vehicle routing, and real-time cold-chain telematics for same-morning delivery.
+                  </p>
+                </div>
+
+                {/* Quick Stats Pill */}
+                <div className="flex items-center gap-3 bg-slate-950/80 p-3 rounded-2xl border border-slate-800 shrink-0">
+                  <div className="text-center px-2">
+                    <span className="text-[10px] uppercase text-slate-400 font-bold block">Efficiency Gain</span>
+                    <span className="text-base sm:text-lg font-extrabold text-emerald-400 font-mono">+28.1%</span>
+                  </div>
+                  <div className="h-7 w-px bg-slate-800" />
+                  <div className="text-center px-2">
+                    <span className="text-[10px] uppercase text-slate-400 font-bold block">Carbon Offset</span>
+                    <span className="text-base sm:text-lg font-extrabold text-teal-300 font-mono">6.4 kg</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 1. Logistics Overview Cards */}
+            <section aria-label="Logistics Overview Cards">
+              <MetricCards 
+                metrics={metrics} 
+                vehicle={vehicle}
+                isOptimizing={isOptimizing}
+              />
+            </section>
+
+            {/* 2. Interactive Map & Clustered Orders Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              {/* Left / Center: Interactive Map & Route Optimization Section (7 Cols) */}
+              <div className="lg:col-span-7 space-y-6">
+                
+                {/* Interactive OpenStreetMap */}
+                <section aria-label="Interactive Map with Leaflet">
+                  <div className="flex items-center justify-between mb-2 px-1">
+                    <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                      Live GIS Logistics Map (OpenStreetMap Leaflet)
+                    </h2>
+                    <span className="text-xs text-slate-400 font-mono">
+                      Farm: 8.5241, 76.9366 • Corridor: 3.4 km
+                    </span>
+                  </div>
+
+                  <MapSection 
+                    farm={farm}
+                    customers={customers}
+                    metrics={metrics}
+                    isOptimized={metrics.isOptimized}
+                    onSelectCustomer={handleSelectCustomer}
+                    selectedCustomerId={selectedCustomerId}
+                    isSimulating={isSimulating}
+                    setIsSimulating={setIsSimulating}
+                    simulationStep={simulationStep}
+                    setSimulationStep={setSimulationStep}
+                  />
+                </section>
+
+                {/* Route Optimization Section */}
+                <section aria-label="Route Optimization Section">
+                  <RouteOptimizationPanel 
+                    metrics={metrics}
+                    onOptimize={handleOptimizeRoute}
+                    isOptimizing={isOptimizing}
+                    showSuccessToast={showSuccessToast}
+                    setShowSuccessToast={setShowSuccessToast}
+                  />
+                </section>
+
+                {/* Delivery Progress & Stop Timeline */}
+                <section aria-label="Delivery Progress Timeline">
+                  <DeliveryProgressSection 
+                    farm={farm}
+                    customers={customers}
+                    simulationStep={simulationStep}
+                    onSimulateCompleteStop={handleSimulateCompleteStop}
+                  />
+                </section>
+
               </div>
 
-              <MapSection 
-                farm={farm}
-                customers={customers}
-                metrics={metrics}
-                isOptimized={metrics.isOptimized}
-                onSelectCustomer={handleSelectCustomer}
-                selectedCustomerId={selectedCustomerId}
-                isSimulating={isSimulating}
-                setIsSimulating={setIsSimulating}
-                simulationStep={simulationStep}
-                setSimulationStep={setSimulationStep}
-              />
-            </section>
+              {/* Right Column: Grouped Orders Panel & Vehicle Telematics (5 Cols) */}
+              <div className="lg:col-span-5 space-y-6">
+                
+                {/* Nearby Order Cluster Panel */}
+                <section aria-label="Nearby Order Cluster Panel">
+                  <ClusterPanel 
+                    cluster={cluster}
+                    customers={customers}
+                    selectedCustomerId={selectedCustomerId}
+                    onSelectCustomer={handleSelectCustomer}
+                    simulationStep={simulationStep}
+                  />
+                </section>
 
-            {/* Route Optimization Section with Large Action Button */}
-            <section aria-label="Route Optimization Section">
-              <RouteOptimizationPanel 
-                metrics={metrics}
-                onOptimize={handleOptimizeRoute}
-                isOptimizing={isOptimizing}
-                showSuccessToast={showSuccessToast}
-                setShowSuccessToast={setShowSuccessToast}
-              />
-            </section>
+                {/* Vehicle Information Card */}
+                <section aria-label="Vehicle Information Card">
+                  <VehicleInfoCard 
+                    vehicle={vehicle}
+                    isSimulating={isSimulating}
+                  />
+                </section>
 
-            {/* Delivery Progress & Stop Timeline */}
-            <section aria-label="Delivery Progress Timeline">
-              <DeliveryProgressSection 
-                farm={farm}
-                customers={customers}
-                simulationStep={simulationStep}
-                onSimulateCompleteStop={handleSimulateCompleteStop}
-              />
-            </section>
+                {/* Microclimate Weather & Telematics Card */}
+                <section aria-label="Weather Telematics Card">
+                  <WeatherTelematicsCard 
+                    weather={weather}
+                    metrics={metrics}
+                  />
+                </section>
 
-          </div>
+                {/* Recent Activity Audit Log */}
+                <section aria-label="Recent Activity Stream">
+                  <RecentActivityPanel 
+                    activities={activities}
+                  />
+                </section>
 
-          {/* Right Column: Grouped Orders Panel & Vehicle Telematics (5 Cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Nearby Order Cluster Panel */}
-            <section aria-label="Nearby Order Cluster Panel">
-              <ClusterPanel 
-                cluster={cluster}
-                customers={customers}
-                selectedCustomerId={selectedCustomerId}
-                onSelectCustomer={handleSelectCustomer}
-                simulationStep={simulationStep}
-              />
-            </section>
+              </div>
 
-            {/* Vehicle Information Card */}
-            <section aria-label="Vehicle Information Card">
-              <VehicleInfoCard 
-                vehicle={vehicle}
-                isSimulating={isSimulating}
-              />
-            </section>
-
-            {/* Microclimate Weather & Telematics Card */}
-            <section aria-label="Weather Telematics Card">
-              <WeatherTelematicsCard 
-                weather={weather}
-                metrics={metrics}
-              />
-            </section>
-
-            {/* Recent Activity Audit Log */}
-            <section aria-label="Recent Activity Stream">
-              <RecentActivityPanel 
-                activities={activities}
-              />
-            </section>
+            </div>
 
           </div>
-
-        </div>
+        )}
 
       </main>
 
       {/* Footer */}
-      <footer className="mt-12 border-t border-slate-800 bg-slate-950/90 py-6 px-4 text-center text-xs text-slate-400">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p>© 2026 AgriRoute AI • Smart India Hackathon Prototype Presentation</p>
-          <div className="flex items-center gap-4 text-slate-400">
-            <span>Leaflet 1.9.4</span>
-            <span>•</span>
-            <span>Tailwind CSS</span>
-            <span>•</span>
-            <span>OpenStreetMap</span>
-          </div>
-        </div>
-      </footer>
+      <Footer onNavigate={handleNavigate} />
 
-      {/* Modals */}
+      {/* Teammate Modals */}
       <ManifestModal 
         isOpen={isManifestOpen}
         onClose={() => setIsManifestOpen(false)}
@@ -307,9 +396,19 @@ export const App: React.FC = () => {
         onAddOrder={handleAddOrder}
       />
 
+      {/* Global Toast Feedback */}
+      <ToastContainer />
+
     </div>
   );
 };
 
-export default App;
+export const App: React.FC = () => {
+  return (
+    <CartProvider>
+      <MainAppContent />
+    </CartProvider>
+  );
+};
 
+export default App;
