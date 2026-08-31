@@ -5,86 +5,36 @@ export interface LocationPoint {
   lat: number;
   lng: number;
   address: string;
-  contactPerson: string;
-  phone: string;
-  orderId?: string;
-  produceItems?: {
-    name: string;
-    quantity: string;
-    weightKg: number;
-    farmSource: string;
-    category: 'Perishable' | 'Grains' | 'Dairy' | 'Vegetables';
-  }[];
   weightKg: number;
-  priority: 'High' | 'Medium' | 'Low';
-  expectedDelivery: string;
-  status: 'Pending' | 'In Transit' | 'Delivered' | 'Ready for Dispatch';
-  deliveryWindow: string;
-  otp: string;
-  sequenceNumber?: number;
+  orderId?: string;
+  itemsSummary?: string;
+  deliveryTime?: string;
 }
 
-export interface ClusterInfo {
+export interface RouteSegment {
+  id: string;
+  from: string;
+  to: string;
+  fromTitle: string;
+  toTitle: string;
+  distanceKm: number;
+  travelTimeMin: number;
+}
+
+export interface OrderCluster {
   id: string;
   name: string;
-  description: string;
-  radiusKm: number;
   ordersCount: number;
   totalWeightKg: number;
   vehicleCapacityKg: number;
-  priority: 'High' | 'Medium' | 'Low';
-  densityScore: number;
-  carbonScore: string;
-  orderIds: string[];
+  customerNames: string[];
 }
 
-export interface RouteMetrics {
-  totalDistanceKm: number;
-  estimatedTimeMin: number;
-  totalOrders: number;
+export interface LogisticsSummary {
+  ordersCount: number;
   vehicleCapacityKg: number;
   currentPayloadKg: number;
-  fuelSavedLitres: number;
-  costSavedInr: number;
-  co2SavedKg: number;
-  routeEfficiencyScore: number;
-  isOptimized: boolean;
-  unoptimizedDistanceKm: number;
-  unoptimizedTimeMin: number;
+  totalDistanceKm: number;
+  totalTravelTimeMin: number;
 }
 
-export interface VehicleInfo {
-  id: string;
-  model: string;
-  regNumber: string;
-  driverName: string;
-  driverRating: number;
-  driverPhone: string;
-  driverAvatar: string;
-  batteryPercent: number;
-  storageTempCelsius: number;
-  targetTempCelsius: number;
-  maxPayloadKg: number;
-  currentSpeedKmh: number;
-  status: 'Ready' | 'In Route' | 'Completed' | 'Idle';
-}
-
-export interface WeatherInfo {
-  location: string;
-  tempCelsius: number;
-  condition: string;
-  humidityPercent: number;
-  windSpeedKmh: number;
-  rainRiskPercent: number;
-  roadCondition: 'Optimal' | 'Wet' | 'Congested' | 'Clear';
-  visibility: string;
-}
-
-export interface ActivityEvent {
-  id: string;
-  timestamp: string;
-  title: string;
-  description: string;
-  type: 'route' | 'order' | 'telematics' | 'dispatch' | 'success';
-  badge: string;
-}

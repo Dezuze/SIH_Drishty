@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { 
   Truck, 
   BatteryCharging, 
@@ -11,7 +11,7 @@ import {
   Zap,
   Radio
 } from 'lucide-react';
-import { VehicleInfo } from '../types';
+import { VehicleInfo } from '../types/dashboardTypes';
 
 interface VehicleInfoCardProps {
   vehicle: VehicleInfo;
@@ -102,12 +102,12 @@ export const VehicleInfoCard: React.FC<VehicleInfoCardProps> = ({
                 <ThermometerSnowflake className="w-3.5 h-3.5 text-cyan-400" />
                 Reefer Temp
               </span>
-              <span className="text-cyan-300 font-bold font-mono">{vehicle.storageTempCelsius}°C</span>
+              <span className="text-cyan-300 font-bold font-mono">{vehicle.storageTempCelsius}┬░C</span>
             </div>
             <div className="w-full bg-slate-900 rounded-full h-1.5 p-0.5 overflow-hidden">
               <div className="bg-cyan-400 h-full rounded-full w-3/4" />
             </div>
-            <span className="text-[10px] text-cyan-400 font-medium mt-1 block">Target: {vehicle.targetTempCelsius}°C (Optimal)</span>
+            <span className="text-[10px] text-cyan-400 font-medium mt-1 block">Target: {vehicle.targetTempCelsius}┬░C (Optimal)</span>
           </div>
 
         </div>
@@ -125,3 +125,4 @@ export const VehicleInfoCard: React.FC<VehicleInfoCardProps> = ({
     </div>
   );
 };
+

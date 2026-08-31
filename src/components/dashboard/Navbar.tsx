@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { 
   Sprout, 
@@ -8,6 +9,8 @@ import {
   Wifi, 
   Radio,
   Clock,
+  Award,
+  Map,
   ShoppingBag,
   Store
 } from 'lucide-react';
@@ -71,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   SIH 2026
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
+              <p className="text-xs text-slate-400 font-medium hidden sm:block">
                 Direct Farmer Marketplace & Smart AI Route Logistics
               </p>
             </div>
@@ -186,6 +189,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden sm:inline">Digital Manifest</span>
           </button>
 
+          <Link
+            to="/simplified"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700 transition shadow-sm"
+            title="Go to Simplified UI"
+          >
+            <Map className="w-4 h-4 text-slate-400" />
+            <span className="hidden sm:inline">Simplified UI</span>
+          </Link>
+
           <div className="h-5 w-px bg-slate-800 hidden sm:block" />
 
           {/* Clock & Operator Badge */}
@@ -208,3 +220,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { 
   X, 
   Printer, 
@@ -12,7 +12,7 @@ import {
   Calendar,
   Layers
 } from 'lucide-react';
-import { LocationPoint, RouteMetrics, VehicleInfo, ClusterInfo } from '../types';
+import { LocationPoint, RouteMetrics, VehicleInfo, ClusterInfo } from '../types/dashboardTypes';
 
 interface ManifestModalProps {
   isOpen: boolean;
@@ -54,7 +54,7 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
                 Official Digital Dispatch Waybill & Manifest
               </h3>
               <p className="text-xs text-slate-400">
-                Manifest Ref: <span className="font-mono text-emerald-400 font-bold">MF-SIH-2026-0829</span> • Trivandrum Corridor
+                Manifest Ref: <span className="font-mono text-emerald-400 font-bold">MF-SIH-2026-0829</span> ΓÇó Trivandrum Corridor
               </p>
             </div>
           </div>
@@ -98,7 +98,7 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
             </div>
             <div>
               <span className="text-[10px] text-slate-400 uppercase font-bold block">Cold Storage Status</span>
-              <span className="font-bold text-cyan-300 text-xs">Reefer Active 4.2°C</span>
+              <span className="font-bold text-cyan-300 text-xs">Reefer Active 4.2┬░C</span>
               <span className="text-[11px] text-slate-400 block">Payload: {metrics.currentPayloadKg} / {metrics.vehicleCapacityKg} kg</span>
             </div>
           </div>
@@ -137,7 +137,7 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
                         <ul className="space-y-0.5 text-[11px]">
                           {c.produceItems?.map((it, i) => (
                             <li key={i} className="text-slate-300">
-                              • {it.name} <span className="text-emerald-400 font-mono">({it.quantity})</span>
+                              ΓÇó {it.name} <span className="text-emerald-400 font-mono">({it.quantity})</span>
                             </li>
                           ))}
                         </ul>
@@ -193,7 +193,7 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
         {/* Footer */}
         <div className="p-4 border-t border-slate-800 bg-slate-950/90 flex items-center justify-between">
           <span className="text-[11px] text-slate-400">
-            AgriRoute AI Logistics Platform • Smart Logistics & Route Optimization
+            AgriRoute AI Logistics Platform ΓÇó Smart Logistics & Route Optimization
           </span>
           <button
             onClick={onClose}
@@ -207,3 +207,4 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
     </div>
   );
 };
+

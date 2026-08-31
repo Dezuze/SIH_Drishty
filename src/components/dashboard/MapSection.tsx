@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { 
   Play, 
@@ -14,8 +14,8 @@ import {
   Navigation,
   Info
 } from 'lucide-react';
-import { LocationPoint, RouteMetrics } from '../types';
-import { DETAILED_ROUTE_COORDS } from '../data/demoData';
+import { LocationPoint, RouteMetrics } from '../types/dashboardTypes';
+import { DETAILED_ROUTE_COORDS } from '../data/dashboardData';
 
 interface MapSectionProps {
   farm: LocationPoint;
@@ -122,7 +122,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
           </svg>
         </div>
         <div class="absolute top-10 whitespace-nowrap bg-slate-900/95 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/40 shadow-lg pointer-events-none">
-          🌱 Farm Hub
+          ≡ƒî▒ Farm Hub
         </div>
       </div>
     `;
@@ -181,7 +181,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
       // Popup Content
       const produceListHtml = cust.produceItems?.map(item => `
         <li class="flex justify-between text-xs py-0.5">
-          <span class="text-slate-300">• ${item.name}</span>
+          <span class="text-slate-300">ΓÇó ${item.name}</span>
           <span class="text-emerald-400 font-mono font-medium">${item.quantity}</span>
         </li>
       `).join('') || '';
@@ -190,7 +190,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
         <div class="p-3.5 max-w-sm">
           <div class="flex items-center justify-between pb-2 border-b border-emerald-500/30 mb-2">
             <span class="px-2 py-0.5 bg-slate-800 text-teal-300 text-[10px] font-bold rounded-full border border-teal-500/40">
-              STOP #${idx + 1} • CUSTOMER ${letter}
+              STOP #${idx + 1} ΓÇó CUSTOMER ${letter}
             </span>
             <span class="text-xs font-semibold px-1.5 py-0.5 rounded ${cust.priority === 'High' ? 'bg-red-950 text-red-400 border border-red-500/30' : 'bg-amber-950 text-amber-400 border border-amber-500/30'}">
               ${cust.priority} Priority
@@ -331,7 +331,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
             {isOptimized ? 'Route: AI-Optimized Sequence' : 'Route: Unoptimized Multi-Stop'}
           </span>
           <span className="text-slate-600">|</span>
-          <span className="text-emerald-400 font-mono font-medium">{metrics.totalDistanceKm} km • {metrics.estimatedTimeMin} min</span>
+          <span className="text-emerald-400 font-mono font-medium">{metrics.totalDistanceKm} km ΓÇó {metrics.estimatedTimeMin} min</span>
         </div>
 
         {/* Right Tools: Map Style & Geofence Toggle */}
@@ -388,11 +388,11 @@ export const MapSection: React.FC<MapSectionProps> = ({
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400">
-                  {simulationStep === 0 && 'At Farm Origin Hub • Cargo Loaded (85 kg)'}
+                  {simulationStep === 0 && 'At Farm Origin Hub ΓÇó Cargo Loaded (85 kg)'}
                   {simulationStep > 0 && simulationStep < 4 && 'Transit to Customer A (Kowdiar)'}
-                  {simulationStep >= 4 && simulationStep < 8 && 'Stop 1 Complete • Transit to Customer B (Sasthamangalam)'}
-                  {simulationStep >= 8 && simulationStep < 12 && 'Stop 2 Complete • Transit to Customer C (Vellayambalam)'}
-                  {simulationStep === 12 && 'All 3 Cluster Deliveries Completed Successfully! 🎉'}
+                  {simulationStep >= 4 && simulationStep < 8 && 'Stop 1 Complete ΓÇó Transit to Customer B (Sasthamangalam)'}
+                  {simulationStep >= 8 && simulationStep < 12 && 'Stop 2 Complete ΓÇó Transit to Customer C (Vellayambalam)'}
+                  {simulationStep === 12 && 'All 3 Cluster Deliveries Completed Successfully! ≡ƒÄë'}
                 </p>
               </div>
             </div>
@@ -449,3 +449,4 @@ export const MapSection: React.FC<MapSectionProps> = ({
     </div>
   );
 };
+

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import SimplifiedUI from './pages/SimplifiedUI';
 import { CartProvider } from './context/CartContext';
 import { PRODUCTS, type Product, type OrderCustomerDetails } from './data/products';
-import { Navbar, type MainViewType } from './components/Navbar';
+import { Navbar, type MainViewType } from './components/dashboard/Navbar';
 import { Marketplace } from './components/Marketplace';
 import { ProductDetails } from './components/ProductDetails';
 import { Cart } from './components/Cart';
@@ -11,16 +13,16 @@ import { ToastContainer } from './components/Toast';
 import { Footer } from './components/Footer';
 
 // Teammate logistics dashboard components
-import { MetricCards } from './components/MetricCards';
-import { MapSection } from './components/MapSection';
-import { ClusterPanel } from './components/ClusterPanel';
-import { RouteOptimizationPanel } from './components/RouteOptimizationPanel';
-import { DeliveryProgressSection } from './components/DeliveryProgressSection';
-import { VehicleInfoCard } from './components/VehicleInfoCard';
-import { WeatherTelematicsCard } from './components/WeatherTelematicsCard';
-import { RecentActivityPanel } from './components/RecentActivityPanel';
-import { ManifestModal } from './components/ManifestModal';
-import { AddOrderModal } from './components/AddOrderModal';
+import { MetricCards } from './components/dashboard/MetricCards';
+import { MapSection } from './components/dashboard/MapSection';
+import { ClusterPanel } from './components/dashboard/ClusterPanel';
+import { RouteOptimizationPanel } from './components/dashboard/RouteOptimizationPanel';
+import { DeliveryProgressSection } from './components/dashboard/DeliveryProgressSection';
+import { VehicleInfoCard } from './components/dashboard/VehicleInfoCard';
+import { WeatherTelematicsCard } from './components/dashboard/WeatherTelematicsCard';
+import { RecentActivityPanel } from './components/dashboard/RecentActivityPanel';
+import { ManifestModal } from './components/dashboard/ManifestModal';
+import { AddOrderModal } from './components/dashboard/AddOrderModal';
 
 import { 
   FARM_LOCATION, 
@@ -406,7 +408,13 @@ export const MainAppContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <CartProvider>
-      <MainAppContent />
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainAppContent />} />
+          <Route path="/simplified" element={<SimplifiedUI />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Router>
     </CartProvider>
   );
 };

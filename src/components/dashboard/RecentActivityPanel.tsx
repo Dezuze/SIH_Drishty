@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { 
   Activity, 
   CheckCircle2, 
@@ -9,7 +9,7 @@ import {
   Clock, 
   Radio 
 } from 'lucide-react';
-import { ActivityEvent } from '../types';
+import { ActivityEvent } from '../types/dashboardTypes';
 
 interface RecentActivityPanelProps {
   activities: ActivityEvent[];
@@ -99,3 +99,4 @@ export const RecentActivityPanel: React.FC<RecentActivityPanelProps> = ({ activi
     </div>
   );
 };
+
