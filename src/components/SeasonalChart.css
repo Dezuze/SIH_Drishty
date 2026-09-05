@@ -1,0 +1,99 @@
+.seasonal-chart-container {
+  background-color: var(--white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.chart-subtitle {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.legend-color {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+}
+
+.legend-color.early { background-color: var(--fresh-green); }
+.legend-color.moderate { background-color: var(--harvest-gold); }
+.legend-color.peak { background-color: var(--papaya-orange); }
+
+.chart-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.seasonal-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.seasonal-matrix th,
+.seasonal-matrix td {
+  border: 1px solid var(--border-light);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.crop-header {
+  text-align: left !important;
+  width: 200px;
+  background-color: var(--background);
+  font-weight: 700;
+}
+
+.month-header {
+  background-color: var(--background);
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.crop-name {
+  text-align: left !important;
+  font-weight: 600;
+}
+
+.month-cell {
+  padding: 0 !important;
+  position: relative;
+  height: 48px;
+}
+
+.season-bar {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+
+.season-bar.early { background-color: var(--fresh-green); }
+.season-bar.moderate { background-color: var(--harvest-gold); }
+.season-bar.peak { background-color: var(--papaya-orange); }
