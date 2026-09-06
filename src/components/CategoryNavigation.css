@@ -1,0 +1,36 @@
+.category-nav-wrapper {
+  background-color: var(--white);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-nav-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.category-nav-item {
+  margin-right: 0.5rem;
+}
+
+.category-nav-btn {
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  color: var(--text-light);
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+}
+
+.category-nav-btn:hover {
+  color: var(--fresh-green);
+}
+
+.category-nav-btn.active {
+  color: var(--fresh-green);
+  border-bottom-color: var(--fresh-green);
+}
