@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ShoppingCart, Search, User, LogIn } from 'lucide-react';
 import './Header.css'; // We'll write this later or use inline/styled
 
 function Header({ cartCount }) {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -30,6 +31,53 @@ function Header({ cartCount }) {
             <span style={{ fontSize: '28px', fontWeight: 'bold', color: '#047857', letterSpacing: '0.5px' }}>KISAN</span>
           </div>
           
+          {/* CENTER: NAVIGATION */}
+          <nav className="header-nav" aria-label="Main Navigation" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button
+              type="button"
+              onClick={() => navigate('/')}
+              className={`header-nav-link ${location.pathname === '/' ? 'active' : ''}`}
+              style={{
+                background: location.pathname === '/' ? 'rgba(27, 56, 30, 0.08)' : 'transparent',
+                color: location.pathname === '/' ? '#1B381E' : 'var(--text-dark)',
+                fontWeight: location.pathname === '/' ? 700 : 500,
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s ease',
+                border: 'none'
+              }}
+            >
+              Marketplace
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/vendors')}
+              className={`header-nav-link ${location.pathname === '/vendors' ? 'active' : ''}`}
+              style={{
+                background: location.pathname === '/vendors' ? '#1B381E' : 'transparent',
+                color: location.pathname === '/vendors' ? '#FFFFFF' : 'var(--text-dark)',
+                fontWeight: location.pathname === '/vendors' ? 700 : 500,
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s ease',
+                border: 'none',
+                boxShadow: location.pathname === '/vendors' ? '0 2px 6px rgba(27, 56, 30, 0.2)' : 'none'
+              }}
+            >
+              Farmers &amp; Vendors
+            </button>
+          </nav>
+
           {/* RIGHT: CONTROLS */}
           <div className="header-actions" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             <div className="header-action-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>

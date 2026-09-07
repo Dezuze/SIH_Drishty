@@ -1,0 +1,306 @@
+/* Vendors Page - Modern Agrarian Editorial Layout */
+
+.vendors-page {
+  background-color: #FEFDF8;
+  color: #1F2937;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+/* Fluid Responsive Container */
+.vendors-content-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 3.5rem;
+}
+
+/* 1. Page Header */
+.vendors-hero-header {
+  padding: 3.5rem 0 2.5rem 0;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.08);
+  margin-bottom: 2.5rem;
+}
+
+.vendors-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 2.5rem;
+}
+
+.vendors-header-text {
+  max-width: 820px;
+}
+
+.vendors-eyebrow {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1B381E;
+  background-color: #EAE3B3;
+  border: 1px solid #F0A800;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.vendors-page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 4.25rem;
+  color: #1B381E;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+.vendors-page-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #52604D;
+  margin-bottom: 0;
+}
+
+.vendors-header-cta {
+  flex-shrink: 0;
+}
+
+.btn-become-vendor {
+  background-color: #FF6D2E;
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.9375rem 1.875rem;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 109, 46, 0.2);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(255, 109, 46, 0.3);
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  min-height: 48px;
+}
+
+.btn-become-vendor:hover {
+  background-color: #E55619;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255, 109, 46, 0.4);
+}
+
+.btn-become-vendor:focus-visible {
+  outline: 2px solid #FF6D2E;
+  outline-offset: 2px;
+}
+
+/* 3. Vendor Summary & Sorting Bar */
+.vendors-summary-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.08);
+}
+
+.vendors-count-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: #1B381E;
+}
+
+.vendors-count-number {
+  color: #1B381E;
+  font-weight: 700;
+}
+
+.vendors-sorting-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vendors-sort-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #52604D;
+}
+
+.vendors-sort-select {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(27, 56, 30, 0.18);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #1F2937;
+  cursor: pointer;
+  min-height: 40px;
+  transition: border-color 0.2s ease;
+}
+
+.vendors-sort-select:focus {
+  outline: none;
+  border-color: #1B381E;
+  box-shadow: 0 0 0 3px rgba(27, 56, 30, 0.12);
+}
+
+/* 4. Vendor Card Grid */
+.vendors-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+@media (min-width: 1400px) {
+  .vendors-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* 7. Empty State */
+.vendors-empty-state {
+  text-align: center;
+  padding: 4.5rem 1.5rem;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(27, 56, 30, 0.1);
+  border-radius: 16px;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(27, 56, 30, 0.04);
+}
+
+.empty-state-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #EAE3B3;
+  color: #1B381E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+}
+
+.empty-state-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1B381E;
+  margin-bottom: 0.75rem;
+}
+
+.empty-state-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  color: #52604D;
+  max-width: 500px;
+  margin: 0 auto 1.75rem auto;
+  line-height: 1.5;
+}
+
+.btn-empty-clear {
+  background-color: #1B381E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+  min-height: 44px;
+}
+
+.btn-empty-clear:hover {
+  background-color: #05220B;
+}
+
+/* Responsive Fluid Layout Breakpoints */
+@media (max-width: 1024px) {
+  .vendors-content-container {
+    padding: 0 2rem;
+  }
+
+  .vendors-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .vendors-hero-header {
+    padding: 2.5rem 0 2rem 0;
+  }
+
+  .vendors-page-title {
+    font-size: 2.75rem;
+    line-height: 3.25rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .vendors-header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .vendors-header-cta {
+    width: 100%;
+  }
+
+  .btn-become-vendor {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .vendors-summary-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .vendors-sorting-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .vendors-sort-select {
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .vendors-content-container {
+    padding: 0 1rem;
+  }
+
+  .vendors-hero-header {
+    padding: 2rem 0 1.5rem 0;
+  }
+
+  .vendors-page-title {
+    font-size: 2.25rem;
+    line-height: 2.75rem;
+  }
+
+  .vendors-page-subtitle {
+    font-size: 1rem;
+  }
+
+  .vendors-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

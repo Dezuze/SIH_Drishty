@@ -108,8 +108,19 @@
     gap: 1rem;
   }
   
-  .search-bar {
+  .header-top {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-nav {
     order: 3;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .search-bar {
+    order: 4;
     width: 100%;
     max-width: none;
   }
