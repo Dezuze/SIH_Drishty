@@ -1,0 +1,98 @@
+.market-price-strip {
+  display: flex;
+  align-items: center;
+  background-color: rgba(234, 227, 179, 0.35);
+  border: 1px solid rgba(240, 168, 0, 0.4);
+  border-radius: 10px;
+  padding: 0.625rem 1.25rem;
+  margin-bottom: 2rem;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.market-price-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.price-strip-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.price-strip-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1B381E;
+  white-space: nowrap;
+}
+
+.price-strip-items {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.price-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.price-item-crop {
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.price-item-value {
+  font-weight: 700;
+  color: #1B381E;
+}
+
+.price-item-unit {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #52604D;
+}
+
+.price-item-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.price-item-trend.trend-up {
+  color: #1B381E;
+  background-color: rgba(163, 213, 93, 0.35);
+}
+
+.price-item-trend.trend-down {
+  color: #FF6D2E;
+  background-color: rgba(255, 109, 46, 0.15);
+}
+
+.price-item-trend.trend-neutral {
+  color: #52604D;
+  background-color: rgba(82, 96, 77, 0.12);
+}
+
+@media (max-width: 768px) {
+  .market-price-strip {
+    padding: 0.5rem 0.875rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}

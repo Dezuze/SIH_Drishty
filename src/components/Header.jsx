@@ -56,6 +56,28 @@ function Header({ cartCount }) {
             </button>
             <button
               type="button"
+              onClick={() => navigate('/products')}
+              className={`header-nav-link ${location.pathname === '/products' || location.pathname === '/produce-market' ? 'active' : ''}`}
+              style={{
+                background: location.pathname === '/products' || location.pathname === '/produce-market' ? '#1B381E' : 'transparent',
+                color: location.pathname === '/products' || location.pathname === '/produce-market' ? '#FFFFFF' : 'var(--text-dark)',
+                fontWeight: location.pathname === '/products' || location.pathname === '/produce-market' ? 700 : 500,
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s ease',
+                border: 'none',
+                boxShadow: location.pathname === '/products' || location.pathname === '/produce-market' ? '0 2px 6px rgba(27, 56, 30, 0.2)' : 'none'
+              }}
+            >
+              Produce Market
+            </button>
+            <button
+              type="button"
               onClick={() => navigate('/vendors')}
               className={`header-nav-link ${location.pathname === '/vendors' ? 'active' : ''}`}
               style={{

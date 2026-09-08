@@ -1,0 +1,482 @@
+/* Product Details Modal Styles */
+
+.product-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(5, 34, 11, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  overflow-y: auto;
+  animation: modalFadeIn 0.2s ease;
+}
+
+.product-modal-dialog {
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 960px;
+  position: relative;
+  box-shadow: 0 20px 40px -8px rgba(5, 34, 11, 0.35);
+  border: 1px solid rgba(27, 56, 30, 0.15);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: modalSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-modal-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  color: #1B381E;
+  border: 1px solid rgba(27, 56, 30, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: all 0.15s ease;
+}
+
+.product-modal-close-btn:hover {
+  background-color: #1B381E;
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+.product-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  overflow-y: auto;
+}
+
+/* Left: Media Column */
+.product-modal-media-col {
+  background-color: #FEFDF8;
+  padding: 2rem;
+  border-right: 1px solid rgba(27, 56, 30, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.product-modal-main-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(27, 56, 30, 0.12);
+  box-shadow: 0 4px 14px rgba(27, 56, 30, 0.06);
+}
+
+.product-modal-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-modal-img-badges {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-organic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #A3D55D;
+  color: #1B381E;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.modal-lot-pill {
+  background-color: rgba(5, 34, 11, 0.82);
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.product-modal-trust-box {
+  background-color: #FFFFFF;
+  border: 1px solid rgba(27, 56, 30, 0.10);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.trust-box-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.trust-box-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.trust-box-icon.sprout {
+  color: #1B381E;
+}
+
+.trust-box-icon.gold {
+  color: #F0A800;
+}
+
+.trust-box-icon.orange {
+  color: #FF6D2E;
+}
+
+.trust-box-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1B381E;
+}
+
+.trust-box-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  color: #52604D;
+  line-height: 1.4;
+}
+
+/* Right: Info Column */
+.product-modal-info-col {
+  padding: 2.25rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-category-origin-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.modal-cat-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background-color: rgba(27, 56, 30, 0.08);
+  color: #1B381E;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.modal-origin-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #52604D;
+}
+
+.product-modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.125rem;
+  font-weight: 700;
+  color: #1B381E;
+  line-height: 1.25;
+  margin-bottom: 0.875rem;
+}
+
+.modal-vendor-rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.08);
+}
+
+.modal-vendor-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.modal-vendor-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  color: #52604D;
+}
+
+.modal-vendor-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1B381E;
+}
+
+.modal-rating-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.modal-rating-badge .star-icon {
+  fill: #F0B400;
+  color: #F0B400;
+}
+
+.modal-reviews-count {
+  color: #52604D;
+  font-weight: 500;
+}
+
+/* GI Certification Box */
+.modal-gi-box {
+  background-color: #FEFDF8;
+  border: 1px solid #F0A800;
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.modal-gi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.375rem;
+}
+
+.gi-reg-no {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #52604D;
+}
+
+.gi-reg-desc {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  color: #1F2937;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Description */
+.modal-desc-section {
+  margin-bottom: 1.25rem;
+}
+
+.modal-section-h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1B381E;
+  margin-bottom: 0.375rem;
+}
+
+.modal-desc-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #52604D;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Specifications Matrix */
+.modal-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 1.75rem;
+}
+
+.spec-card {
+  background-color: rgba(234, 227, 179, 0.25);
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spec-lbl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  color: #52604D;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.spec-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1B381E;
+}
+
+/* Purchase Footer */
+.modal-purchase-footer {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(27, 56, 30, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.modal-price-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-price-tag-lbl {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #52604D;
+}
+
+.modal-price-display {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: #1B381E;
+  line-height: 1.1;
+}
+
+.modal-price-unit {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #52604D;
+}
+
+.modal-actions-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-modal-add-crate {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #FF6D2E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8125rem 1.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(255, 109, 46, 0.30);
+  min-height: 48px;
+  white-space: nowrap;
+}
+
+.btn-modal-add-crate:hover {
+  background-color: #E55619;
+  transform: translateY(-1px);
+}
+
+.btn-modal-added {
+  background-color: #1B381E !important;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Modal Responsive */
+@media (max-width: 768px) {
+  .product-modal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-modal-media-col {
+    padding: 1.5rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(27, 56, 30, 0.08);
+  }
+
+  .product-modal-info-col {
+    padding: 1.5rem;
+  }
+
+  .product-modal-title {
+    font-size: 1.75rem;
+  }
+
+  .modal-purchase-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-actions-area {
+    flex-direction: column;
+  }
+
+  .modal-actions-area .quantity-control {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-modal-add-crate {
+    width: 100%;
+    justify-content: center;
+  }
+}
