@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Dashboard - DRISHTI 🌱</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="{{ url_for('home') }}" class="nav-brand">
+      <span class="sprout">🌱</span> DRISHTI
+    </a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('driver_dashboard') }}" class="nav-link active">Dashboard</a></li>
+      <li><a href="{{ url_for('driver_deliveries') }}" class="nav-link">My Deliveries</a></li>
+      <li><a href="{{ url_for('customer_tracking') }}" target="_blank" class="nav-link">Customer View ↗</a></li>
+      <li><a href="{{ url_for('driver_logout') }}" class="nav-btn" style="background-color: #C62828;">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Driver Profile Header Card -->
+    <div class="card" style="border-left: 6px solid var(--primary-green);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="background: var(--light-green); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">
+            👨‍🌾
+          </div>
+          <div>
+            <h2 style="color: var(--dark-green); margin-bottom: 0.2rem;">{{ driver.name }}</h2>
+            <div style="font-size: 0.9rem; color: var(--text-muted);">
+              <strong>Driver ID:</strong> <code>{{ driver.driver_code }}</code> &nbsp;|&nbsp;
+              <strong>Phone:</strong> {{ driver.phone }}
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          {% if driver.status == 'Available' %}
+            <span class="badge badge-available">● Available</span>
+          {% else %}
+            <span class="badge badge-offline">○ Offline</span>
+          {% endif %}
+
+          <form action="{{ url_for('toggle_driver_status') }}" method="POST" style="margin: 0;">
+            <button type="submit" class="btn btn-secondary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;">
+              Switch to {{ 'Offline' if driver.status == 'Available' else 'Available' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics / Statistics Cards -->
+    <div class="stats-grid">
+      <!-- Pending Deliveries -->
+      <div class="stat-card pending">
+        <div class="stat-icon">📦</div>
+        <div class="stat-info">
+          <h3>{{ pending_count }}</h3>
+          <p>Pending Deliveries</p>
+        </div>
+      </div>
+
+      <!-- Active Delivery -->
+      <div class="stat-card active">
+        <div class="stat-icon">🚚</div>
+        <div class="stat-info">
+          <h3>{{ active_count }}</h3>
+          <p>Active Delivery</p>
+        </div>
+      </div>
+
+      <!-- Completed Deliveries -->
+      <div class="stat-card completed">
+        <div class="stat-icon">✅</div>
+        <div class="stat-info">
+          <h3>{{ completed_count }}</h3>
+          <p>Completed Deliveries</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Delivery Showcase -->
+    {% if active_order %}
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">
+            🚚 Current Assigned Delivery: Order #{{ active_order.id }}
+          </h2>
+          <span class="badge badge-status {% if active_order.status == 'Delivered' %}completed{% elif active_order.status == 'Out for Delivery' %}active{% endif %}">
+            {{ active_order.status }}
+          </span>
+        </div>
+
+        <div class="details-grid">
+          <div class="info-box">
+            <div class="info-label">Product & Quantity</div>
+            <div class="info-value">🥬 {{ active_order.product }}</div>
+            <div class="info-sub">Quantity: <strong>{{ active_order.quantity }}</strong></div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Customer Details</div>
+            <div class="info-value">👤 {{ active_order.customer_name }}</div>
+            <div class="info-sub">Phone: {{ active_order.customer_phone }}</div>
+          </div>
+        </div>
+
+        <div class="details-grid">
+          <div class="info-box">
+            <div class="info-label">🌾 Farm Pickup Location</div>
+            <div class="info-value" style="font-size: 0.95rem;">{{ active_order.pickup_address }}</div>
+            <div class="info-sub">GPS: {{ active_order.pickup_lat }}, {{ active_order.pickup_lng }}</div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">📍 Customer Delivery Drop</div>
+            <div class="info-value" style="font-size: 0.95rem;">{{ active_order.customer_address }}</div>
+            <div class="info-sub">GPS: {{ active_order.customer_lat }}, {{ active_order.customer_lng }}</div>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="{{ url_for('driver_order_detail', order_id=active_order.id) }}" class="btn btn-primary" style="font-size: 1rem;">
+            🗺️ Manage Order & Open Delivery Map &rarr;
+          </a>
+          <a href="{{ url_for('driver_deliveries') }}" class="btn btn-secondary">
+            📋 View All Assigned Deliveries
+          </a>
+        </div>
+      </div>
+    {% else %}
+      <div class="card" style="text-align: center; padding: 3rem;">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎉</div>
+        <h3 style="color: var(--dark-green);">No Pending Deliveries!</h3>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">You are all caught up. New orders from farmers will appear here automatically.</p>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    DRISHTI 🌱 Delivery & Driver Module &bull; College Project Prototype
+  </footer>
+
+</body>
+</html>

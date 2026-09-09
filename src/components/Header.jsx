@@ -98,6 +98,71 @@ function Header({ cartCount }) {
             >
               Farmers &amp; Vendors
             </button>
+            <button
+              type="button"
+              onClick={() => navigate('/tracking')}
+              className={`header-nav-link ${location.pathname.startsWith('/tracking') ? 'active' : ''}`}
+              style={{
+                background: location.pathname.startsWith('/tracking') ? '#15803D' : 'rgba(22, 163, 74, 0.1)',
+                color: location.pathname.startsWith('/tracking') ? '#FFFFFF' : '#15803D',
+                fontWeight: 700,
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s ease',
+                border: '1px solid rgba(22, 163, 74, 0.3)',
+                boxShadow: location.pathname.startsWith('/tracking') ? '0 2px 6px rgba(21, 128, 61, 0.3)' : 'none'
+              }}
+            >
+              📍 Live Tracking
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/driver')}
+              className={`header-nav-link ${location.pathname.startsWith('/driver') ? 'active' : ''}`}
+              style={{
+                background: location.pathname.startsWith('/driver') ? '#0284C7' : 'rgba(2, 132, 199, 0.1)',
+                color: location.pathname.startsWith('/driver') ? '#FFFFFF' : '#0284C7',
+                fontWeight: 700,
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s ease',
+                border: '1px solid rgba(2, 132, 199, 0.3)',
+                boxShadow: location.pathname.startsWith('/driver') ? '0 2px 6px rgba(2, 132, 199, 0.3)' : 'none'
+              }}
+            >
+              🚚 Driver Portal
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/logistics')}
+              className={`header-nav-link ${location.pathname === '/logistics' ? 'active' : ''}`}
+              style={{
+                background: location.pathname === '/logistics' ? '#0F172A' : 'transparent',
+                color: location.pathname === '/logistics' ? '#FFFFFF' : 'var(--text-dark)',
+                fontWeight: location.pathname === '/logistics' ? 700 : 500,
+                padding: '6px 14px',
+                borderRadius: '8px',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                transition: 'all 0.2s ease',
+                border: 'none'
+              }}
+            >
+              🤖 Logistics AI
+            </button>
           </nav>
 
           {/* RIGHT: CONTROLS */}

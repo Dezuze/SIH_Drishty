@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 import { 
   Zap, 
@@ -13,7 +13,7 @@ import {
   ChevronRight,
   Flame
 } from 'lucide-react';
-import { RouteMetrics } from '../types/dashboardTypes';
+import { RouteMetrics } from '../../types/dashboardTypes';
 
 interface RouteOptimizationPanelProps {
   metrics: RouteMetrics;
@@ -104,7 +104,7 @@ export const RouteOptimizationPanel: React.FC<RouteOptimizationPanelProps> = ({
                 Route Generated Successfully
               </h4>
               <p className="text-xs text-emerald-300">
-                Saved 9.6 km ΓÇó Multi-stop sequence locked for Farm ΓåÆ Cust A ΓåÆ Cust B ΓåÆ Cust C
+                Saved 9.6 km G�� Multi-stop sequence locked for Farm G�� Cust A G�� Cust B G�� Cust C
               </p>
             </div>
           </div>
@@ -143,7 +143,7 @@ export const RouteOptimizationPanel: React.FC<RouteOptimizationPanelProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Sequence:</span>
-                <span className="text-slate-400 font-mono">Farm ΓåÆ C ΓåÆ A ΓåÆ B (Zigzag)</span>
+                <span className="text-slate-400 font-mono">Farm G�� C G�� A G�� B (Zigzag)</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Perishability Risk:</span>
@@ -180,11 +180,11 @@ export const RouteOptimizationPanel: React.FC<RouteOptimizationPanelProps> = ({
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-300">Optimized Order:</span>
-                <span className="text-emerald-300 font-mono font-semibold">Farm ΓåÆ A ΓåÆ B ΓåÆ C</span>
+                <span className="text-emerald-300 font-mono font-semibold">Farm G�� A G�� B G�� C</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-300">Fuel & Carbon Saving:</span>
-                <span className="text-emerald-400 font-semibold font-mono">Γé╣285 saved ΓÇó 6.4 kg COΓéé</span>
+                <span className="text-emerald-400 font-semibold font-mono">G�285 saved G�� 6.4 kg COG��</span>
               </div>
             </div>
           </div>

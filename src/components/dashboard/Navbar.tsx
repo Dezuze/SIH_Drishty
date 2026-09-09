@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 import { 
   Sprout, 
   Truck, 
@@ -190,11 +190,28 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <Link
+            to="/tracking"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-emerald-950/80 text-emerald-300 hover:bg-emerald-900 border border-emerald-500/40 transition shadow-xs cursor-pointer"
+            title="Open Live Delivery Tracking"
+          >
+            <Map className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="hidden sm:inline">Live Tracking</span>
+          </Link>
+
+          <Link
+            to="/driver"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-900 text-sky-400 hover:bg-slate-800 border border-sky-500/30 transition shadow-xs cursor-pointer"
+            title="Open Driver Telematics Portal"
+          >
+            <Truck className="w-3.5 h-3.5 text-sky-400" />
+            <span className="hidden sm:inline">Driver Portal</span>
+          </Link>
+
+          <Link
             to="/simplified"
             className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700 transition shadow-sm"
             title="Go to Simplified UI"
           >
-            <Map className="w-4 h-4 text-slate-400" />
             <span className="hidden sm:inline">Simplified UI</span>
           </Link>
 
