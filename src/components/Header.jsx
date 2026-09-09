@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ShoppingCart, Search, User, LogIn } from 'lucide-react';
-import './Header.css'; // We'll write this later or use inline/styled
+import './Header.css';
 
 function Header({ cartCount }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -15,189 +24,86 @@ function Header({ cartCount }) {
     }
   };
 
+  const navLinks = [
+    { name: 'Marketplace', path: '/', exact: true },
+    { name: 'Produce Market', path: '/products', alt: '/produce-market' },
+    { name: 'Farmers & Vendors', path: '/vendors' },
+    { name: 'Live Tracking', path: '/tracking' },
+    { name: 'Driver Portal', path: '/driver' },
+    { name: 'Logistics AI', path: '/logistics' },
+  ];
+
   return (
-    <header className="site-header">
-      <div className="container" style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        
-        {/* ROW 1 */}
-        <div className="header-top" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-          {/* LEFT: LOGO */}
-          <div className="logo-container" onClick={() => navigate('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBF24" strokeWidth="4" />
+    <header className={`modern-header ${scrolled ? 'scrolled' : ''}`}>
+      {/* Top Tier: Logo, Search, Actions */}
+      <div className="header-top-tier container">
+        {/* LOGO */}
+        <div className="modern-logo" onClick={() => navigate('/')}>
+          <div className="logo-icon">
+            <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBF24" strokeWidth="6" />
               <path d="M50 80 C30 80, 25 55, 45 40 C45 40, 50 45, 50 55 C50 55, 55 45, 55 40 C75 55, 70 80, 50 80 Z" fill="#10B981" />
               <path d="M50 55 Q40 25 50 15 Q60 25 50 55" fill="#FBBF24" />
             </svg>
-            <span style={{ fontSize: '28px', fontWeight: 'bold', color: '#047857', letterSpacing: '0.5px' }}>KISAN</span>
           </div>
-          
-          {/* CENTER: NAVIGATION */}
-          <nav className="header-nav" aria-label="Main Navigation" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
-              type="button"
-              onClick={() => navigate('/')}
-              className={`header-nav-link ${location.pathname === '/' ? 'active' : ''}`}
-              style={{
-                background: location.pathname === '/' ? 'rgba(27, 56, 30, 0.08)' : 'transparent',
-                color: location.pathname === '/' ? '#1B381E' : 'var(--text-dark)',
-                fontWeight: location.pathname === '/' ? 700 : 500,
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                border: 'none'
-              }}
-            >
-              Marketplace
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/products')}
-              className={`header-nav-link ${location.pathname === '/products' || location.pathname === '/produce-market' ? 'active' : ''}`}
-              style={{
-                background: location.pathname === '/products' || location.pathname === '/produce-market' ? '#1B381E' : 'transparent',
-                color: location.pathname === '/products' || location.pathname === '/produce-market' ? '#FFFFFF' : 'var(--text-dark)',
-                fontWeight: location.pathname === '/products' || location.pathname === '/produce-market' ? 700 : 500,
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                border: 'none',
-                boxShadow: location.pathname === '/products' || location.pathname === '/produce-market' ? '0 2px 6px rgba(27, 56, 30, 0.2)' : 'none'
-              }}
-            >
-              Produce Market
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/vendors')}
-              className={`header-nav-link ${location.pathname === '/vendors' ? 'active' : ''}`}
-              style={{
-                background: location.pathname === '/vendors' ? '#1B381E' : 'transparent',
-                color: location.pathname === '/vendors' ? '#FFFFFF' : 'var(--text-dark)',
-                fontWeight: location.pathname === '/vendors' ? 700 : 500,
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                border: 'none',
-                boxShadow: location.pathname === '/vendors' ? '0 2px 6px rgba(27, 56, 30, 0.2)' : 'none'
-              }}
-            >
-              Farmers &amp; Vendors
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/tracking')}
-              className={`header-nav-link ${location.pathname.startsWith('/tracking') ? 'active' : ''}`}
-              style={{
-                background: location.pathname.startsWith('/tracking') ? '#15803D' : 'rgba(22, 163, 74, 0.1)',
-                color: location.pathname.startsWith('/tracking') ? '#FFFFFF' : '#15803D',
-                fontWeight: 700,
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                border: '1px solid rgba(22, 163, 74, 0.3)',
-                boxShadow: location.pathname.startsWith('/tracking') ? '0 2px 6px rgba(21, 128, 61, 0.3)' : 'none'
-              }}
-            >
-              📍 Live Tracking
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/driver')}
-              className={`header-nav-link ${location.pathname.startsWith('/driver') ? 'active' : ''}`}
-              style={{
-                background: location.pathname.startsWith('/driver') ? '#0284C7' : 'rgba(2, 132, 199, 0.1)',
-                color: location.pathname.startsWith('/driver') ? '#FFFFFF' : '#0284C7',
-                fontWeight: 700,
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                border: '1px solid rgba(2, 132, 199, 0.3)',
-                boxShadow: location.pathname.startsWith('/driver') ? '0 2px 6px rgba(2, 132, 199, 0.3)' : 'none'
-              }}
-            >
-              🚚 Driver Portal
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate('/logistics')}
-              className={`header-nav-link ${location.pathname === '/logistics' ? 'active' : ''}`}
-              style={{
-                background: location.pathname === '/logistics' ? '#0F172A' : 'transparent',
-                color: location.pathname === '/logistics' ? '#FFFFFF' : 'var(--text-dark)',
-                fontWeight: location.pathname === '/logistics' ? 700 : 500,
-                padding: '6px 14px',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                transition: 'all 0.2s ease',
-                border: 'none'
-              }}
-            >
-              🤖 Logistics AI
-            </button>
-          </nav>
-
-          {/* RIGHT: CONTROLS */}
-          <div className="header-actions" style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <div className="header-action-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
-              <User size={22} color="var(--text-dark)" />
-              <span style={{ fontWeight: 500, color: 'var(--text-dark)' }}>Account</span>
-            </div>
-            <div className="header-action-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
-              <LogIn size={22} color="var(--text-dark)" />
-              <span style={{ fontWeight: 500, color: 'var(--text-dark)' }}>Login</span>
-            </div>
-            <div className="header-action-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer' }}>
-              <ShoppingCart size={22} color="var(--text-dark)" />
-              <span style={{ fontWeight: 500, color: 'var(--text-dark)' }}>Cart ({cartCount})</span>
-            </div>
-          </div>
+          <span className="logo-text">KISAN</span>
         </div>
-
-        {/* ROW 2: SEARCH */}
-        <div className="header-bottom" style={{ width: '100%' }}>
-          <form className="search-bar" onSubmit={handleSearch} style={{ maxWidth: '100%', width: '100%' }}>
+        
+        {/* SEARCH BAR */}
+        <div className="modern-search-container">
+          <form className="modern-search-bar" onSubmit={handleSearch}>
+            <Search className="search-icon-left" size={18} />
             <input 
               type="text" 
-              placeholder="Search for vegetables, fruits, grains, spices..." 
+              placeholder="Search for fresh produce, grains, or vendors..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button type="submit" className="search-btn">
-              <Search size={20} />
-              <span className="visually-hidden">Search</span>
-            </button>
+            <button type="submit" className="modern-search-btn">Search</button>
           </form>
         </div>
-        
+
+        {/* ACTIONS */}
+        <div className="modern-actions">
+          <button className="action-btn icon-btn group" title="Account">
+            <User size={20} />
+            <span className="action-tooltip">Account</span>
+          </button>
+          <button className="action-btn icon-btn group" title="Login">
+            <LogIn size={20} />
+            <span className="action-tooltip">Login</span>
+          </button>
+          <button className="action-btn cart-btn group" title="Cart">
+            <div className="cart-icon-wrapper">
+              <ShoppingCart size={20} />
+              {Number(cartCount) > 0 && <span className="modern-cart-badge">{cartCount}</span>}
+            </div>
+            <span className="cart-text">Cart</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Bottom Tier: Navigation */}
+      <div className="header-bottom-tier">
+        <div className="container">
+          <nav className="modern-nav">
+            {navLinks.map((link) => {
+              const isActive = link.exact 
+                ? location.pathname === link.path 
+                : (location.pathname.startsWith(link.path) || (link.alt && location.pathname.startsWith(link.alt)));
+              
+              return (
+                <button
+                  key={link.path}
+                  onClick={() => navigate(link.path)}
+                  className={`modern-nav-link ${isActive ? 'active' : ''}`}
+                >
+                  {link.name}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
       </div>
     </header>
   );

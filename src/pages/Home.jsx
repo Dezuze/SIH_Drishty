@@ -46,7 +46,6 @@ function Home({ onAddToCart }) {
       
       <main className="container">
         <>
-          <h1 className="section-title">{activeCategory}</h1>
           {activeCategory === "For You" && (
             <div style={{ marginBottom: '3rem' }}>
               <SeasonalChart />
