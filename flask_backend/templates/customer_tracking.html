@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Order #{{ order.id if order else order_id }} - DRISHTI 🌱</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Leaflet.js Map CSS (High Speed CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="{{ url_for('home') }}" class="nav-brand">
+      <span class="sprout">🌱</span> DRISHTI
+    </a>
+    <ul class="nav-links">
+      <li><a href="{{ url_for('home') }}" class="nav-link">Home</a></li>
+      <li><a href="{{ url_for('customer_tracking') }}" class="nav-link active">Live Tracking</a></li>
+      {% if session.get('driver_id') %}
+        <li><a href="{{ url_for('driver_dashboard') }}" class="nav-link">Driver Dashboard</a></li>
+      {% else %}
+        <li><a href="{{ url_for('driver_login') }}" class="nav-btn">Driver Login</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    {% if not order %}
+      <div class="card" style="text-align: center; padding: 3rem;">
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">🔍</div>
+        <h2 style="color: #C62828;">Order #{{ order_id }} Not Found</h2>
+        <p style="color: var(--text-muted); margin: 1rem 0;">Please check your Order ID or track our demo order.</p>
+        <a href="{{ url_for('customer_tracking', order_id='DR001') }}" class="btn btn-primary">Track Demo Order #DR001</a>
+      </div>
+    {% else %}
+
+      <!-- Order Overview Header -->
+      <div class="card" style="border-top: 5px solid var(--primary-green);">
+        <div class="card-header">
+          <div>
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+              Live Agricultural Delivery Tracker
+            </div>
+            <h1 class="card-title" style="font-size: 1.7rem; margin-top: 0.2rem;">
+              Order #{{ order.id }}
+            </h1>
+          </div>
+          <div>
+            <span id="live-status-badge" class="badge badge-status {% if order.status == 'Delivered' %}completed{% elif order.status == 'Out for Delivery' %}active{% endif %}" style="font-size: 1rem; padding: 0.45rem 1.1rem;">
+              {{ order.status }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Flipkart-Style Visual Timeline -->
+        {% set current_idx = stages.index(order.status) if order.status in stages else 0 %}
+        <div class="timeline-container" style="border: none; padding: 0.5rem 0 1rem;">
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--dark-green); margin-bottom: 0.5rem;">
+            📍 DELIVERY STATUS TIMELINE
+          </div>
+          <div class="timeline">
+            <div id="customer-timeline-progress" class="timeline-progress-bar" style="width: {{ (current_idx / (stages|length - 1)) * 100 }}%;"></div>
+            {% for stage in stages %}
+              <div class="timeline-step {% if loop.index0 < current_idx %}completed{% elif loop.index0 == current_idx %}active{% endif %}">
+                <div class="timeline-icon">
+                  {% if loop.index0 < current_idx %}✓{% elif loop.index0 == current_idx %}●{% else %}○{% endif %}
+                </div>
+                <div class="timeline-label">{{ stage }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Product & Delivery Details -->
+        <div class="details-grid">
+          <div class="info-box">
+            <div class="info-label">Product Ordered</div>
+            <div class="info-value">🥬 {{ order.product }}</div>
+            <div class="info-sub">Quantity: <strong>{{ order.quantity }}</strong></div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Farmer / Source</div>
+            <div class="info-value">🌾 {{ order.pickup_address }}</div>
+            <div class="info-sub">Locally harvested organic produce</div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Delivery Partner</div>
+            <div class="info-value">🚚 {{ order.driver_name or 'Rajesh Kumar' }}</div>
+            <div class="info-sub">Phone: {{ order.driver_phone or '+91 98765 43210' }}</div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-label">Delivery Destination</div>
+            <div class="info-value">📍 {{ order.customer_name }}</div>
+            <div class="info-sub">{{ order.customer_address }}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Interactive Map Section -->
+      <div class="card map-card">
+        <div class="card-header">
+          <h2 class="card-title">
+            🗺️ Live Driver GPS Location (3-Second Polling)
+          </h2>
+          <div style="font-size: 0.85rem; color: var(--text-muted);">
+            Driver Coordinates: <strong id="customer-driver-coords">{{ order.pickup_lat }}, {{ order.pickup_lng }}</strong>
+          </div>
+        </div>
+
+        <!-- Live Connection Banner -->
+        <div id="customer-live-indicator" class="gps-banner">
+          <div>
+            <span class="gps-live-dot"></span>
+            <strong>Live GPS Polling Active</strong> &bull; Tracking driver location in real-time
+          </div>
+          <div>
+            <small>Last synced: <span id="customer-last-poll-time">Connecting...</span></small>
+          </div>
+        </div>
+
+        <!-- Leaflet Map Container -->
+        <div id="customer-map" class="map-container"></div>
+
+        <!-- Legend -->
+        <div class="map-legend">
+          <div class="legend-item"><span>🌾</span> Farmer Farm (Pickup)</div>
+          <div class="legend-item"><span>🚚</span> Driver Live Position</div>
+          <div class="legend-item"><span>📍</span> Your Delivery Address</div>
+        </div>
+
+        <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); background: #FAFAF7; padding: 0.75rem; border-radius: 8px;">
+          💡 <strong>How Real-Time Tracking Works:</strong> As your delivery driver updates their location on their dashboard (via browser GPS or simulator), this page automatically polls Flask every 3 seconds and animates the 🚚 icon towards your location.
+        </div>
+      </div>
+
+    {% endif %}
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    DRISHTI 🌱 Delivery & Driver Module &bull; College Project Prototype
+  </footer>
+
+  {% if order %}
+    <!-- Leaflet.js Map Library (High Speed CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+    <!-- Pass Python Order data to client -->
+    <script>
+      window.CUSTOMER_ORDER = {
+        id: "{{ order.id }}",
+        product: "{{ order.product }}",
+        quantity: "{{ order.quantity }}",
+        status: "{{ order.status }}",
+        driver_name: "{{ order.driver_name or 'Assigned Driver' }}",
+        pickup_address: "{{ order.pickup_address }}",
+        pickup_lat: {{ order.pickup_lat }},
+        pickup_lng: {{ order.pickup_lng }},
+        customer_name: "{{ order.customer_name }}",
+        customer_address: "{{ order.customer_address }}",
+        customer_lat: {{ order.customer_lat }},
+        customer_lng: {{ order.customer_lng }}
+      };
+    </script>
+    <script src="{{ url_for('static', filename='js/customer.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        initCustomerMap(window.CUSTOMER_ORDER);
+      });
+    </script>
+  {% endif %}
+
+</body>
+</html>

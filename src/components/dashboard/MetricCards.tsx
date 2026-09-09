@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { 
   Navigation, 
   Clock, 
@@ -10,7 +10,7 @@ import {
   ThermometerSnowflake,
   ShieldCheck
 } from 'lucide-react';
-import { RouteMetrics, VehicleInfo } from '../types/dashboardTypes';
+import { RouteMetrics, VehicleInfo } from '../../types/dashboardTypes';
 
 interface MetricCardsProps {
   metrics: RouteMetrics;
@@ -144,7 +144,7 @@ export const MetricCards: React.FC<MetricCardsProps> = ({
         </div>
         <div className="flex items-baseline gap-1.5">
           <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400 tracking-tight">
-            Γé╣{metrics.costSavedInr}
+            G�{metrics.costSavedInr}
           </span>
           <span className="text-xs font-semibold text-slate-400">saved</span>
         </div>
@@ -152,7 +152,7 @@ export const MetricCards: React.FC<MetricCardsProps> = ({
           <span className="text-slate-400 font-mono">2.8L Fuel</span>
           <span className="inline-flex items-center text-emerald-300 font-semibold bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-500/30">
             <Sparkles className="w-3 h-3 mr-0.5 text-emerald-400" />
-            {metrics.co2SavedKg}kg COΓéé
+            {metrics.co2SavedKg}kg COG��
           </span>
         </div>
       </div>
@@ -168,9 +168,9 @@ export const MetricCards: React.FC<MetricCardsProps> = ({
         </div>
         <div className="flex items-baseline gap-1.5">
           <span className="text-2xl sm:text-3xl font-extrabold text-cyan-300 tracking-tight">
-            {vehicle.storageTempCelsius}┬░C
+            {vehicle.storageTempCelsius}-�C
           </span>
-          <span className="text-xs font-semibold text-slate-400">Target: {vehicle.targetTempCelsius}┬░C</span>
+          <span className="text-xs font-semibold text-slate-400">Target: {vehicle.targetTempCelsius}-�C</span>
         </div>
         <div className="mt-2 flex items-center justify-between text-[11px]">
           <span className="text-slate-400">Fresh Produce</span>

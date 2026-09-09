@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { 
   Sun, 
   CloudRain, 
@@ -10,7 +10,7 @@ import {
   Sparkles,
   Award
 } from 'lucide-react';
-import { WeatherInfo, RouteMetrics } from '../types/dashboardTypes';
+import { WeatherInfo, RouteMetrics } from '../../types/dashboardTypes';
 
 interface WeatherTelematicsCardProps {
   weather: WeatherInfo;
@@ -43,7 +43,7 @@ export const WeatherTelematicsCard: React.FC<WeatherTelematicsCardProps> = ({
 
           <div className="text-right">
             <span className="text-lg font-extrabold text-amber-300 font-mono">
-              {weather.tempCelsius}┬░C
+              {weather.tempCelsius}-�C
             </span>
             <span className="text-[10px] text-slate-400 block">Clear & Dry</span>
           </div>
@@ -91,11 +91,11 @@ export const WeatherTelematicsCard: React.FC<WeatherTelematicsCardProps> = ({
           <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
             <div>
               <span className="text-[10px] text-slate-400 block">Fuel Saved</span>
-              <span className="font-mono font-bold text-white">{metrics.fuelSavedLitres} Litres (Γé╣{metrics.costSavedInr})</span>
+              <span className="font-mono font-bold text-white">{metrics.fuelSavedLitres} Litres (G�{metrics.costSavedInr})</span>
             </div>
             <div>
               <span className="text-[10px] text-slate-400 block">Carbon Offset</span>
-              <span className="font-mono font-bold text-emerald-400">{metrics.co2SavedKg} kg COΓéé eq.</span>
+              <span className="font-mono font-bold text-emerald-400">{metrics.co2SavedKg} kg COG�� eq.</span>
             </div>
           </div>
         </div>

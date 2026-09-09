@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { 
   X, 
   PlusCircle, 
@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from 'lucide-react';
-import { LocationPoint } from '../types/dashboardTypes';
+import { LocationPoint } from '../../types/dashboardTypes';
 
 interface AddOrderModalProps {
   isOpen: boolean;
