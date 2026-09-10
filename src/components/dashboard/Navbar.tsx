@@ -15,7 +15,7 @@ import {
   Store
 } from 'lucide-react';
 
-export type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics';
+export type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
 
 interface NavbarProps {
   onOpenManifest: () => void;

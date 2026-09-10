@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 interface CartProps {
-  onNavigate: (view: 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics', productId?: number) => void;
+  onNavigate: (view: 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor', productId?: number) => void;
 }
 
 export const Cart: React.FC<CartProps> = ({ onNavigate }) => {
@@ -318,12 +318,12 @@ export const Cart: React.FC<CartProps> = ({ onNavigate }) => {
                 )}
               </div>
 
-              {/* Checkout CTA */}
+              {/* Checkout CTA — routes through Ann's Purchase → Login → Payment flow */}
               <button
-                onClick={() => onNavigate('checkout')}
+                onClick={() => onNavigate('purchase')}
                 className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 hover:shadow-xl transition-all cursor-pointer"
               >
-                <span>Proceed to Checkout</span>
+                <span>Proceed to Purchase Details</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 

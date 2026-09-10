@@ -12,6 +12,12 @@ import { OrderConfirmation } from './components/OrderConfirmation';
 import { ToastContainer } from './components/Toast';
 import { Footer } from './components/Footer';
 
+// Ann's module pages: Purchase → Login → Payment → Vendor handoff
+import { PurchasePage } from './pages/PurchasePage';
+import { LoginPage } from './pages/LoginPage';
+import { PaymentPage } from './pages/PaymentPage';
+import { VendorPage } from './pages/VendorPage';
+
 // Teammate logistics dashboard components
 import { MetricCards } from './components/dashboard/MetricCards';
 import { MapSection } from './components/dashboard/MapSection';
@@ -374,6 +380,26 @@ export const MainAppContent: React.FC = () => {
             </div>
 
           </div>
+        )}
+
+        {/* 7. ANN'S PURCHASE PAGE (Delivery Dispatch Configuration) */}
+        {activeView === 'purchase' && (
+          <PurchasePage onNavigate={handleNavigate} />
+        )}
+
+        {/* 8. ANN'S LOGIN PAGE (Consumer / Vendor Auth Gate) */}
+        {activeView === 'login' && (
+          <LoginPage onNavigate={handleNavigate} />
+        )}
+
+        {/* 9. ANN'S PAYMENT PAGE (Handoff to Hanna) */}
+        {activeView === 'payment' && (
+          <PaymentPage onNavigate={handleNavigate} />
+        )}
+
+        {/* 10. ANN'S VENDOR PAGE (Handoff to Ihsana) */}
+        {activeView === 'vendor' && (
+          <VendorPage onNavigate={handleNavigate} />
         )}
 
       </main>
