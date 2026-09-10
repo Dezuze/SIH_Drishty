@@ -48,6 +48,13 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [onlinePayTab, setOnlinePayTab] = useState<'upi' | 'card'>('upi');
+  
+  // Card Details State
+  const [cardDetails, setCardDetails] = useState({
+    number: '',
+    expiry: '',
+    cvv: ''
+  });
 
   // If cart is empty, redirect back
   if (cart.length === 0) {
@@ -92,6 +99,17 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
       errs.pincode = 'PIN Code is required';
     } else if (cleanPin.length !== 6) {
       errs.pincode = 'PIN code must be 6 digits';
+    }
+
+    if (formData.paymentMethod === 'online' && onlinePayTab === 'card') {
+      const cleanCard = cardDetails.number.replace(/\D/g, '');
+      if (cleanCard.length < 15) errs.cardNumber = 'Valid card number is required';
+      
+      const cleanExpiry = cardDetails.expiry.replace(/\D/g, '');
+      if (cleanExpiry.length !== 4) errs.cardExpiry = 'Valid expiry (MM/YY) is required';
+      
+      const cleanCvv = cardDetails.cvv.replace(/\D/g, '');
+      if (cleanCvv.length < 3) errs.cardCvv = 'Valid CVV is required';
     }
 
     setErrors(errs);
@@ -395,7 +413,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                     </div>
                   </label>
 
-                  {/* Online Payment (Mock) */}
+                  {/* Online Payment */}
                   <label
                     className={`flex items-start gap-3 p-4 rounded-2xl border-2 cursor-pointer transition-all ${
                       formData.paymentMethod === 'online'
@@ -414,10 +432,9 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                       <div className="flex items-center gap-1.5 font-bold text-white text-sm">
                         <CreditCard className="w-4 h-4 text-emerald-400" />
                         <span>Online Payment</span>
-                        <span className="text-[10px] bg-amber-400 text-slate-950 font-bold px-1.5 py-0.5 rounded">Demo</span>
                       </div>
                       <p className="text-xs text-slate-400 mt-1">
-                        Simulated instant UPI (GPay, PhonePe, Paytm) or Card verification.
+                        Secure instant UPI (GPay, PhonePe, Paytm) or Card verification.
                       </p>
                     </div>
                   </label>
@@ -461,9 +478,69 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                         </div>
                       </div>
                     ) : (
-                      <div className="space-y-2 bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs">
-                        <div className="text-slate-400">Mock Card Number: <span className="font-mono font-bold text-white">4242 •••• •••• 4242</span></div>
-                        <div className="text-[11px] text-emerald-400 font-semibold">✓ Test card pre-filled for instant verification</div>
+                      <div className="space-y-4 bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs">
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-slate-400">Card Number <span className="text-red-400">*</span></label>
+                          <input 
+                            type="text" 
+                            maxLength={19}
+                            placeholder="0000 0000 0000 0000" 
+                            value={cardDetails.number}
+                            onChange={(e) => {
+                              const val = e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+                              setCardDetails(prev => ({...prev, number: val}));
+                              if (errors.cardNumber) {
+                                setErrors(prev => { const n = {...prev}; delete n.cardNumber; return n; });
+                              }
+                            }}
+                            className={`w-full px-3 py-2 bg-slate-950 border rounded-lg text-white font-mono focus:outline-hidden ${errors.cardNumber ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-700 focus:border-emerald-500'}`}
+                          />
+                          {errors.cardNumber && <p className="text-[10px] text-red-400">{errors.cardNumber}</p>}
+                        </div>
+                        <div className="flex gap-4">
+                          <div className="space-y-1 flex-1">
+                            <label className="text-[11px] font-bold text-slate-400">Expiry (MM/YY) <span className="text-red-400">*</span></label>
+                            <input 
+                              type="text" 
+                              maxLength={5}
+                              placeholder="MM/YY" 
+                              value={cardDetails.expiry}
+                              onChange={(e) => {
+                                let val = e.target.value.replace(/\D/g, '');
+                                if (val.length >= 3) {
+                                  val = val.substring(0, 2) + '/' + val.substring(2, 4);
+                                }
+                                setCardDetails(prev => ({...prev, expiry: val}));
+                                if (errors.cardExpiry) {
+                                  setErrors(prev => { const n = {...prev}; delete n.cardExpiry; return n; });
+                                }
+                              }}
+                              className={`w-full px-3 py-2 bg-slate-950 border rounded-lg text-white font-mono focus:outline-hidden ${errors.cardExpiry ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-700 focus:border-emerald-500'}`}
+                            />
+                            {errors.cardExpiry && <p className="text-[10px] text-red-400">{errors.cardExpiry}</p>}
+                          </div>
+                          <div className="space-y-1 flex-1">
+                            <label className="text-[11px] font-bold text-slate-400">CVV <span className="text-red-400">*</span></label>
+                            <input 
+                              type="password" 
+                              maxLength={4}
+                              placeholder="•••" 
+                              value={cardDetails.cvv}
+                              onChange={(e) => {
+                                const val = e.target.value.replace(/\D/g, '');
+                                setCardDetails(prev => ({...prev, cvv: val}));
+                                if (errors.cardCvv) {
+                                  setErrors(prev => { const n = {...prev}; delete n.cardCvv; return n; });
+                                }
+                              }}
+                              className={`w-full px-3 py-2 bg-slate-950 border rounded-lg text-white font-mono focus:outline-hidden ${errors.cardCvv ? 'border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-700 focus:border-emerald-500'}`}
+                            />
+                            {errors.cardCvv && <p className="text-[10px] text-red-400">{errors.cardCvv}</p>}
+                          </div>
+                        </div>
+                        <div className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
+                          <Lock className="w-3 h-3" /> Secure 256-bit encryption
+                        </div>
                       </div>
                     )}
                   </div>

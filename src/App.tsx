@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import SimplifiedUI from './pages/SimplifiedUI';
 import { CartProvider } from './context/CartContext';
-import { PRODUCTS, type Product, type OrderCustomerDetails } from './data/products';
+import { products as PRODUCTS, type Product, type OrderCustomerDetails } from './data/products';
 import { Navbar, type MainViewType } from './components/dashboard/Navbar';
 import { Marketplace } from './components/Marketplace';
 import { ProductDetails } from './components/ProductDetails';
@@ -38,7 +38,7 @@ import {
   VEHICLE_DETAILS, 
   WEATHER_DATA, 
   INITIAL_ACTIVITIES 
-} from './data/demoData';
+} from './data/dashboardData';
 
 import type { LocationPoint, RouteMetrics, ClusterInfo, ActivityEvent } from './types';
 

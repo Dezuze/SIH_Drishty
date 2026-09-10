@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { 
   CheckCircle2, 
   Clock, 
@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   AlertTriangle
 } from 'lucide-react';
-import { LocationPoint } from '../types/dashboardTypes';
+import { LocationPoint } from '../../types/dashboardTypes';
 
 interface DeliveryProgressSectionProps {
   farm: LocationPoint;
@@ -54,7 +54,7 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
       return {
         type: 'customer',
         title: `Stop #${idx + 1}: ${c.name.split(' - ')[1] || c.name}`,
-        subtitle: `${c.weightKg} kg ΓÇó ${c.produceItems?.[0]?.name || 'Produce'}`,
+        subtitle: `${c.weightKg} kg G�� ${c.produceItems?.[0]?.name || 'Produce'}`,
         time: c.expectedDelivery,
         status: isCompleted ? 'Delivered' : isCurrent ? 'In Transit' : 'Scheduled',
         isCurrent: isCurrent,
@@ -80,7 +80,7 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
               Delivery Progress & Stop Timeline
             </h3>
             <p className="text-xs text-slate-400">
-              Farm Hub ΓåÆ Stop 1 (Anita) ΓåÆ Stop 2 (Rajesh) ΓåÆ Stop 3 (Deepa)
+              Farm Hub G�� Stop 1 (Anita) G�� Stop 2 (Rajesh) G�� Stop 3 (Deepa)
             </p>
           </div>
         </div>

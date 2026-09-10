@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { 
   Layers, 
   Package, 
@@ -13,7 +13,7 @@ import {
   ShieldAlert,
   Flame
 } from 'lucide-react';
-import { ClusterInfo, LocationPoint } from '../types/dashboardTypes';
+import { ClusterInfo, LocationPoint } from '../../types/dashboardTypes';
 
 interface ClusterPanelProps {
   cluster: ClusterInfo;
@@ -65,7 +65,7 @@ export const ClusterPanel: React.FC<ClusterPanelProps> = ({
                 </span>
               </div>
               <p className="text-xs text-slate-400">
-                Trivandrum Urban North Corridor ΓÇó AI Geofence Grouping
+                Trivandrum Urban North Corridor G�� AI Geofence Grouping
               </p>
             </div>
           </div>
@@ -176,7 +176,7 @@ export const ClusterPanel: React.FC<ClusterPanelProps> = ({
                             key={i} 
                             className="inline-flex items-center text-[10px] px-2 py-0.5 rounded-full bg-emerald-950/70 text-emerald-300 border border-emerald-500/30"
                           >
-                            ≡ƒî▒ {item.name} ({item.quantity})
+                            =�� {item.name} ({item.quantity})
                           </span>
                         ))}
                       </div>

@@ -1,0 +1,350 @@
+/* Featured Harvests Section */
+
+.featured-harvests-section {
+  margin-bottom: 4rem;
+}
+
+.featured-harvests-header {
+  margin-bottom: 2rem;
+}
+
+.featured-eyebrow {
+  display: inline-block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1B381E;
+  background-color: #EAE3B3;
+  border: 1px solid #F0A800;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+}
+
+.featured-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #1B381E;
+  margin-bottom: 0.625rem;
+  line-height: 1.2;
+}
+
+.featured-section-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.0625rem;
+  color: #52604D;
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+/* 3 Cards Grid */
+.featured-harvests-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* Product Card */
+.featured-harvest-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 56, 30, 0.12);
+  box-shadow: 0 2px 8px -2px rgba(27, 56, 30, 0.06), 0 1px 3px 0 rgba(27, 56, 30, 0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.featured-harvest-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(27, 56, 30, 0.25);
+  box-shadow: 0 10px 24px -4px rgba(27, 56, 30, 0.10), 0 4px 8px -2px rgba(27, 56, 30, 0.04);
+}
+
+/* 4:3 Aspect Ratio Media */
+.card-media-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: #FEFDF8;
+}
+
+.card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.featured-harvest-card:hover .card-image {
+  transform: scale(1.04);
+}
+
+.card-badges-top-left {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+}
+
+.card-badges-top-right {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+}
+
+.card-organic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #A3D55D;
+  color: #1B381E;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card-harvest-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background-color: rgba(5, 34, 11, 0.82);
+  color: #FFFFFF;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+/* Content */
+.card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-district-rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+
+.card-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #52604D;
+}
+
+.pin-icon {
+  color: #FF6D2E;
+}
+
+.card-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.card-rating .star-icon {
+  fill: #F0B400;
+  color: #F0B400;
+}
+
+.review-count {
+  font-size: 0.6875rem;
+  color: #52604D;
+  font-weight: 500;
+}
+
+.card-product-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1875rem;
+  font-weight: 700;
+  color: #1B381E;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.card-product-title:hover {
+  color: #FF6D2E;
+}
+
+.card-vendor-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.card-vendor-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  color: #52604D;
+  font-weight: 500;
+}
+
+.card-stats-strip {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.25rem;
+}
+
+.stat-pill {
+  flex: 1;
+  background-color: rgba(234, 227, 179, 0.25);
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-pill-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  color: #52604D;
+  font-weight: 500;
+}
+
+.stat-pill-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1B381E;
+}
+
+/* Footer */
+.card-footer {
+  margin-top: auto;
+  padding-top: 1.125rem;
+  border-top: 1px solid rgba(27, 56, 30, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-price-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #52604D;
+}
+
+.card-price-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: #1B381E;
+  line-height: 1.1;
+}
+
+.card-unit {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #52604D;
+}
+
+.card-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-card-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #FF6D2E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.625rem 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(255, 109, 46, 0.25);
+}
+
+.btn-card-add:hover {
+  background-color: #E55619;
+  transform: translateY(-1px);
+}
+
+.btn-card-add-success {
+  background-color: #1B381E !important;
+  color: #FFFFFF !important;
+}
+
+.btn-card-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid rgba(27, 56, 30, 0.20);
+  background-color: #FFFFFF;
+  color: #1B381E;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-card-details:hover {
+  background-color: #1B381E;
+  color: #FFFFFF;
+  border-color: #1B381E;
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+  .featured-harvests-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .featured-section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .featured-harvests-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .card-content {
+    padding: 1.25rem;
+  }
+}

@@ -1,0 +1,214 @@
+.become-vendor-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(5, 34, 11, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.become-vendor-dialog {
+  background-color: #FEFDF8;
+  border-radius: 16px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px -8px rgba(5, 34, 11, 0.35);
+  border: 1px solid rgba(27, 56, 30, 0.15);
+  position: relative;
+  padding: 2.25rem;
+}
+
+.become-vendor-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(27, 56, 30, 0.15);
+  color: #1B381E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.become-vendor-close-btn:hover {
+  background-color: #EAE3B3;
+}
+
+.become-vendor-header {
+  margin-bottom: 1.75rem;
+}
+
+.become-vendor-eyebrow {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #FF6D2E;
+  background-color: rgba(255, 109, 46, 0.12);
+  border: 1px solid rgba(255, 109, 46, 0.3);
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 0.625rem;
+}
+
+.become-vendor-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1B381E;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.become-vendor-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #52604D;
+  line-height: 1.5;
+}
+
+.become-vendor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1B381E;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(27, 56, 30, 0.2);
+  border-radius: 8px;
+  padding: 0.6875rem 0.875rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #1F2937;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #1B381E;
+  box-shadow: 0 0 0 3px rgba(27, 56, 30, 0.12);
+}
+
+.btn-submit-vendor {
+  background-color: #FF6D2E;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 109, 46, 0.2);
+  border-radius: 8px;
+  padding: 0.875rem 1.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(255, 109, 46, 0.25);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 48px;
+}
+
+.btn-submit-vendor:hover {
+  background-color: #E55619;
+  box-shadow: 0 6px 16px rgba(255, 109, 46, 0.35);
+}
+
+.vendor-submission-success {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.success-icon-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(163, 213, 93, 0.25);
+  border: 2px solid #A3D55D;
+  color: #1B381E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem auto;
+}
+
+.success-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1B381E;
+  margin-bottom: 0.75rem;
+}
+
+.success-body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #52604D;
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto 1.5rem auto;
+}
+
+.btn-close-success {
+  background-color: #1B381E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .become-vendor-dialog {
+    padding: 1.5rem;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .become-vendor-title {
+    font-size: 1.6rem;
+  }
+}
