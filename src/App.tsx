@@ -18,6 +18,17 @@ import { LoginPage } from './pages/LoginPage';
 import { PaymentPage } from './pages/PaymentPage';
 import { VendorPage } from './pages/VendorPage';
 
+// Marketplace & Analytics Pages
+import Analytics from './pages/Analytics';
+import Products from './pages/Products';
+import Vendors from './pages/Vendors';
+import SearchResults from './pages/SearchResults';
+import DeliveryTracking from './pages/DeliveryTracking';
+import DriverPortal from './pages/DriverPortal';
+import Header from './components/Header';
+import { useCart } from './context/CartContext';
+import { TrackingProvider } from './context/TrackingContext';
+
 // Teammate logistics dashboard components
 import { MetricCards } from './components/dashboard/MetricCards';
 import { MapSection } from './components/dashboard/MapSection';
@@ -42,9 +53,9 @@ import {
 
 import type { LocationPoint, RouteMetrics, ClusterInfo, ActivityEvent } from './types';
 
-export const MainAppContent: React.FC = () => {
+export const MainAppContent: React.FC<{ initialView?: MainViewType }> = ({ initialView = 'marketplace' }) => {
   // Navigation View State: Defaults to Marketplace, with instant toggle to Logistics
-  const [activeView, setActiveView] = useState<MainViewType>('marketplace');
+  const [activeView, setActiveView] = useState<MainViewType>(initialView);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -431,16 +442,73 @@ export const MainAppContent: React.FC = () => {
   );
 };
 
+// Teammate Page Wrappers with Header & Cart Integration
+const ProductsPageWrapper: React.FC = () => {
+  const { addToCart, cartCount } = useCart() || {};
+  const handleAddToCart = (product: any, qty = 1) => {
+    if (addToCart) {
+      addToCart(product, qty);
+    }
+  };
+  return (
+    <div className="min-h-screen bg-[#FEFDF8]">
+      <Header cartCount={cartCount} />
+      <Products onAddToCart={handleAddToCart} />
+    </div>
+  );
+};
+
+const VendorsPageWrapper: React.FC = () => {
+  const { addToCart, cartCount } = useCart() || {};
+  const handleAddToCart = (product: any, qty = 1) => {
+    if (addToCart) {
+      addToCart(product, qty);
+    }
+  };
+  return (
+    <div className="min-h-screen bg-[#FEFDF8]">
+      <Header cartCount={cartCount} />
+      <Vendors onAddToCart={handleAddToCart} />
+    </div>
+  );
+};
+
+const SearchResultsWrapper: React.FC = () => {
+  const { addToCart, cartCount } = useCart() || {};
+  const handleAddToCart = (product: any, qty = 1) => {
+    if (addToCart) {
+      addToCart(product, qty);
+    }
+  };
+  return (
+    <div className="min-h-screen bg-[#FEFDF8]">
+      <Header cartCount={cartCount} />
+      <SearchResults onAddToCart={handleAddToCart} />
+    </div>
+  );
+};
+
 export const App: React.FC = () => {
   return (
     <CartProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MainAppContent />} />
-          <Route path="/simplified" element={<SimplifiedUI />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Router>
+      <TrackingProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainAppContent />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/products" element={<ProductsPageWrapper />} />
+            <Route path="/produce-market" element={<ProductsPageWrapper />} />
+            <Route path="/vendors" element={<VendorsPageWrapper />} />
+            <Route path="/search" element={<SearchResultsWrapper />} />
+            <Route path="/tracking" element={<DeliveryTracking />} />
+            <Route path="/driver" element={<DriverPortal />} />
+            <Route path="/logistics" element={<MainAppContent initialView="logistics" />} />
+            <Route path="/cart" element={<MainAppContent initialView="cart" />} />
+            <Route path="/simplified" element={<SimplifiedUI />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </TrackingProvider>
     </CartProvider>
   );
 };

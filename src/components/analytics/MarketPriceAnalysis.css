@@ -1,0 +1,231 @@
+/* src/components/analytics/MarketPriceAnalysis.css */
+
+.market-price-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba(27, 56, 30, 0.04);
+  margin-bottom: 2rem;
+}
+
+.section-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.section-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.section-eyebrow-badge.gold {
+  background-color: rgba(240, 180, 0, 0.15);
+  color: #92400E;
+  border: 1px solid rgba(240, 180, 0, 0.3);
+}
+
+.section-editorial-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: #1B381E;
+  margin-bottom: 0.25rem;
+}
+
+.section-editorial-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #52604D;
+  max-width: 720px;
+}
+
+.msp-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(163, 213, 93, 0.18);
+  border: 1px solid #A3D55D;
+  color: #1B381E;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.msp-shield-icon {
+  color: #1B381E;
+}
+
+/* Table */
+.table-responsive-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  background-color: #FFFFFF;
+}
+
+.commodity-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.commodity-table thead {
+  background-color: #FEFDF8;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.1);
+}
+
+.commodity-table th {
+  padding: 0.875rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #52604D;
+  white-space: nowrap;
+}
+
+.commodity-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.05);
+  vertical-align: middle;
+}
+
+.commodity-row:hover {
+  background-color: rgba(254, 253, 248, 0.8);
+}
+
+.commodity-name-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.commodity-title {
+  font-weight: 700;
+  color: #1B381E;
+}
+
+.commodity-subname {
+  font-size: 0.75rem;
+  color: #52604D;
+  margin-top: 2px;
+}
+
+.district-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1B381E;
+  background-color: rgba(27, 56, 30, 0.06);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.font-numeric {
+  font-variant-numeric: tabular-nums;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.current-price-val {
+  font-weight: 800;
+  color: #1B381E;
+  font-size: 0.9375rem;
+}
+
+.msp-val {
+  font-weight: 600;
+  color: #854D0E;
+  background-color: rgba(240, 180, 0, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.unit-label {
+  font-size: 0.75rem;
+  color: #6C7A89;
+  margin-left: 2px;
+}
+
+.diff-badge {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.diff-badge.positive {
+  background-color: rgba(163, 213, 93, 0.22);
+  color: #1B381E;
+}
+
+.trend-indicator-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.trend-indicator-pill.up {
+  background-color: rgba(255, 109, 46, 0.15);
+  color: #FF6D2E;
+}
+
+.trend-indicator-pill.stable {
+  background-color: rgba(163, 213, 93, 0.18);
+  color: #1B381E;
+}
+
+.quality-grade-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #52604D;
+  background-color: #FEFDF8;
+  border: 1px solid rgba(27, 56, 30, 0.12);
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.market-price-footnote {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #52604D;
+  line-height: 1.4;
+  padding: 0.75rem 1rem;
+  background-color: #FEFDF8;
+  border-radius: 8px;
+  border-left: 3px solid #F0A800;
+}
+
+.footnote-highlight {
+  font-weight: 700;
+  color: #1B381E;
+  margin-right: 4px;
+}

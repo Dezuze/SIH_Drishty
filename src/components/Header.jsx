@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ShoppingCart, Search, User, LogIn } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 import './Header.css';
 
 function Header({ cartCount }) {
@@ -8,6 +9,8 @@ function Header({ cartCount }) {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const cartContext = useCart();
+  const effectiveCartCount = cartCount !== undefined ? cartCount : (cartContext?.cartCount ?? 0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +31,7 @@ function Header({ cartCount }) {
     { name: 'Marketplace', path: '/', exact: true },
     { name: 'Produce Market', path: '/products', alt: '/produce-market' },
     { name: 'Farmers & Vendors', path: '/vendors' },
+    { name: 'Market Analytics', path: '/analytics' },
     { name: 'Live Tracking', path: '/tracking' },
     { name: 'Driver Portal', path: '/driver' },
     { name: 'Logistics AI', path: '/logistics' },
@@ -73,10 +77,10 @@ function Header({ cartCount }) {
             <LogIn size={20} />
             <span className="action-tooltip">Login</span>
           </button>
-          <button className="action-btn cart-btn group" title="Cart">
+          <button className="action-btn cart-btn group" title="Cart" onClick={() => navigate('/cart')}>
             <div className="cart-icon-wrapper">
               <ShoppingCart size={20} />
-              {Number(cartCount) > 0 && <span className="modern-cart-badge">{cartCount}</span>}
+              {Number(effectiveCartCount) > 0 && <span className="modern-cart-badge">{effectiveCartCount}</span>}
             </div>
             <span className="cart-text">Cart</span>
           </button>

@@ -1,0 +1,134 @@
+/* src/components/analytics/VendorPerformance.css */
+
+.vendor-performance-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba(27, 56, 30, 0.04);
+  margin-bottom: 2rem;
+}
+
+.vendor-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1B381E;
+  background-color: rgba(27, 56, 30, 0.08);
+  border: 1px solid rgba(27, 56, 30, 0.15);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.vendor-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.vendor-table thead {
+  background-color: #FEFDF8;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.1);
+}
+
+.vendor-table th {
+  padding: 0.875rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #52604D;
+  white-space: nowrap;
+}
+
+.vendor-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid rgba(27, 56, 30, 0.05);
+  vertical-align: middle;
+}
+
+.vendor-row:hover {
+  background-color: rgba(254, 253, 248, 0.8);
+}
+
+.vendor-name-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.vendor-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.vendor-name {
+  font-weight: 700;
+  color: #1B381E;
+}
+
+.vendor-verified-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #1B381E;
+  background-color: rgba(163, 213, 93, 0.25);
+  border: 1px solid #A3D55D;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.vendor-type-tag {
+  font-size: 0.75rem;
+  color: #6C7A89;
+  margin-top: 2px;
+}
+
+.vendor-district-pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1B381E;
+  background-color: rgba(27, 56, 30, 0.06);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.revenue-accent {
+  color: #1B381E;
+  font-size: 0.9375rem;
+}
+
+.fulfillment-badge {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1B381E;
+  background-color: rgba(163, 213, 93, 0.2);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.vendor-rating-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1F2937;
+  background-color: #FEFDF8;
+  border: 1px solid rgba(27, 56, 30, 0.12);
+  padding: 2px 8px;
+  border-radius: 6px;
+}

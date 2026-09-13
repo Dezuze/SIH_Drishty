@@ -12,7 +12,8 @@ import {
   Award,
   Map,
   ShoppingBag,
-  Store
+  Store,
+  BarChart2
 } from 'lucide-react';
 
 export type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
@@ -188,6 +189,15 @@ export const Navbar: React.FC<NavbarProps> = ({
             <FileText className="w-3.5 h-3.5 text-emerald-400" />
             <span className="hidden sm:inline">Digital Manifest</span>
           </button>
+
+          <Link
+            to="/analytics"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-amber-950/60 text-amber-300 hover:bg-amber-900/80 border border-amber-500/40 transition shadow-xs cursor-pointer"
+            title="Open Market Analytics & Intelligence"
+          >
+            <BarChart2 className="w-3.5 h-3.5 text-amber-400" />
+            <span className="hidden sm:inline">Analytics</span>
+          </Link>
 
           <Link
             to="/tracking"

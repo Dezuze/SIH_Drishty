@@ -1,0 +1,164 @@
+/* src/components/analytics/AvailabilityWatch.css */
+
+.availability-watch-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba(27, 56, 30, 0.04);
+  margin-bottom: 2rem;
+}
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1B381E;
+  background-color: rgba(163, 213, 93, 0.2);
+  border: 1px solid #A3D55D;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  margin-bottom: 0.5rem;
+}
+
+.availability-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.avail-card {
+  background-color: #FEFDF8;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.avail-card:hover {
+  transform: translateY(-2px);
+}
+
+.avail-card.status-in-stock:hover {
+  border-color: #10B981;
+}
+
+.avail-card.status-low-stock:hover {
+  border-color: #FF6D2E;
+}
+
+.avail-card.status-imminent:hover {
+  border-color: #F0A800;
+}
+
+.avail-card.status-sold-out:hover {
+  border-color: #6C7A89;
+}
+
+.avail-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.avail-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #52604D;
+  text-transform: uppercase;
+}
+
+.avail-indicator.green {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.avail-icon.orange {
+  color: #FF6D2E;
+}
+
+.avail-icon.gold {
+  color: #F0A800;
+}
+
+.avail-icon.slate {
+  color: #6C7A89;
+}
+
+.avail-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1B381E;
+  margin-bottom: 0.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.avail-desc {
+  font-size: 0.75rem;
+  color: #6C7A89;
+}
+
+/* Proportional Bar */
+.avail-proportional-bar-wrapper {
+  background-color: #FEFDF8;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+}
+
+.avail-stack-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 9999px;
+  overflow: hidden;
+  background-color: rgba(27, 56, 30, 0.06);
+}
+
+.stack-segment {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.stack-segment.segment-green {
+  background-color: #1B381E;
+}
+
+.stack-segment.segment-gold {
+  background-color: #F0A800;
+}
+
+.stack-segment.segment-orange {
+  background-color: #FF6D2E;
+}
+
+.stack-segment.segment-slate {
+  background-color: #94A3B8;
+}
+
+@media (max-width: 900px) {
+  .availability-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .availability-grid {
+    grid-template-columns: 1fr;
+  }
+}
