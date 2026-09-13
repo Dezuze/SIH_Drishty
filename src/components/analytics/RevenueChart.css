@@ -1,0 +1,271 @@
+/* src/components/analytics/RevenueChart.css */
+
+.revenue-performance-card {
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid rgba(27, 56, 30, 0.08);
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba(27, 56, 30, 0.04);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.revenue-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.revenue-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.625rem;
+  font-weight: 700;
+  color: #1B381E;
+  margin-bottom: 0.25rem;
+}
+
+.revenue-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  color: #52604D;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.legend-color-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.legend-color-dot.forest {
+  background-color: #1B381E;
+}
+
+.legend-color-dot.papaya {
+  background-color: #FF6D2E;
+}
+
+.legend-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1F2937;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.view-toggle-btns {
+  display: flex;
+  background-color: #FEFDF8;
+  border: 1px solid rgba(27, 56, 30, 0.12);
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.toggle-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #52604D;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  color: #1B381E;
+}
+
+.toggle-btn.active {
+  background-color: #1B381E;
+  color: #FFFFFF;
+}
+
+/* SVG Chart Container */
+.svg-chart-container {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  margin-bottom: 1.25rem;
+}
+
+.revenue-svg-chart {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.chart-axis-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px;
+  fill: #6C7A89;
+  font-weight: 500;
+}
+
+.chart-axis-text.highlight-x {
+  fill: #1B381E;
+  font-weight: 800;
+}
+
+.chart-point-marker {
+  transition: r 0.2s ease;
+}
+
+.chart-crosshair {
+  pointer-events: none;
+}
+
+/* Floating Tooltip */
+.chart-tooltip-floating {
+  position: absolute;
+  transform: translate(-50%, -120%);
+  background-color: #1B381E;
+  color: #FEFDF8;
+  border-radius: 10px;
+  padding: 0.625rem 0.875rem;
+  box-shadow: 0 8px 24px rgba(5, 34, 11, 0.25);
+  pointer-events: none;
+  z-index: 10;
+  min-width: 140px;
+  border: 1px solid rgba(163, 213, 93, 0.3);
+  transition: left 0.1s ease, top 0.1s ease;
+}
+
+.tooltip-period-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #A3D55D;
+}
+
+.tooltip-date {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  color: #EAE3B3;
+  margin-bottom: 0.375rem;
+}
+
+.tooltip-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tooltip-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+}
+
+.tooltip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.tooltip-dot.forest {
+  background-color: #A3D55D;
+}
+
+.tooltip-dot.papaya {
+  background-color: #FF6D2E;
+}
+
+.tooltip-lbl {
+  color: rgba(254, 253, 248, 0.75);
+}
+
+.tooltip-val {
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-left: auto;
+}
+
+/* Footer Summary Bar */
+.revenue-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(27, 56, 30, 0.06);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.summary-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8125rem;
+  color: #52604D;
+}
+
+.summary-value {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #1B381E;
+}
+
+.summary-badge.positive {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background-color: rgba(163, 213, 93, 0.2);
+  color: #1B381E;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .revenue-card-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .chart-controls {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .svg-chart-container {
+    height: 240px;
+  }
+
+  .revenue-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
