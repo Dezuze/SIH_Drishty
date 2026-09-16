@@ -58,7 +58,7 @@ function Header() {
   const navLinks = [
     { name: 'Home', path: '/', exact: true },
     { name: 'Shop All Produce', path: '/products', alt: '/produce-market' },
-    { name: 'Verified Farmers', path: '/vendors' },
+    { name: 'Farmers', path: '/vendors' },
     { name: 'Live Tracking', path: '/tracking' }
   ];
 

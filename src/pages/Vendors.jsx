@@ -3,7 +3,6 @@ import { UserPlus, SearchX, RotateCcw } from 'lucide-react';
 import { VENDORS_DATA } from '../data/vendorsData';
 import VendorCard from '../components/vendors/VendorCard';
 import VendorFilters from '../components/vendors/VendorFilters';
-import TrustSection from '../components/vendors/TrustSection';
 import VendorModal from '../components/vendors/VendorModal';
 import BecomeVendorModal from '../components/vendors/BecomeVendorModal';
 import './Vendors.css';
@@ -253,9 +252,6 @@ export function Vendors({ onAddToCart }) {
           </div>
         )}
       </div>
-
-      {/* 6. Trust / Provenance Section */}
-      <TrustSection />
 
       {/* Modals */}
       <VendorModal

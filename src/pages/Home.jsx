@@ -11,26 +11,19 @@ function Home({ onAddToCart }) {
 
   return (
     <div className="home-page">
-      {/* Featured Categories */}
+      {/* Simplistic Category Buttons */}
       <section className="categories-section container">
-        <div className="section-header">
-          <div>
-            <h2 className="section-title">Shop by Category</h2>
-            <p className="section-subtitle">Freshly categorized seasonal harvest</p>
-          </div>
-          <a href="/products" className="view-all-link">All Categories <ArrowRight size={14} /></a>
-        </div>
-        <div className="category-cards">
+        <div className="category-pills">
+          <a href="/products" className="category-pill active">All Categories</a>
           {[
-            { name: 'Vegetables', icon: '🥦', count: '18+ Items' },
-            { name: 'Fruits', icon: '🍎', count: '14+ Items' },
-            { name: 'Dairy Products', icon: '🥛', count: '6+ Items' },
-            { name: 'Spices', icon: '🌶️', count: '12+ Items' }
+            { name: 'Vegetables', icon: '🥦' },
+            { name: 'Fruits', icon: '🍎' },
+            { name: 'Dairy', icon: '🥛' },
+            { name: 'Spices', icon: '🌶️' }
           ].map(cat => (
-            <a href={`/products?category=${cat.name}`} key={cat.name} className="category-card group">
-              <div className="category-icon-box">{cat.icon}</div>
-              <h3>{cat.name}</h3>
-              <span className="category-count">{cat.count}</span>
+            <a href={`/products?category=${cat.name}`} key={cat.name} className="category-pill">
+              <span>{cat.icon}</span>
+              <span>{cat.name}</span>
             </a>
           ))}
         </div>
