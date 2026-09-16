@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isLogisticsActive = activeView === 'logistics';
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-emerald-500/20 bg-slate-950/95 backdrop-blur-md px-4 sm:px-6 py-2.5 shadow-xl">
+    <header className="sticky top-0 z-40 w-full border-b border-emerald-500/20 bg-slate-50/95 backdrop-blur-md px-4 sm:px-6 py-2.5 shadow-xl">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
         
         {/* Left: Branding & SIH Badge */}
@@ -74,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   SIH 2026
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-medium hidden sm:block">
+              <p className="text-xs text-slate-600 font-medium hidden sm:block">
                 Direct Farmer Marketplace & Smart AI Route Logistics
               </p>
             </div>
@@ -87,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={`p-2 rounded-xl text-xs font-bold transition-all ${
                 isMarketplaceActive
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-slate-900 text-slate-400 border border-slate-800'
+                  : 'bg-white text-slate-600 border border-slate-200'
               }`}
               title="Farm Marketplace"
             >
@@ -98,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={`p-2 rounded-xl text-xs font-bold transition-all ${
                 isLogisticsActive
                   ? 'bg-emerald-600 text-white'
-                  : 'bg-slate-900 text-slate-400 border border-slate-800'
+                  : 'bg-white text-slate-600 border border-slate-200'
               }`}
               title="Route AI Logistics"
             >
@@ -106,7 +106,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => onNavigate('cart')}
-              className="relative p-2 rounded-xl bg-slate-900 border border-emerald-500/40 text-emerald-300"
+              className="relative p-2 rounded-xl bg-white border border-emerald-500/40 text-emerald-300"
             >
               <ShoppingBag className="w-4 h-4" />
               {cartCount > 0 && (
@@ -119,13 +119,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Center: Top Main Navigation Switcher (Desktop) */}
-        <div className="hidden md:flex items-center gap-2 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800 shadow-inner">
+        <div className="hidden md:flex items-center gap-2 bg-white/90 p-1.5 rounded-2xl border border-slate-200 shadow-inner">
           <button
             onClick={() => onNavigate('marketplace')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               isMarketplaceActive
                 ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-emerald-400/40'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
+                : 'text-slate-600 hover:text-white hover:bg-slate-100/80'
             }`}
           >
             <Store className="w-3.5 h-3.5" />
@@ -137,7 +137,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               isLogisticsActive
                 ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-emerald-400/40'
-                : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
+                : 'text-slate-600 hover:text-white hover:bg-slate-100/80'
             }`}
           >
             <Truck className="w-3.5 h-3.5" />
@@ -155,7 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`relative hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeView === 'cart' || activeView === 'checkout'
                 ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
-                : 'bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-emerald-500/30'
+                : 'bg-white/90 hover:bg-slate-100 text-slate-800 border border-emerald-500/30'
             }`}
             title="View Shopping Cart"
           >
@@ -173,7 +173,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Logistics-specific Action Buttons (Always available or when in logistics) */}
           <button
             onClick={onOpenAddOrder}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-white border border-slate-700 transition shadow-xs cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white text-slate-800 hover:bg-slate-100 hover:text-slate-900 border border-slate-300 transition shadow-xs cursor-pointer"
             title="Simulate Adding New Customer Order to Route"
           >
             <PlusCircle className="w-3.5 h-3.5 text-emerald-400" />
@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <Link
             to="/driver"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-900 text-sky-400 hover:bg-slate-800 border border-sky-500/30 transition shadow-xs cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white text-sky-400 hover:bg-slate-100 border border-sky-500/30 transition shadow-xs cursor-pointer"
             title="Open Driver Telematics Portal"
           >
             <Truck className="w-3.5 h-3.5 text-sky-400" />
@@ -209,17 +209,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           <Link
             to="/simplified"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-800/60 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700 transition shadow-sm"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-slate-100/60 text-slate-700 hover:bg-slate-200 hover:text-slate-900 border border-slate-300 transition shadow-sm"
             title="Go to Simplified UI"
           >
             <span className="hidden sm:inline">Simplified UI</span>
           </Link>
 
-          <div className="h-5 w-px bg-slate-800 hidden sm:block" />
+          <div className="h-5 w-px bg-slate-100 hidden sm:block" />
 
           {/* Clock & Operator Badge */}
           <div className="hidden lg:flex items-center gap-2 pl-1">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-mono text-emerald-400">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[11px] font-mono text-emerald-400">
               <Clock className="w-3 h-3" />
               <span>{timeStr || '06:45:00 AM'}</span>
             </div>

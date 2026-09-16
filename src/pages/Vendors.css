@@ -1,23 +1,23 @@
-/* Vendors Page - Modern Agrarian Editorial Layout */
+/* Vendors Page - Modern Light-Mode Layout */
 
 .vendors-page {
-  background-color: #FEFDF8;
-  color: #1F2937;
+  background-color: var(--background);
+  color: #0F172A;
   min-height: 100vh;
   padding-bottom: 5rem;
 }
 
 /* Fluid Responsive Container */
 .vendors-content-container {
-  max-width: 1440px;
+  max-width: 1380px;
   margin: 0 auto;
-  padding: 0 3.5rem;
+  padding: 0 2rem;
 }
 
 /* 1. Page Header */
 .vendors-hero-header {
-  padding: 3.5rem 0 2.5rem 0;
-  border-bottom: 1px solid rgba(27, 56, 30, 0.08);
+  padding: 3rem 0 2rem 0;
+  border-bottom: 1px solid #E2E8F0;
   margin-bottom: 2.5rem;
 }
 
@@ -33,36 +33,38 @@
 }
 
 .vendors-eyebrow {
-  display: inline-block;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #1B381E;
-  background-color: #EAE3B3;
-  border: 1px solid #F0A800;
+  color: #047857;
+  background-color: #ECFDF5;
+  border: 1px solid #A7F3D0;
   padding: 4px 12px;
-  border-radius: 4px;
-  margin-bottom: 1rem;
+  border-radius: 9999px;
+  margin-bottom: 0.85rem;
 }
 
 .vendors-page-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 4.25rem;
-  color: #1B381E;
-  margin-bottom: 1.25rem;
-  letter-spacing: -0.01em;
+  font-family: var(--font-heading);
+  font-size: 2.75rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #0F172A;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.03em;
 }
 
 .vendors-page-subtitle {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #52604D;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #64748B;
   margin-bottom: 0;
+  font-weight: 500;
 }
 
 .vendors-header-cta {
@@ -70,32 +72,31 @@
 }
 
 .btn-become-vendor {
-  background-color: #FF6D2E;
+  background: linear-gradient(135deg, #10B981, #059669);
   color: #FFFFFF;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
   font-weight: 700;
-  padding: 0.9375rem 1.875rem;
-  border-radius: 8px;
+  padding: 0.85rem 1.65rem;
+  border-radius: 16px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(255, 109, 46, 0.2);
+  border: none;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(255, 109, 46, 0.3);
-  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  min-height: 48px;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 46px;
 }
 
 .btn-become-vendor:hover {
-  background-color: #E55619;
+  filter: brightness(1.06);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(255, 109, 46, 0.4);
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
 }
 
-.btn-become-vendor:focus-visible {
-  outline: 2px solid #FF6D2E;
-  outline-offset: 2px;
+.btn-become-vendor:active {
+  transform: scale(0.97);
 }
 
 /* 3. Vendor Summary & Sorting Bar */
@@ -105,19 +106,19 @@
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(27, 56, 30, 0.08);
+  border-bottom: 1px solid #E2E8F0;
 }
 
 .vendors-count-text {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.0625rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
   font-weight: 600;
-  color: #1B381E;
+  color: #64748B;
 }
 
 .vendors-count-number {
-  color: #1B381E;
-  font-weight: 700;
+  color: #0F172A;
+  font-weight: 800;
 }
 
 .vendors-sorting-group {
@@ -127,105 +128,108 @@
 }
 
 .vendors-sort-label {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 600;
-  color: #52604D;
+  color: #64748B;
 }
 
 .vendors-sort-select {
   background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.18);
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0.45rem 0.85rem;
+  font-family: var(--font-body);
   font-size: 0.875rem;
-  color: #1F2937;
+  color: #0F172A;
   cursor: pointer;
-  min-height: 40px;
+  min-height: 38px;
+  font-weight: 600;
+  outline: none;
   transition: border-color 0.2s ease;
 }
 
 .vendors-sort-select:focus {
-  outline: none;
-  border-color: #1B381E;
-  box-shadow: 0 0 0 3px rgba(27, 56, 30, 0.12);
+  border-color: #10B981;
 }
 
 /* 4. Vendor Card Grid */
 .vendors-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
+  gap: 1.75rem;
   margin-bottom: 3.5rem;
 }
 
 @media (min-width: 1400px) {
   .vendors-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2rem;
+    gap: 1.75rem;
   }
 }
 
 /* 7. Empty State */
 .vendors-empty-state {
   text-align: center;
-  padding: 4.5rem 1.5rem;
+  padding: 4rem 1.5rem;
   background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.1);
-  border-radius: 16px;
+  border: 1px dashed #CBD5E1;
+  border-radius: var(--radius-card);
   margin: 2rem 0;
-  box-shadow: 0 2px 8px rgba(27, 56, 30, 0.04);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
 }
 
 .empty-state-icon-box {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background-color: #EAE3B3;
-  color: #1B381E;
+  background-color: #ECFDF5;
+  color: #047857;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 1.5rem auto;
+  margin: 0 auto 1.25rem auto;
 }
 
 .empty-state-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1B381E;
-  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
 .empty-state-desc {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1rem;
-  color: #52604D;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #64748B;
   max-width: 500px;
-  margin: 0 auto 1.75rem auto;
+  margin: 0 auto 1.5rem auto;
   line-height: 1.5;
 }
 
 .btn-empty-clear {
-  background-color: #1B381E;
+  background: linear-gradient(135deg, #10B981, #059669);
   color: #FFFFFF;
   border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1.75rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
+  border-radius: 14px;
+  padding: 0.65rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: background-color 0.2s ease;
-  min-height: 44px;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+  transition: all 0.2s ease;
+  min-height: 42px;
 }
 
 .btn-empty-clear:hover {
-  background-color: #05220B;
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 /* Responsive Fluid Layout Breakpoints */

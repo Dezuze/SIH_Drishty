@@ -106,7 +106,7 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
           </svg>
         </div>
-        <div class="absolute top-9 whitespace-nowrap bg-slate-900 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded shadow border border-emerald-500/40 pointer-events-none">
+        <div class="absolute top-9 whitespace-nowrap bg-white text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded shadow border border-emerald-500/40 pointer-events-none">
           Farm (Origin)
         </div>
       </div>
@@ -123,8 +123,8 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
     farmMarker.bindPopup(`
       <div class="p-2.5 max-w-xs text-xs">
         <div class="font-bold text-emerald-400 text-sm mb-1">${farm.name}</div>
-        <div class="text-slate-300">${farm.address}</div>
-        <div class="mt-2 text-slate-400 font-mono">${farm.lat.toFixed(4)}, ${farm.lng.toFixed(4)}</div>
+        <div class="text-slate-700">${farm.address}</div>
+        <div class="mt-2 text-slate-600 font-mono">${farm.lat.toFixed(4)}, ${farm.lng.toFixed(4)}</div>
       </div>
     `);
     markersRef.current[farm.id] = farmMarker;
@@ -137,12 +137,12 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
 
         const custIconHtml = `
           <div class="relative flex items-center justify-center cursor-pointer">
-            <div class="w-7 h-7 rounded-full bg-slate-900 text-emerald-400 flex items-center justify-center font-extrabold text-xs shadow-lg border-2 ${
+            <div class="w-7 h-7 rounded-full bg-white text-emerald-400 flex items-center justify-center font-extrabold text-xs shadow-lg border-2 ${
               isSelected ? 'border-amber-400 ring-4 ring-amber-400/40 scale-110' : 'border-emerald-400 ring-2 ring-slate-900'
             } transition-all">
               ${letter}
             </div>
-            <div class="absolute top-8 whitespace-nowrap bg-slate-900 text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-slate-700 pointer-events-none">
+            <div class="absolute top-8 whitespace-nowrap bg-white text-white text-[10px] font-semibold px-2 py-0.5 rounded shadow border border-slate-300 pointer-events-none">
               Customer ${letter} (${cust.weightKg} kg)
             </div>
           </div>
@@ -159,9 +159,9 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
         custMarker.bindPopup(`
           <div class="p-2.5 max-w-xs text-xs">
             <div class="font-bold text-white text-sm mb-1">${cust.name}</div>
-            <div class="text-slate-300">${cust.address}</div>
-            <div class="mt-1.5 flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-800">
-              <span class="text-slate-400">Order Weight:</span>
+            <div class="text-slate-700">${cust.address}</div>
+            <div class="mt-1.5 flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-200">
+              <span class="text-slate-600">Order Weight:</span>
               <span class="text-amber-400 font-bold font-mono">${cust.weightKg} kg</span>
             </div>
           </div>
@@ -262,7 +262,7 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[540px] lg:h-[640px] rounded-3xl overflow-hidden border border-slate-800 shadow-xl bg-slate-950">
+    <div className="relative w-full h-[540px] lg:h-[640px] rounded-3xl overflow-hidden border border-slate-200 shadow-xl bg-slate-50">
       {/* Leaflet Container */}
       <div ref={mapContainerRef} className="w-full h-full z-0" />
 
@@ -270,9 +270,9 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
       <div className="absolute top-3.5 left-3.5 right-3.5 z-10 flex items-center justify-between pointer-events-none">
         
         {/* Route Status Tag */}
-        <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-800 text-xs shadow-md">
+        <div className="pointer-events-auto flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50/90 backdrop-blur-md border border-slate-200 text-xs shadow-md">
           <span className={`w-2 h-2 rounded-full ${showRoute ? 'bg-blue-400 animate-pulse' : showLocations ? 'bg-teal-400' : 'bg-slate-500'}`} />
-          <span className="font-semibold text-slate-200">
+          <span className="font-semibold text-slate-800">
             {showRoute 
               ? 'Route: Farm → Customer A → Customer B → Customer C' 
               : showLocations 
@@ -282,10 +282,10 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
         </div>
 
         {/* Map Control Buttons */}
-        <div className="pointer-events-auto flex items-center gap-1.5 bg-slate-950/90 backdrop-blur-md p-1 rounded-xl border border-slate-800 shadow-md text-xs">
+        <div className="pointer-events-auto flex items-center gap-1.5 bg-slate-50/90 backdrop-blur-md p-1 rounded-xl border border-slate-200 shadow-md text-xs">
           <button
             onClick={() => setMapTheme(mapTheme === 'voyager' ? 'osm' : 'voyager')}
-            className="px-2.5 py-1 rounded-lg text-slate-300 hover:text-white bg-slate-900 border border-slate-800 flex items-center gap-1 transition cursor-pointer"
+            className="px-2.5 py-1 rounded-lg text-slate-700 hover:text-slate-900 bg-white border border-slate-200 flex items-center gap-1 transition cursor-pointer"
             title="Toggle Map Style"
           >
             <Layers className="w-3.5 h-3.5 text-teal-400" />
@@ -294,7 +294,7 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
 
           <button
             onClick={handleRecenter}
-            className="p-1.5 rounded-lg text-slate-300 hover:text-white bg-slate-900 border border-slate-800 transition cursor-pointer"
+            className="p-1.5 rounded-lg text-slate-700 hover:text-slate-900 bg-white border border-slate-200 transition cursor-pointer"
             title="Recenter Map"
           >
             <LocateFixed className="w-3.5 h-3.5 text-emerald-400" />
@@ -305,9 +305,9 @@ export const SimplifiedMap: React.FC<SimplifiedMapProps> = ({
       {/* Road Navigation Legend */}
       {showRoute && (
         <div className="absolute bottom-3.5 left-3.5 z-10 pointer-events-none">
-          <div className="pointer-events-auto px-3.5 py-2 rounded-xl bg-slate-950/90 backdrop-blur-md border border-slate-800 text-xs shadow-md flex items-center gap-2.5">
+          <div className="pointer-events-auto px-3.5 py-2 rounded-xl bg-slate-50/90 backdrop-blur-md border border-slate-200 text-xs shadow-md flex items-center gap-2.5">
             <span className="w-3.5 h-1.5 bg-blue-500 rounded-full inline-block"></span>
-            <span className="text-[11px] text-slate-300 font-semibold">Actual Road Network (24.6 km • 52 min)</span>
+            <span className="text-[11px] text-slate-700 font-semibold">Actual Road Network (24.6 km • 52 min)</span>
           </div>
         </div>
       )}

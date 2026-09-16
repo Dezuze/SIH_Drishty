@@ -121,7 +121,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
           </svg>
         </div>
-        <div class="absolute top-10 whitespace-nowrap bg-slate-900/95 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/40 shadow-lg pointer-events-none">
+        <div class="absolute top-10 whitespace-nowrap bg-white/95 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/40 shadow-lg pointer-events-none">
           =�� Farm Hub
         </div>
       </div>
@@ -139,12 +139,12 @@ export const MapSection: React.FC<MapSectionProps> = ({
       <div class="p-3.5 max-w-xs">
         <div class="flex items-center justify-between pb-2 border-b border-emerald-500/30 mb-2">
           <span class="px-2 py-0.5 bg-emerald-950 text-emerald-300 text-[10px] font-bold rounded-full border border-emerald-500/40">ORIGIN HUB</span>
-          <span class="text-xs text-slate-400 font-mono">06:30 AM Dispatch</span>
+          <span class="text-xs text-slate-600 font-mono">06:30 AM Dispatch</span>
         </div>
         <h4 class="font-bold text-sm text-white">${farm.name}</h4>
-        <p class="text-xs text-slate-300 mt-1">${farm.address}</p>
-        <div class="mt-2.5 pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
-          <span class="text-slate-400">Manager:</span>
+        <p class="text-xs text-slate-700 mt-1">${farm.address}</p>
+        <div class="mt-2.5 pt-2 border-t border-slate-200 flex items-center justify-between text-xs">
+          <span class="text-slate-600">Manager:</span>
           <span class="text-emerald-400 font-medium">${farm.contactPerson}</span>
         </div>
       </div>
@@ -163,7 +163,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
           <div class="relative z-10 w-8 h-8 rounded-full bg-gradient-to-br ${badgeColor} text-white flex items-center justify-center shadow-lg border-2 ${isSelected ? 'border-amber-400 ring-4 ring-amber-400/30 scale-110' : 'border-white ring-2 ring-slate-900'} transition-all">
             <span class="font-extrabold text-xs">${letter}</span>
           </div>
-          <div class="absolute top-9 whitespace-nowrap bg-slate-900/95 text-slate-100 text-[10px] font-semibold px-2 py-0.5 rounded shadow-lg border border-slate-700 pointer-events-none">
+          <div class="absolute top-9 whitespace-nowrap bg-white/95 text-slate-900 text-[10px] font-semibold px-2 py-0.5 rounded shadow-lg border border-slate-300 pointer-events-none">
             Stop #${idx + 1} (${cust.weightKg} kg)
           </div>
         </div>
@@ -181,7 +181,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
       // Popup Content
       const produceListHtml = cust.produceItems?.map(item => `
         <li class="flex justify-between text-xs py-0.5">
-          <span class="text-slate-300">G�� ${item.name}</span>
+          <span class="text-slate-700">G�� ${item.name}</span>
           <span class="text-emerald-400 font-mono font-medium">${item.quantity}</span>
         </li>
       `).join('') || '';
@@ -189,7 +189,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
       custMarker.bindPopup(`
         <div class="p-3.5 max-w-sm">
           <div class="flex items-center justify-between pb-2 border-b border-emerald-500/30 mb-2">
-            <span class="px-2 py-0.5 bg-slate-800 text-teal-300 text-[10px] font-bold rounded-full border border-teal-500/40">
+            <span class="px-2 py-0.5 bg-slate-100 text-teal-300 text-[10px] font-bold rounded-full border border-teal-500/40">
               STOP #${idx + 1} G�� CUSTOMER ${letter}
             </span>
             <span class="text-xs font-semibold px-1.5 py-0.5 rounded ${cust.priority === 'High' ? 'bg-red-950 text-red-400 border border-red-500/30' : 'bg-amber-950 text-amber-400 border border-amber-500/30'}">
@@ -197,20 +197,20 @@ export const MapSection: React.FC<MapSectionProps> = ({
             </span>
           </div>
           <h4 class="font-bold text-sm text-white">${cust.name}</h4>
-          <p class="text-xs text-slate-300 mt-0.5">${cust.address}</p>
+          <p class="text-xs text-slate-700 mt-0.5">${cust.address}</p>
           
-          <div class="mt-2 p-2 rounded bg-slate-950/70 border border-slate-800">
-            <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Perishable Farm Basket:</span>
+          <div class="mt-2 p-2 rounded bg-slate-50/70 border border-slate-200">
+            <span class="text-[10px] uppercase font-bold text-slate-600 tracking-wider">Perishable Farm Basket:</span>
             <ul class="mt-1 space-y-0.5">${produceListHtml}</ul>
           </div>
 
-          <div class="mt-2.5 pt-2 border-t border-slate-800 grid grid-cols-2 gap-2 text-xs">
+          <div class="mt-2.5 pt-2 border-t border-slate-200 grid grid-cols-2 gap-2 text-xs">
             <div>
-              <span class="text-slate-400 text-[10px] block">Payload Weight</span>
+              <span class="text-slate-600 text-[10px] block">Payload Weight</span>
               <span class="text-amber-400 font-bold font-mono">${cust.weightKg} kg</span>
             </div>
             <div>
-              <span class="text-slate-400 text-[10px] block">Delivery OTP</span>
+              <span class="text-slate-600 text-[10px] block">Delivery OTP</span>
               <span class="text-emerald-400 font-bold font-mono tracking-widest">${cust.otp}</span>
             </div>
           </div>
@@ -316,7 +316,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
   };
 
   return (
-    <div className="relative w-full h-[450px] lg:h-[530px] rounded-3xl overflow-hidden border border-emerald-500/30 shadow-2xl bg-slate-950">
+    <div className="relative w-full h-[350px] sm:h-[450px] lg:h-[530px] rounded-3xl overflow-hidden border border-emerald-500/30 shadow-2xl bg-slate-50">
       
       {/* Real-time Map Container */}
       <div ref={mapContainerRef} className="w-full h-full z-0" />
@@ -325,9 +325,9 @@ export const MapSection: React.FC<MapSectionProps> = ({
       <div className="absolute top-3 left-3 right-3 z-10 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
         
         {/* Left Badge: Route Status */}
-        <div className="pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-950/90 backdrop-blur-md border border-emerald-500/30 text-xs shadow-lg">
+        <div className="pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-50/90 backdrop-blur-md border border-emerald-500/30 text-xs shadow-lg">
           <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-bold text-white tracking-wide">
+          <span className="font-bold text-slate-900 tracking-wide">
             {isOptimized ? 'Route: AI-Optimized Sequence' : 'Route: Unoptimized Multi-Stop'}
           </span>
           <span className="text-slate-600">|</span>
@@ -335,12 +335,12 @@ export const MapSection: React.FC<MapSectionProps> = ({
         </div>
 
         {/* Right Tools: Map Style & Geofence Toggle */}
-        <div className="pointer-events-auto flex items-center gap-1.5 bg-slate-950/90 backdrop-blur-md p-1 rounded-xl border border-slate-700 shadow-lg text-xs">
+        <div className="pointer-events-auto flex items-center gap-1.5 bg-slate-50/90 backdrop-blur-md p-1 rounded-xl border border-slate-300 shadow-lg text-xs">
           
           <button
             onClick={() => setShowGeofence(!showGeofence)}
             className={`px-2.5 py-1 rounded-lg font-medium transition flex items-center gap-1 ${
-              showGeofence ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'text-slate-400 hover:text-slate-200'
+              showGeofence ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' : 'text-slate-600 hover:text-slate-800'
             }`}
             title="Toggle Cluster 1 Geofence Perimeter"
           >
@@ -348,12 +348,12 @@ export const MapSection: React.FC<MapSectionProps> = ({
             <span className="hidden sm:inline">Geofence</span>
           </button>
 
-          <div className="h-4 w-px bg-slate-800" />
+          <div className="h-4 w-px bg-slate-100" />
 
           {/* Theme switcher */}
           <button
             onClick={() => setMapTheme(mapTheme === 'dark' ? 'carto' : mapTheme === 'carto' ? 'osm' : 'dark')}
-            className="px-2.5 py-1 rounded-lg text-slate-300 hover:text-white bg-slate-900 border border-slate-800 flex items-center gap-1 transition"
+            className="px-2.5 py-1 rounded-lg text-slate-700 hover:text-slate-900 bg-white border border-slate-200 flex items-center gap-1 transition"
             title="Switch Map Tile Style"
           >
             <Layers className="w-3.5 h-3.5 text-teal-400" />
@@ -362,7 +362,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
 
           <button
             onClick={handleRecenter}
-            className="p-1.5 rounded-lg text-slate-300 hover:text-white bg-slate-900 border border-slate-800 hover:border-slate-700 transition"
+            className="p-1.5 rounded-lg text-slate-700 hover:text-slate-900 bg-white border border-slate-200 hover:border-slate-300 transition"
             title="Recenter Map View"
           >
             <LocateFixed className="w-3.5 h-3.5 text-emerald-400" />
@@ -372,7 +372,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
 
       {/* Floating Bottom: Delivery Simulator Controller */}
       <div className="absolute bottom-3 left-3 right-3 z-10 pointer-events-none">
-        <div className="pointer-events-auto max-w-2xl mx-auto rounded-2xl bg-slate-950/95 backdrop-blur-xl border border-emerald-500/40 p-3 shadow-2xl">
+        <div className="pointer-events-auto max-w-2xl mx-auto rounded-2xl bg-slate-50/95 backdrop-blur-xl border border-emerald-500/40 p-3 shadow-2xl">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             
             {/* Simulation Status */}
@@ -382,12 +382,12 @@ export const MapSection: React.FC<MapSectionProps> = ({
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-white">Live GPS Delivery Simulation</span>
+                  <span className="text-xs font-bold text-slate-900">Live GPS Delivery Simulation</span>
                   <span className="text-[10px] px-1.5 py-0.2 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/30">
                     Step {simulationStep + 1}/{DETAILED_ROUTE_COORDS.length}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[11px] text-slate-600">
                   {simulationStep === 0 && 'At Farm Origin Hub G�� Cargo Loaded (85 kg)'}
                   {simulationStep > 0 && simulationStep < 4 && 'Transit to Customer A (Kowdiar)'}
                   {simulationStep >= 4 && simulationStep < 8 && 'Stop 1 Complete G�� Transit to Customer B (Sasthamangalam)'}
@@ -401,7 +401,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
             <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
               <button
                 onClick={() => setSimSpeed(simSpeed === 1 ? 2 : 1)}
-                className="px-2 py-1.5 rounded-lg text-xs font-mono font-bold bg-slate-900 text-slate-300 hover:text-white border border-slate-700 transition"
+                className="px-2 py-1.5 rounded-lg text-xs font-mono font-bold bg-white text-slate-700 hover:text-slate-900 border border-slate-300 transition"
               >
                 {simSpeed}x
               </button>
@@ -414,7 +414,7 @@ export const MapSection: React.FC<MapSectionProps> = ({
                   }
                   setIsSimulating(false);
                 }}
-                className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-700 transition"
+                className="p-1.5 rounded-lg bg-white text-slate-600 hover:text-slate-800 border border-slate-300 transition"
                 title="Reset Simulation"
               >
                 <RotateCcw className="w-4 h-4" />

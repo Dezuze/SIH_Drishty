@@ -1,10 +1,10 @@
 .vendor-filters-container {
-  background-color: #EAE3B3;
-  border: 1px solid rgba(27, 56, 30, 0.12);
-  border-radius: 16px;
+  background-color: #FFFFFF;
+  border: 1px solid #F1F5F9;
+  border-radius: var(--radius-card);
   padding: 1.5rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 14px -3px rgba(27, 56, 30, 0.06);
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
 }
 
 .filters-search-row {
@@ -24,31 +24,31 @@
 .filters-search-icon {
   position: absolute;
   left: 14px;
-  color: #52604D;
+  color: #94A3B8;
   pointer-events: none;
 }
 
 .filters-search-input {
   width: 100%;
   background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.18);
-  border-radius: 8px;
-  padding: 0.8125rem 1rem 0.8125rem 2.75rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.95rem;
-  color: #1F2937;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  min-height: 46px;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: #0F172A;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  outline: none;
 }
 
 .filters-search-input::placeholder {
-  color: #737970;
+  color: #94A3B8;
 }
 
 .filters-search-input:focus {
-  outline: none;
-  border-color: #1B381E;
-  box-shadow: 0 0 0 3px rgba(27, 56, 30, 0.14);
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 .filters-clear-search-btn {
@@ -56,7 +56,7 @@
   right: 12px;
   background: transparent;
   border: none;
-  color: #737970;
+  color: #94A3B8;
   cursor: pointer;
   padding: 4px;
   display: flex;
@@ -66,22 +66,22 @@
 }
 
 .filters-clear-search-btn:hover {
-  color: #1F2937;
+  color: #0F172A;
 }
 
 .filters-mobile-toggle-btn {
   display: none;
-  background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.18);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.9rem;
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
   font-weight: 600;
-  color: #1B381E;
+  color: #0F172A;
   align-items: center;
   gap: 6px;
-  min-height: 46px;
+  min-height: 44px;
   cursor: pointer;
 }
 
@@ -99,10 +99,10 @@
 }
 
 .filter-control-label {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.8125rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
   font-weight: 700;
-  color: #1B381E;
+  color: #64748B;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -110,22 +110,22 @@
 .filter-select {
   width: 100%;
   background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.18);
-  border-radius: 8px;
-  padding: 0.6875rem 0.875rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  color: #1F2937;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 0.6rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: #0F172A;
   cursor: pointer;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  min-height: 44px;
-  appearance: auto;
+  transition: all 0.2s ease;
+  min-height: 42px;
+  outline: none;
+  font-weight: 600;
 }
 
 .filter-select:focus {
-  outline: none;
-  border-color: #1B381E;
-  box-shadow: 0 0 0 3px rgba(27, 56, 30, 0.14);
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 .filters-pills-row {
@@ -135,14 +135,14 @@
   justify-content: space-between;
   gap: 12px;
   padding-top: 1rem;
-  border-top: 1px solid rgba(27, 56, 30, 0.12);
+  border-top: 1px solid #F1F5F9;
 }
 
 .filters-toggles-group {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .filter-toggle-chip {
@@ -150,90 +150,83 @@
   align-items: center;
   gap: 6px;
   background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.18);
-  border-radius: 8px;
-  padding: 0.5rem 0.875rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.84rem;
+  border: 1px solid #E2E8F0;
+  border-radius: 9999px;
+  padding: 0.45rem 0.95rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
   font-weight: 600;
-  color: #52604D;
+  color: #64748B;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 40px;
+  min-height: 36px;
   user-select: none;
 }
 
 .filter-toggle-chip:hover {
-  border-color: #1B381E;
-  color: #1B381E;
+  border-color: #CBD5E1;
+  color: #0F172A;
+  background-color: #F8FAFC;
 }
 
-/* Verified Farmers - Deep Forest Green */
+/* Verified Farmers - Emerald */
 .filter-toggle-chip.chip-verified.active {
-  background-color: #1B381E;
-  border-color: #1B381E;
-  color: #FEFDF8;
-  box-shadow: 0 2px 6px rgba(27, 56, 30, 0.25);
+  background-color: #ECFDF5;
+  border-color: #10B981;
+  color: #047857;
+  font-weight: 700;
 }
 
 .filter-toggle-chip.chip-verified.active svg {
-  color: #A3D55D;
+  color: #059669;
 }
 
-/* GI-Origin Tagged - Mustard/Harvest Gold */
+/* GI-Origin Tagged - Amber */
 .filter-toggle-chip.chip-gi.active {
-  background-color: #F0B400;
-  border-color: #F0A800;
-  color: #05220B;
+  background-color: #FFFBEB;
+  border-color: #F59E0B;
+  color: #B45309;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(240, 168, 0, 0.35);
 }
 
 .filter-toggle-chip.chip-gi.active svg {
-  color: #05220B;
+  color: #D97706;
 }
 
-/* 100% Organic - Fresh Sprout Green */
+/* 100% Organic - Emerald/Teal */
 .filter-toggle-chip.chip-organic.active {
-  background-color: #A3D55D;
-  border-color: #88be40;
-  color: #05220B;
+  background-color: #ECFDF5;
+  border-color: #10B981;
+  color: #047857;
   font-weight: 700;
-  box-shadow: 0 2px 6px rgba(163, 213, 93, 0.35);
 }
 
 .filter-toggle-chip.chip-organic.active svg {
-  color: #05220B;
+  color: #059669;
 }
 
-/* Reset filters - Papaya Orange accent */
+/* Reset filters */
 .btn-reset-filters {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   background-color: #FFFFFF;
-  border: 1px solid rgba(255, 109, 46, 0.45);
-  color: #FF6D2E;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.84rem;
+  border: 1px solid #E2E8F0;
+  color: #64748B;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
   font-weight: 700;
-  padding: 0.45rem 0.875rem;
-  border-radius: 8px;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 40px;
+  min-height: 36px;
 }
 
 .btn-reset-filters:hover {
-  background-color: #FF6D2E;
-  border-color: #FF6D2E;
-  color: #FFFFFF;
-  box-shadow: 0 2px 6px rgba(255, 109, 46, 0.25);
-}
-
-.btn-reset-filters:focus-visible {
-  outline: 2px solid #FF6D2E;
-  outline-offset: 2px;
+  background-color: #FEF2F2;
+  border-color: #FECACA;
+  color: #DC2626;
 }
 
 @media (max-width: 900px) {
@@ -244,8 +237,7 @@
 
 @media (max-width: 640px) {
   .vendor-filters-container {
-    padding: 1.125rem;
-    border-radius: 12px;
+    padding: 1.25rem;
   }
 
   .filters-mobile-toggle-btn {

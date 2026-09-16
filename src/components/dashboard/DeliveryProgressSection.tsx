@@ -67,19 +67,19 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
   ];
 
   return (
-    <div className="rounded-3xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
+    <div className="rounded-3xl bg-white/90 border border-slate-200 p-5 shadow-xl">
       
       {/* Header with Route Status Indicator */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
           <div className="p-2.5 rounded-2xl bg-teal-500/10 text-teal-400 border border-teal-500/20">
             <Truck className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="font-extrabold text-base text-white tracking-tight">
+            <h3 className="font-extrabold text-base text-slate-900 tracking-tight">
               Delivery Progress & Stop Timeline
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600">
               Farm Hub G�� Stop 1 (Anita) G�� Stop 2 (Rajesh) G�� Stop 3 (Deepa)
             </p>
           </div>
@@ -87,7 +87,7 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
 
         {/* Route Status Indicator */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400">Status:</span>
+          <span className="text-xs text-slate-600">Status:</span>
           <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${
             simulationStep >= 12
               ? 'bg-emerald-950 text-emerald-400 border border-emerald-500/40'
@@ -115,7 +115,7 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
                   ? 'bg-emerald-950/30 border-emerald-500/50'
                   : isInTransit
                   ? 'bg-amber-950/30 border-amber-500/60 ring-2 ring-amber-500/20 shadow-lg'
-                  : 'bg-slate-950/60 border-slate-800/80'
+                  : 'bg-slate-50/60 border-slate-200/80'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -124,26 +124,26 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
                     ? 'bg-emerald-900/60 text-emerald-300 border border-emerald-500/30' 
                     : isInTransit 
                     ? 'bg-amber-900/80 text-amber-300 border border-amber-500/40' 
-                    : 'bg-slate-800 text-slate-400'
+                    : 'bg-slate-100 text-slate-600'
                 }`}>
                   {idx === 0 ? 'ORIGIN' : `STOP 0${idx}`}
                 </span>
                 
-                <span className="text-xs font-mono text-slate-400 font-semibold">
+                <span className="text-xs font-mono text-slate-600 font-semibold">
                   {stop.time}
                 </span>
               </div>
 
-              <h4 className="font-bold text-sm text-white line-clamp-1">{stop.title}</h4>
-              <p className="text-xs text-slate-400 line-clamp-1 mt-0.5">{stop.subtitle}</p>
+              <h4 className="font-bold text-sm text-slate-900 line-clamp-1">{stop.title}</h4>
+              <p className="text-xs text-slate-600 line-clamp-1 mt-0.5">{stop.subtitle}</p>
 
-              <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs">
+              <div className="mt-3 pt-2 border-t border-slate-200/80 flex items-center justify-between text-xs">
                 <span className={`font-mono font-bold text-[11px] ${idx === 0 ? 'text-teal-400' : 'text-amber-400'}`}>
                   {stop.weightChange}
                 </span>
 
                 {stop.otp && (
-                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-900 border border-slate-800 text-emerald-400">
+                  <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white border border-slate-200 text-emerald-400">
                     OTP: {stop.otp}
                   </span>
                 )}
@@ -162,7 +162,7 @@ export const DeliveryProgressSection: React.FC<DeliveryProgressSectionProps> = (
                     <span>Approaching Customer</span>
                   </div>
                 ) : (
-                  <div className="text-[11px] text-slate-400">
+                  <div className="text-[11px] text-slate-600">
                     Awaiting arrival
                   </div>
                 )}

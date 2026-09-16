@@ -1,0 +1,193 @@
+{
+  "users": [
+    {
+      "id": "usr_cust_001",
+      "name": "Anjali Menon",
+      "email": "customer@kisan.in",
+      "password": "password123",
+      "phone": "+91 94471 23456",
+      "role": "customer",
+      "address": "Hill View Residence, Erattupetta",
+      "city": "Kottayam",
+      "pincode": "686122",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-01-15T10:00:00.000Z"
+    },
+    {
+      "id": "usr_farm_001",
+      "name": "Ramesh Kurian",
+      "email": "farmer@kisan.in",
+      "password": "password123",
+      "phone": "+91 98472 88910",
+      "role": "farmer",
+      "farmName": "Green Valley Organic Farm",
+      "address": "Poonjar Highland Valley",
+      "city": "Kottayam",
+      "pincode": "686581",
+      "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-01-10T08:30:00.000Z"
+    },
+    {
+      "id": "usr_driv_001",
+      "name": "Rajesh Kumar",
+      "email": "driver@kisan.in",
+      "password": "password123",
+      "phone": "+91 98765 43210",
+      "role": "driver",
+      "vehicleNumber": "KL-35-E-4819 (Electric Cargo)",
+      "city": "Kottayam",
+      "pincode": "686001",
+      "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-02-01T09:15:00.000Z"
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "KSN-2026-3083",
+      "createdAt": "16 Sept 2026, 04:30 pm",
+      "items": [
+        {
+          "product": {
+            "id": "prod-cardamom-02",
+            "name": "Grade 1 Green Cardamom Pods (8mm+)",
+            "price": 1950,
+            "unit": "kg",
+            "available": 65,
+            "farmer": "Cardamom Hills Organic Cooperative",
+            "location": "Idukki",
+            "image": "/assets/products/green-cardamom.jpg",
+            "description": "Carefully handpicked extra-jumbo 8mm green pods kiln-dried under gentle flue heat to seal volatile essential oils. Crisp husk enclosing dark resinous seeds with signature eucalyptus-floral notes.",
+            "category": "Spices",
+            "organic": true
+          },
+          "quantity": 2
+        }
+      ],
+      "customer": {
+        "fullName": "Anjali Menon",
+        "phoneNumber": "+91 94471 23456",
+        "email": "customer@kisan.in",
+        "address": "Hill View Residence, Erattupetta",
+        "city": "Kottayam",
+        "pincode": "686122",
+        "deliverySlot": "Tomorrow Morning (7:00 AM - 11:00 AM)",
+        "paymentMethod": "online",
+        "notes": ""
+      },
+      "subtotal": 3900,
+      "deliveryFee": 0,
+      "discount": 0,
+      "grandTotal": 3900,
+      "estimatedDelivery": "Tomorrow Morning (7:00 AM - 11:00 AM)",
+      "primaryFarmer": "Cardamom Hills Organic Cooperative",
+      "allFarmers": [
+        "Cardamom Hills Organic Cooperative"
+      ],
+      "status": "Order Placed",
+      "timestamp": "2026-09-16T11:00:45.649Z",
+      "paymentDetails": {
+        "gateway": "Razorpay",
+        "paymentId": "pay_1789556445595_9742",
+        "status": "SUCCESS",
+        "amount": 3900
+      }
+    },
+    {
+      "orderId": "KSN-2026-TEST",
+      "userId": "usr_cust_001",
+      "grandTotal": 450,
+      "customer": {
+        "fullName": "Anjali Menon",
+        "city": "Kochi"
+      },
+      "status": "Order Placed",
+      "createdAt": "04:19 pm",
+      "timestamp": "2026-09-16T10:49:18.424Z",
+      "paymentDetails": {
+        "paymentId": "pay_1789555758382_4083",
+        "orderId": "order_rzp_1789555758376_5634",
+        "method": "Razorpay UPI",
+        "amount": 450,
+        "currency": "INR",
+        "status": "captured",
+        "timestamp": "2026-09-16T10:49:18.383Z"
+      }
+    },
+    {
+      "orderId": "KSN-2026-1082",
+      "userId": "usr_cust_001",
+      "createdAt": "Yesterday, 04:30 PM",
+      "status": "Delivered",
+      "items": [
+        {
+          "product": {
+            "id": 1,
+            "name": "Organic Red Tomatoes",
+            "price": 30,
+            "unit": "kg",
+            "farmer": "Green Valley Organic Farm",
+            "image": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80"
+          },
+          "quantity": 3
+        },
+        {
+          "product": {
+            "id": 3,
+            "name": "Crisp Mountain Carrots",
+            "price": 50,
+            "unit": "kg",
+            "farmer": "Green Harvest Palakkad",
+            "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80"
+          },
+          "quantity": 2
+        }
+      ],
+      "customer": {
+        "fullName": "Anjali Menon",
+        "phoneNumber": "+91 94471 23456",
+        "email": "customer@kisan.in",
+        "address": "Hill View Residence, Erattupetta",
+        "city": "Kottayam",
+        "pincode": "686122",
+        "deliverySlot": "Morning Harvest Slot (7:00 AM - 11:00 AM)",
+        "paymentMethod": "online"
+      },
+      "subtotal": 190,
+      "deliveryFee": 35,
+      "discount": 0,
+      "grandTotal": 225,
+      "estimatedDelivery": "Delivered Yesterday",
+      "primaryFarmer": "Green Valley Organic Farm",
+      "allFarmers": [
+        "Green Valley Organic Farm",
+        "Green Harvest Palakkad"
+      ],
+      "paymentDetails": {
+        "gateway": "Razorpay",
+        "paymentId": "pay_test_9401kisan",
+        "status": "SUCCESS",
+        "method": "UPI"
+      }
+    }
+  ],
+  "payments": [
+    {
+      "paymentId": "pay_1789556445595_9742",
+      "orderId": "order_rzp_1789556428669_2861",
+      "method": "Razorpay Sandbox",
+      "amount": 3900,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-16T11:00:45.595Z"
+    },
+    {
+      "paymentId": "pay_1789555758382_4083",
+      "orderId": "order_rzp_1789555758376_5634",
+      "method": "Razorpay UPI",
+      "amount": 450,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-16T10:49:18.383Z"
+    }
+  ]
+}

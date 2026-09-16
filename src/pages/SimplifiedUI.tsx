@@ -73,10 +73,10 @@ export const SimplifiedUI: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-slate-950 font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-emerald-500 selection:text-slate-950 font-sans">
       
       {/* ── Minimal Header ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-30 w-full border-b border-slate-800 bg-slate-950/95 backdrop-blur px-4 sm:px-6 py-3.5">
+      <header className="sticky top-0 z-30 w-full border-b border-slate-200 bg-slate-50/95 backdrop-blur px-4 sm:px-6 py-3.5">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           
           <div className="flex items-center gap-3">
@@ -84,10 +84,10 @@ export const SimplifiedUI: React.FC = () => {
               <MapPin className="w-5 h-5 fill-current" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold tracking-tight text-white">
+              <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
                 Logistics & Maps
               </h1>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-600">
                 Route planning and delivery workflow
               </p>
             </div>
@@ -96,7 +96,7 @@ export const SimplifiedUI: React.FC = () => {
           <div className="flex items-center gap-2">
             <Link
               to="/dashboard"
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer"
               title="Go to Full Dashboard"
             >
               <LayoutDashboard className="w-3.5 h-3.5" />
@@ -104,7 +104,7 @@ export const SimplifiedUI: React.FC = () => {
             </Link>
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 transition cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 border border-slate-200 transition cursor-pointer"
               title="Reset workflow to Step 1"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -179,7 +179,7 @@ export const SimplifiedUI: React.FC = () => {
       </main>
 
       {/* ── Clean Minimal Footer ─────────────────────────────────── */}
-      <footer className="mt-6 border-t border-slate-900 bg-slate-950 py-3.5 px-4 text-center text-xs text-slate-500">
+      <footer className="mt-6 border-t border-slate-900 bg-slate-50 py-3.5 px-4 text-center text-xs text-slate-500">
         <p>Logistics & Maps • Road Navigation & Route Optimization</p>
       </footer>
 

@@ -9,9 +9,9 @@ interface ToastState {
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, quantity?: number) => { success: boolean; message: string };
-  updateQuantity: (productId: number, quantity: number) => void;
-  removeFromCart: (productId: number) => void;
+  addToCart: (product: any, quantity?: number) => { success: boolean; message: string };
+  updateQuantity: (productId: number | string, quantity: number) => void;
+  removeFromCart: (productId: number | string) => void;
   clearCart: () => void;
   cartCount: number;
   subtotal: number;
@@ -87,11 +87,25 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  const addToCart = (product: Product, quantity = 1): { success: boolean; message: string } => {
+  const addToCart = (rawProduct: any, quantity = 1): { success: boolean; message: string } => {
     let result = { success: true, message: '' };
 
+    const product: Product = {
+      id: rawProduct.id,
+      name: rawProduct.name,
+      price: Number(rawProduct.price) || 0,
+      unit: rawProduct.unit || 'kg',
+      available: Number(rawProduct.available || rawProduct.availableQuantity || 500),
+      farmer: rawProduct.farmer || rawProduct.vendor || 'Kerala Farm Collective',
+      location: rawProduct.location || rawProduct.district || 'Kerala',
+      image: rawProduct.image || 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
+      description: rawProduct.description || '',
+      category: rawProduct.category || 'Produce',
+      organic: !!rawProduct.organic,
+    };
+
     setCart((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
+      const existing = prev.find((item) => String(item.product.id) === String(product.id));
       const currentQty = existing ? existing.quantity : 0;
       const targetQty = currentQty + quantity;
 
@@ -109,7 +123,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             message: `Added maximum available (${allowed} ${product.unit}) to cart.`
           };
           return prev.map((item) =>
-            item.product.id === product.id
+            String(item.product.id) === String(product.id)
               ? { ...item, quantity: product.available }
               : item
           );
@@ -123,7 +137,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (existing) {
         return prev.map((item) =>
-          item.product.id === product.id
+          String(item.product.id) === String(product.id)
             ? { ...item, quantity: targetQty }
             : item
         );
@@ -141,11 +155,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return result;
   };
 
-  const updateQuantity = (productId: number, requestedQty: number) => {
+  const updateQuantity = (productId: number | string, requestedQty: number) => {
     setCart((prev) => {
       return prev
         .map((item) => {
-          if (item.product.id === productId) {
+          if (String(item.product.id) === String(productId)) {
             if (requestedQty <= 0) {
               return null;
             }
@@ -161,13 +175,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
-  const removeFromCart = (productId: number) => {
+  const removeFromCart = (productId: number | string) => {
     setCart((prev) => {
-      const item = prev.find((i) => i.product.id === productId);
+      const item = prev.find((i) => String(i.product.id) === String(productId));
       if (item) {
         addToast(`Removed ${item.product.name} from cart`, 'info');
       }
-      return prev.filter((i) => i.product.id !== productId);
+      return prev.filter((i) => String(i.product.id) !== String(productId));
     });
   };
 

@@ -17,7 +17,7 @@ export const ToastContainer: React.FC = () => {
               ? 'bg-emerald-950/95 text-emerald-100 border-emerald-500/50 shadow-emerald-950/50'
               : toast.type === 'warning'
               ? 'bg-amber-950/95 text-amber-100 border-amber-500/50 shadow-amber-950/50'
-              : 'bg-slate-900/95 text-slate-100 border-slate-700/60 shadow-slate-950/50'
+              : 'bg-white/95 text-slate-900 border-slate-300/60 shadow-slate-950/50'
           }`}
         >
           <div className="flex items-start gap-3">
@@ -28,7 +28,7 @@ export const ToastContainer: React.FC = () => {
           </div>
           <button
             onClick={() => removeToast(toast.id)}
-            className="text-slate-400 hover:text-white p-0.5 rounded transition-colors cursor-pointer"
+            className="text-slate-600 hover:text-slate-900 p-0.5 rounded transition-colors cursor-pointer"
             aria-label="Dismiss notification"
           >
             <X className="w-4 h-4" />

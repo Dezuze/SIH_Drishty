@@ -47,23 +47,23 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
   onResetSimulation,
 }) => {
   return (
-    <div className="flex flex-col h-full bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-lg justify-between">
+    <div className="flex flex-col h-full bg-white border border-slate-200 rounded-3xl p-5 shadow-lg justify-between">
       
       {/* ── STEP 1: ORDERS (View Orders) ────────────────────────── */}
       {currentStep === 1 && (
         <div className="flex flex-col h-full justify-between">
           <div>
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                   <Package className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-white">View Orders</h3>
-                  <p className="text-xs text-slate-400">3 delivery orders ready for dispatch</p>
+                  <h3 className="font-bold text-base text-slate-900">View Orders</h3>
+                  <p className="text-xs text-slate-600">3 delivery orders ready for dispatch</p>
                 </div>
               </div>
-              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-800 text-emerald-400 border border-slate-700">
+              <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-emerald-400 border border-slate-300">
                 3 Orders
               </span>
             </div>
@@ -79,24 +79,24 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
                     onClick={() => onSelectCustomer(cust)}
                     className={`p-3.5 rounded-2xl border transition cursor-pointer ${
                       isSelected
-                        ? 'bg-slate-800/90 border-emerald-500 ring-1 ring-emerald-500/30'
-                        : 'bg-slate-950/70 border-slate-800 hover:border-slate-700'
+                        ? 'bg-slate-100/90 border-emerald-500 ring-1 ring-emerald-500/30'
+                        : 'bg-slate-50/70 border-slate-200 hover:border-slate-300'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-start gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-slate-800 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">
+                        <div className="w-8 h-8 rounded-xl bg-slate-100 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0">
                           {letter}
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="font-bold text-sm text-white">{cust.name}</span>
-                            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-400">
+                            <span className="font-bold text-sm text-slate-900">{cust.name}</span>
+                            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">
                               {cust.orderId}
                             </span>
                           </div>
-                          <p className="text-xs text-slate-400 mt-0.5">{cust.address}</p>
-                          <p className="text-[11px] text-slate-300 mt-1">{cust.itemsSummary}</p>
+                          <p className="text-xs text-slate-600 mt-0.5">{cust.address}</p>
+                          <p className="text-[11px] text-slate-700 mt-1">{cust.itemsSummary}</p>
                         </div>
                       </div>
 
@@ -104,7 +104,7 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
                         <span className="text-sm font-extrabold text-amber-400 font-mono block">
                           {cust.weightKg} kg
                         </span>
-                        <span className="text-[10px] text-slate-400 block mt-0.5">
+                        <span className="text-[10px] text-slate-600 block mt-0.5">
                           {cust.deliveryTime}
                         </span>
                       </div>
@@ -116,7 +116,7 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
           </div>
 
           {/* Primary Action Button: Group Nearby Orders */}
-          <div className="mt-5 pt-3 border-t border-slate-800">
+          <div className="mt-5 pt-3 border-t border-slate-200">
             <button
               onClick={() => setStep(2)}
               className="w-full py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition cursor-pointer"
@@ -133,14 +133,14 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
       {currentStep === 2 && (
         <div className="flex flex-col h-full justify-between">
           <div>
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-white">Group Nearby Orders</h3>
-                  <p className="text-xs text-slate-400">Orders grouped for vehicle capacity</p>
+                  <h3 className="font-bold text-base text-slate-900">Group Nearby Orders</h3>
+                  <p className="text-xs text-slate-600">Orders grouped for vehicle capacity</p>
                 </div>
               </div>
               <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
@@ -149,35 +149,35 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
             </div>
 
             {/* Group Summary Box */}
-            <div className="mt-4 p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3.5">
+            <div className="mt-4 p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3.5">
               <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-white">Grouped Delivery Batch</span>
+                <span className="font-bold text-sm text-slate-900">Grouped Delivery Batch</span>
                 <span className="text-xs font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-500/30">
                   {cluster.totalWeightKg} / {cluster.vehicleCapacityKg} kg
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-2.5 text-center">
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-[11px] text-slate-400 block font-medium">Orders Grouped</span>
-                  <span className="text-2xl font-bold text-white font-mono mt-0.5 block">
+                <div className="p-3 rounded-xl bg-white border border-slate-200">
+                  <span className="text-[11px] text-slate-600 block font-medium">Orders Grouped</span>
+                  <span className="text-2xl font-bold text-slate-900 font-mono mt-0.5 block">
                     {cluster.ordersCount}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
-                  <span className="text-[11px] text-slate-400 block font-medium">Total Payload</span>
+                <div className="p-3 rounded-xl bg-white border border-slate-200">
+                  <span className="text-[11px] text-slate-600 block font-medium">Total Payload</span>
                   <span className="text-2xl font-bold text-amber-400 font-mono mt-0.5 block">
                     {cluster.totalWeightKg} kg
                   </span>
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-slate-800/80">
-                <span className="text-xs text-slate-400 block mb-2 font-medium">Grouped Customers:</span>
+              <div className="pt-2 border-t border-slate-200/80">
+                <span className="text-xs text-slate-600 block mb-2 font-medium">Grouped Customers:</span>
                 <div className="space-y-1.5">
                   {customers.map((cust) => (
-                    <div key={cust.id} className="flex items-center justify-between text-xs px-3 py-2 rounded-xl bg-slate-900 border border-slate-800">
-                      <span className="font-semibold text-slate-200">{cust.name}</span>
+                    <div key={cust.id} className="flex items-center justify-between text-xs px-3 py-2 rounded-xl bg-white border border-slate-200">
+                      <span className="font-semibold text-slate-800">{cust.name}</span>
                       <span className="font-mono text-amber-400 font-bold">{cust.weightKg} kg</span>
                     </div>
                   ))}
@@ -187,10 +187,10 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
           </div>
 
           {/* Action Buttons: Show Locations on Map */}
-          <div className="mt-5 pt-3 border-t border-slate-800 flex items-center gap-2">
+          <div className="mt-5 pt-3 border-t border-slate-200 flex items-center gap-2">
             <button
               onClick={() => setStep(1)}
-              className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition cursor-pointer"
+              className="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer"
             >
               Back
             </button>
@@ -210,14 +210,14 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
       {currentStep === 3 && (
         <div className="flex flex-col h-full justify-between">
           <div>
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-xl bg-teal-500/10 text-teal-400">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-white">Show Locations on Map</h3>
-                  <p className="text-xs text-slate-400">Origin and customer delivery points</p>
+                  <h3 className="font-bold text-base text-slate-900">Show Locations on Map</h3>
+                  <p className="text-xs text-slate-600">Origin and customer delivery points</p>
                 </div>
               </div>
               <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-teal-950 text-teal-300 border border-teal-500/40">
@@ -233,8 +233,8 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
                     HUB
                   </span>
                   <div>
-                    <span className="font-bold text-white block">Farm (Origin)</span>
-                    <span className="text-[11px] text-slate-400">{farm.address}</span>
+                    <span className="font-bold text-slate-900 block">Farm (Origin)</span>
+                    <span className="text-[11px] text-slate-600">{farm.address}</span>
                   </div>
                 </div>
                 <span className="text-emerald-300 font-semibold">Origin</span>
@@ -243,14 +243,14 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
               {customers.map((cust, idx) => {
                 const letter = String.fromCharCode(65 + idx);
                 return (
-                  <div key={cust.id} className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs">
+                  <div key={cust.id} className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2.5">
-                      <span className="w-6 h-6 rounded bg-slate-800 text-emerald-400 flex items-center justify-center font-bold text-xs">
+                      <span className="w-6 h-6 rounded bg-slate-100 text-emerald-400 flex items-center justify-center font-bold text-xs">
                         {letter}
                       </span>
                       <div>
-                        <span className="font-bold text-white block">{cust.name}</span>
-                        <span className="text-[11px] text-slate-400">{cust.address}</span>
+                        <span className="font-bold text-slate-900 block">{cust.name}</span>
+                        <span className="text-[11px] text-slate-600">{cust.address}</span>
                       </div>
                     </div>
                     <span className="text-amber-400 font-mono font-bold">{cust.weightKg} kg</span>
@@ -261,10 +261,10 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
           </div>
 
           {/* Action Buttons: Generate Route */}
-          <div className="mt-5 pt-3 border-t border-slate-800 flex items-center gap-2">
+          <div className="mt-5 pt-3 border-t border-slate-200 flex items-center gap-2">
             <button
               onClick={() => setStep(2)}
-              className="py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition cursor-pointer"
+              className="py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition cursor-pointer"
             >
               Back
             </button>
@@ -287,14 +287,14 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
       {currentStep === 4 && (
         <div className="flex flex-col h-full justify-between">
           <div>
-            <div className="flex items-center justify-between pb-3.5 border-b border-slate-800">
+            <div className="flex items-center justify-between pb-3.5 border-b border-slate-200">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                   <Route className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-base text-white">Delivery Route</h3>
-                  <p className="text-xs text-slate-400">Farm → Customer A → Customer B → Customer C</p>
+                  <h3 className="font-bold text-base text-slate-900">Delivery Route</h3>
+                  <p className="text-xs text-slate-600">Farm → Customer A → Customer B → Customer C</p>
                 </div>
               </div>
               <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
@@ -305,19 +305,19 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
 
             {/* Route Details Breakdown */}
             <div className="mt-3.5 space-y-2">
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+              <span className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider block">
                 Route Details:
               </span>
 
               {segments.map((seg) => (
                 <div 
                   key={seg.id}
-                  className="p-3 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-between text-xs hover:border-slate-700 transition"
+                  className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs hover:border-slate-300 transition"
                 >
                   <div className="flex items-center gap-2">
                     <Navigation className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                     <div>
-                      <span className="font-bold text-white block">
+                      <span className="font-bold text-slate-900 block">
                         {seg.fromTitle} → {seg.toTitle}
                       </span>
                     </div>
@@ -325,11 +325,11 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
 
                   <div className="flex items-center gap-3 font-mono text-right">
                     <div>
-                      <span className="text-[10px] text-slate-400 block font-sans">Distance</span>
+                      <span className="text-[10px] text-slate-600 block font-sans">Distance</span>
                       <span className="text-emerald-400 font-bold">{seg.distanceKm} km</span>
                     </div>
-                    <div className="border-l border-slate-800 pl-3">
-                      <span className="text-[10px] text-slate-400 block font-sans">Travel Time</span>
+                    <div className="border-l border-slate-200 pl-3">
+                      <span className="text-[10px] text-slate-600 block font-sans">Travel Time</span>
                       <span className="text-teal-300 font-bold">{seg.travelTimeMin} min</span>
                     </div>
                   </div>
@@ -337,8 +337,8 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
               ))}
 
               {/* Total Summary Footer */}
-              <div className="p-3 rounded-xl bg-slate-950/90 border border-slate-800 flex items-center justify-between text-xs mt-3">
-                <span className="font-bold text-slate-200">Total Route</span>
+              <div className="p-3 rounded-xl bg-slate-50/90 border border-slate-200 flex items-center justify-between text-xs mt-3">
+                <span className="font-bold text-slate-800">Total Route</span>
                 <div className="flex items-center gap-3 font-mono">
                   <span className="text-emerald-400 font-extrabold">{summary.totalDistanceKm} km</span>
                   <span className="text-slate-600">•</span>
@@ -349,10 +349,10 @@ export const OrdersPanel: React.FC<OrdersPanelProps> = ({
           </div>
 
           {/* Action Buttons: Play/Pause Vehicle along Road */}
-          <div className="mt-4 pt-3 border-t border-slate-800 flex items-center gap-2">
+          <div className="mt-4 pt-3 border-t border-slate-200 flex items-center gap-2">
             <button
               onClick={onResetSimulation}
-              className="p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition cursor-pointer"
+              className="p-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition cursor-pointer"
               title="Reset Vehicle to Farm Hub"
             >
               <RotateCcw className="w-4 h-4" />

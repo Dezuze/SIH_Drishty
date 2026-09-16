@@ -36,7 +36,7 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
   ];
 
   return (
-    <div className="w-full bg-slate-900 border border-slate-800 rounded-2xl p-2.5 shadow-md">
+    <div className="w-full bg-white border border-slate-200 rounded-2xl p-2.5 shadow-md">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         {steps.map((step) => {
           const Icon = step.icon;
@@ -51,8 +51,8 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
                 isActive
                   ? 'bg-emerald-950/80 border-emerald-500 text-white shadow-sm ring-1 ring-emerald-500/30'
                   : isCompleted
-                  ? 'bg-slate-950/60 border-slate-800 text-slate-300 hover:border-slate-700'
-                  : 'bg-slate-950/30 border-slate-800/60 text-slate-400 hover:text-slate-200'
+                  ? 'bg-slate-50/60 border-slate-200 text-slate-700 hover:border-slate-300'
+                  : 'bg-slate-50/30 border-slate-200/60 text-slate-600 hover:text-slate-800'
               }`}
             >
               <div
@@ -61,7 +61,7 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
                     ? 'bg-emerald-500 text-slate-950 font-extrabold'
                     : isActive
                     ? 'bg-emerald-400 text-slate-950 font-extrabold shadow-sm'
-                    : 'bg-slate-800 text-slate-400'
+                    : 'bg-slate-100 text-slate-600'
                 }`}
               >
                 {isCompleted ? <Check className="w-4 h-4 stroke-[3]" /> : step.number}
@@ -69,7 +69,7 @@ export const WorkflowStepper: React.FC<WorkflowStepperProps> = ({
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-1.5">
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-emerald-400' : 'text-slate-600'}`} />
                   <span className={`text-xs font-semibold truncate ${isActive ? 'text-emerald-300' : ''}`}>
                     {step.title}
                   </span>

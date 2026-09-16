@@ -121,7 +121,7 @@ export const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-emerald-500 selection:text-slate-950">
       
       {/* Top Navigation */}
       <Navbar 
@@ -146,23 +146,23 @@ export const Dashboard: React.FC = () => {
                   Farmer-to-Consumer Direct Supply Chain
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Smart Logistics & Route Optimization Command Center
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-3xl mt-1">
+              <p className="text-xs sm:text-sm text-slate-700 max-w-3xl mt-1">
                 Empowering regional farmers with intelligent micro-clustering, capacity-constrained vehicle routing, and real-time cold-chain telematics for same-morning delivery.
               </p>
             </div>
 
             {/* Quick Stats Pill */}
-            <div className="flex items-center gap-3 bg-slate-950/80 p-3 rounded-2xl border border-slate-800 shrink-0">
+            <div className="flex items-center gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-200 shrink-0">
               <div className="text-center px-2">
-                <span className="text-[10px] uppercase text-slate-400 font-bold block">Efficiency Gain</span>
+                <span className="text-[10px] uppercase text-slate-600 font-bold block">Efficiency Gain</span>
                 <span className="text-base sm:text-lg font-extrabold text-emerald-400 font-mono">+28.1%</span>
               </div>
-              <div className="h-7 w-px bg-slate-800" />
+              <div className="h-7 w-px bg-slate-100" />
               <div className="text-center px-2">
-                <span className="text-[10px] uppercase text-slate-400 font-bold block">Carbon Offset</span>
+                <span className="text-[10px] uppercase text-slate-600 font-bold block">Carbon Offset</span>
                 <span className="text-base sm:text-lg font-extrabold text-teal-300 font-mono">6.4 kg</span>
               </div>
             </div>
@@ -187,11 +187,11 @@ export const Dashboard: React.FC = () => {
             {/* Interactive OpenStreetMap */}
             <section aria-label="Interactive Map with Leaflet">
               <div className="flex items-center justify-between mb-2 px-1">
-                <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400" />
                   Live GIS Logistics Map (OpenStreetMap Leaflet)
                 </h2>
-                <span className="text-xs text-slate-400 font-mono">
+                <span className="text-xs text-slate-600 font-mono">
                   Farm: 8.5241, 76.9366 ΓÇó Corridor: 3.4 km
                 </span>
               </div>
@@ -277,10 +277,10 @@ export const Dashboard: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="mt-12 border-t border-slate-800 bg-slate-950/90 py-6 px-4 text-center text-xs text-slate-400">
+      <footer className="mt-12 border-t border-slate-200 bg-slate-50/90 py-6 px-4 text-center text-xs text-slate-600">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>┬⌐ 2026 AgriRoute AI ΓÇó Smart India Hackathon Prototype Presentation</p>
-          <div className="flex items-center gap-4 text-slate-400">
+          <div className="flex items-center gap-4 text-slate-600">
             <span>Leaflet 1.9.4</span>
             <span>ΓÇó</span>
             <span>Tailwind CSS</span>

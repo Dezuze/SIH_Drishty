@@ -189,9 +189,9 @@ export const DeliveryTracking = () => {
       
       {/* Top Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, #134e27 0%, #15803d 100%)',
+        background: 'linear-gradient(135deg, #065F46 0%, #059669 50%, #10B981 100%)',
         color: '#ffffff',
-        padding: '2rem 1.5rem 2.5rem'
+        padding: '2.5rem 1.5rem 3rem'
       }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem', opacity: 0.9 }}>

@@ -1,10 +1,10 @@
 .vendor-card {
   background-color: #FFFFFF;
-  border: 1px solid rgba(27, 56, 30, 0.09);
-  border-radius: 16px;
+  border: 1px solid #F1F5F9;
+  border-radius: var(--radius-card);
   overflow: hidden;
-  box-shadow: 0 2px 8px -2px rgba(27, 56, 30, 0.06), 0 1px 3px 0 rgba(27, 56, 30, 0.04);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -12,16 +12,16 @@
 }
 
 .vendor-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px -4px rgba(27, 56, 30, 0.1), 0 3px 6px -1px rgba(27, 56, 30, 0.05);
-  border-color: rgba(27, 56, 30, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.35);
 }
 
 .vendor-card-media {
   position: relative;
   width: 100%;
   padding-top: 66.66%; /* approx 3:2 to 4:3 pleasing aspect ratio */
-  background-color: #EAE3B3;
+  background: linear-gradient(135deg, #F8FAFC, #F1F5F9);
   overflow: hidden;
 }
 
@@ -207,72 +207,71 @@
 }
 
 .btn-view-farm {
-  background-color: #1B381E;
+  background: linear-gradient(135deg, #10B981, #059669);
   color: #FFFFFF;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  padding: 0.625rem 0.875rem;
-  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.6rem 0.85rem;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-  min-height: 44px;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 42px;
   border: none;
   cursor: pointer;
 }
 
 .btn-view-farm:hover {
-  background-color: #05220B;
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
 }
 
-.btn-view-farm:focus-visible {
-  outline: 2px solid #A3D55D;
-  outline-offset: 2px;
+.btn-view-farm:active {
+  transform: scale(0.96);
 }
 
 /* Selective high-value Papaya Orange CTA for visual rhythm */
 .btn-view-farm.btn-cta-orange {
-  background-color: #FF6D2E;
+  background: linear-gradient(135deg, #F59E0B, #D97706);
   color: #FFFFFF;
-  box-shadow: 0 2px 8px rgba(255, 109, 46, 0.28);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.25);
 }
 
 .btn-view-farm.btn-cta-orange:hover {
-  background-color: #E55619;
-  box-shadow: 0 4px 12px rgba(255, 109, 46, 0.35);
-}
-
-.btn-view-farm.btn-cta-orange:focus-visible {
-  outline: 2px solid #FF6D2E;
-  outline-offset: 2px;
+  filter: brightness(1.06);
+  box-shadow: 0 6px 16px rgba(217, 119, 6, 0.35);
 }
 
 .btn-view-products {
-  background-color: transparent;
-  color: #1B381E;
-  border: 1px solid rgba(27, 56, 30, 0.2);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.875rem;
+  background-color: #FFFFFF;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 0.625rem 0.875rem;
-  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   transition: all 0.2s ease;
-  min-height: 44px;
+  min-height: 42px;
+  cursor: pointer;
 }
 
 .btn-view-products:hover {
-  background-color: #EAE3B3;
-  border-color: #1B381E;
+  background-color: #F8FAFC;
+  border-color: #CBD5E1;
+  color: #0F172A;
+  transform: translateY(-1px);
 }
 
-.btn-view-products:focus-visible {
-  outline: 2px solid #1B381E;
-  outline-offset: 2px;
+.btn-view-products:active {
+  transform: scale(0.96);
 }

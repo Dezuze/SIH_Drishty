@@ -67,27 +67,27 @@ export const AddOrderModal: React.FC<AddOrderModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-lg rounded-3xl bg-slate-900 border border-emerald-500/40 shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-50/80 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-lg rounded-3xl bg-white border border-emerald-500/40 shadow-2xl overflow-hidden flex flex-col">
         
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/80">
+        <div className="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/80">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <PlusCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-extrabold text-base text-white">
+              <h3 className="font-extrabold text-base text-slate-900">
                 Simulate New Consumer Order
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-600">
                 Demonstrates Dynamic Spatial Clustering & Capacity Re-Optimization
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white transition"
+            className="p-1.5 rounded-xl bg-slate-100 text-slate-600 hover:text-slate-900 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -97,44 +97,44 @@ export const AddOrderModal: React.FC<AddOrderModalProps> = ({
         <form onSubmit={handleSubmit} className="p-5 space-y-4 text-xs">
           
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Customer Name & ID</label>
+            <label className="block text-slate-700 font-semibold mb-1">Customer Name & ID</label>
             <input
               type="text"
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-400 focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:border-emerald-400 focus:outline-none"
               required
             />
           </div>
 
           <div>
-            <label className="block text-slate-300 font-semibold mb-1">Delivery Address (Trivandrum Corridor)</label>
+            <label className="block text-slate-700 font-semibold mb-1">Delivery Address (Trivandrum Corridor)</label>
             <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-400 focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:border-emerald-400 focus:outline-none"
               required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Contact Phone</label>
+              <label className="block text-slate-700 font-semibold mb-1">Contact Phone</label>
               <input
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-400 focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:border-emerald-400 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Order Priority</label>
+              <label className="block text-slate-700 font-semibold mb-1">Order Priority</label>
               <select
                 value={priority}
                 onChange={(e) => setPriority(e.target.value as any)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-400 focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:border-emerald-400 focus:outline-none"
               >
                 <option value="High">High (Perishable Produce)</option>
                 <option value="Medium">Medium</option>
@@ -145,24 +145,24 @@ export const AddOrderModal: React.FC<AddOrderModalProps> = ({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Produce Name</label>
+              <label className="block text-slate-700 font-semibold mb-1">Produce Name</label>
               <input
                 type="text"
                 value={produceName}
                 onChange={(e) => setProduceName(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-emerald-400 focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:border-emerald-400 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Weight (kg)</label>
+              <label className="block text-slate-700 font-semibold mb-1">Weight (kg)</label>
               <input
                 type="number"
                 min={1}
                 max={50}
                 value={weightKg}
                 onChange={(e) => setWeightKg(Number(e.target.value))}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono focus:border-emerald-400 focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 font-mono focus:border-emerald-400 focus:outline-none"
                 required
               />
             </div>
@@ -174,7 +174,7 @@ export const AddOrderModal: React.FC<AddOrderModalProps> = ({
               <Sparkles className="w-4 h-4 text-emerald-400" />
               New Payload Capacity Impact:
             </span>
-            <span className="font-mono font-bold text-white">
+            <span className="font-mono font-bold text-slate-900">
               85 kg + {weightKg} kg = <strong className="text-emerald-400">{85 + weightKg} / 150 kg</strong> (OK)
             </span>
           </div>
@@ -184,7 +184,7 @@ export const AddOrderModal: React.FC<AddOrderModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white font-semibold transition"
+              className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 font-semibold transition"
             >
               Cancel
             </button>
