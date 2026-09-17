@@ -44,7 +44,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({ onNavigate
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 text-slate-900 pt-28 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-8">
         
         {/* Success Header Banner */}
@@ -82,7 +82,7 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({ onNavigate
         </div>
 
         {/* Farmer Appreciation & Tracking Card */}
-        <div className="bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-slate-900 border border-emerald-500/30 rounded-3xl p-6 shadow-xl space-y-4">
+        <div className="bg-gradient-to-br from-emerald-950 via-slate-900 to-teal-950 text-white border border-emerald-500/30 rounded-3xl p-6 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <HeartHandshake className="w-5 h-5 text-amber-300" />
@@ -90,18 +90,18 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({ onNavigate
                 Direct Farmer Connection
               </span>
             </div>
-            <span className="bg-emerald-950 text-emerald-300 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/40">
+            <span className="bg-emerald-900/80 text-emerald-300 text-xs font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/40">
               Fresh Packing
             </span>
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-lg font-bold text-slate-900">
+            <h3 className="text-lg font-bold text-white">
               {lastOrder.allFarmers.length === 1
                 ? lastOrder.allFarmers[0]
                 : lastOrder.allFarmers.join(', ')}
             </h3>
-            <p className="text-xs text-slate-700 leading-relaxed">
+            <p className="text-xs text-emerald-100/80 leading-relaxed">
               🌱 Our local growers in {lastOrder.customer.city} & nearby districts are currently handpicking and packing your items with natural protective wrapping.
             </p>
           </div>

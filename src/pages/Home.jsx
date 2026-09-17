@@ -1,13 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ProductGrid from '../components/ProductGrid';
-import { products } from '../data/products';
+import { getLiveProducts } from '../data/products';
 import { ArrowRight, Star, TrendingUp } from 'lucide-react';
 import SeasonalChart from '../components/SeasonalChart';
 import './Home.css';
 
 function Home({ onAddToCart }) {
-  const trendingProducts = useMemo(() => products.slice(0, 4), []);
-  const freshArrivals = useMemo(() => products.slice(4, 8), []);
+  const [liveList, setLiveList] = useState(() => getLiveProducts());
+
+  useEffect(() => {
+    const handleUpdate = () => setLiveList(getLiveProducts());
+    window.addEventListener('kisan_products_updated', handleUpdate);
+    return () => window.removeEventListener('kisan_products_updated', handleUpdate);
+  }, []);
+
+  const trendingProducts = useMemo(() => liveList.slice(0, 4), [liveList]);
+  const freshArrivals = useMemo(() => liveList.slice(4, 8), [liveList]);
 
   return (
     <div className="home-page">

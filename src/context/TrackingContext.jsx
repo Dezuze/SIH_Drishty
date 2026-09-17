@@ -89,6 +89,10 @@ export const TrackingProvider = ({ children }) => {
       phone: '+91 98765 43210',
       status: 'Available',
       vehicleNumber: 'KL-35-E-4819 (Electric Cargo)',
+      serviceArea: 'Kottayam',
+      vehicleType: 'Tata Ace (1 Ton Mini Truck)',
+      isRefrigerated: true,
+      maxCapacityKg: 250,
       rating: 4.9,
       totalDeliveries: 148
     };
@@ -364,6 +368,76 @@ export const TrackingProvider = ({ children }) => {
     }
   };
 
+  // Automated Regional Batching & Assignment Engine
+  const autoAssignRegionalOrders = () => {
+    let vConfig = driverProfile;
+    try {
+      const savedConfig = localStorage.getItem('kisan_driver_vehicle_config');
+      if (savedConfig) {
+        vConfig = { ...driverProfile, ...JSON.parse(savedConfig) };
+      }
+    } catch {}
+
+    const driverHub = (vConfig.serviceArea || 'Kottayam').toLowerCase();
+    const maxCapacity = Number(vConfig.maxCapacityKg) || 250;
+    const isRefrigerated = !!vConfig.isRefrigerated;
+
+    const currentOrdersMap = { ...orders };
+
+    // Pull consumer orders from kisan_all_orders
+    try {
+      const allOrdersList = JSON.parse(localStorage.getItem('kisan_all_orders') || '[]');
+      allOrdersList.forEach(item => {
+        const tr = item.trackingEntry || item;
+        if (tr && tr.id && !currentOrdersMap[tr.id]) {
+          currentOrdersMap[tr.id] = tr;
+        }
+      });
+    } catch {}
+
+    let accumulatedWeight = 0;
+    const assignedIds = [];
+
+    Object.keys(currentOrdersMap).forEach(key => {
+      const ord = currentOrdersMap[key];
+      const ordLocation = `${ord.customerAddress || ''} ${ord.customerDistrict || ''} ${ord.pickupAddress || ''}`.toLowerCase();
+      const isRegionalMatch = ordLocation.includes(driverHub) || ordLocation.includes('kottayam') || driverHub.includes('kottayam');
+
+      const ordWeight = Number(ord.weightKg) || parseFloat(ord.quantity) || 5;
+      const needsCold = !!ord.requiresRefrigeration;
+
+      // Filter: regional match, vehicle cold-chain compatible if required, and fits in payload
+      if (isRegionalMatch) {
+        if (needsCold && !isRefrigerated) {
+          // Vehicle cannot carry cold-chain produce
+          return;
+        }
+        if (accumulatedWeight + ordWeight <= maxCapacity) {
+          accumulatedWeight += ordWeight;
+          assignedIds.push(key);
+          currentOrdersMap[key] = {
+            ...ord,
+            driverId: vConfig.driverCode,
+            driverName: vConfig.name,
+            driverPhone: vConfig.phone,
+            driverStatus: vConfig.status,
+            status: ord.status === 'Order Placed' || !ord.status ? 'Driver Assigned' : ord.status,
+            lastUpdated: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
+          };
+        }
+      }
+    });
+
+    persistOrders(currentOrdersMap);
+    return {
+      assignedCount: assignedIds.length,
+      assignedIds,
+      totalWeightKg: accumulatedWeight,
+      maxCapacityKg: maxCapacity,
+      hub: vConfig.serviceArea || 'Kottayam'
+    };
+  };
+
   return (
     <TrackingContext.Provider
       value={{
@@ -376,7 +450,8 @@ export const TrackingProvider = ({ children }) => {
         resetDemoOrder,
         addTrackingOrder,
         toggleSimulation,
-        stepForwardOnce
+        stepForwardOnce,
+        autoAssignRegionalOrders
       }}
     >
       {children}

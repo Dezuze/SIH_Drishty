@@ -13,7 +13,8 @@ import {
   Leaf, 
   ShieldCheck, 
   Compass,
-  ArrowRight
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -55,12 +56,29 @@ function Header() {
     }
   };
 
-  const navLinks = [
-    { name: 'Home', path: '/', exact: true },
-    { name: 'Shop All Produce', path: '/products', alt: '/produce-market' },
-    { name: 'Farmers', path: '/vendors' },
-    { name: 'Live Tracking', path: '/tracking' }
-  ];
+  const getNavLinks = () => {
+    if (user?.role === 'driver') {
+      return [
+        { name: '🚚 Delivery Operations', path: '/driver' },
+        { name: '🚛 Vehicle & Fleet Specs', path: '/profile' }
+      ];
+    }
+    if (user?.role === 'farmer') {
+      return [
+        { name: '🌾 My Farm & Produce', path: '/profile' },
+        { name: '🏪 Local Vendors & Details', path: '/vendors' },
+        { name: '🥬 Produce Catalog', path: '/products' }
+      ];
+    }
+    return [
+      { name: 'Home', path: '/', exact: true },
+      { name: 'Shop All Produce', path: '/products', alt: '/produce-market' },
+      { name: 'Farmers & Vendors', path: '/vendors' },
+      { name: 'Live Tracking', path: '/tracking' }
+    ];
+  };
+
+  const navLinks = getNavLinks();
 
   const getRoleBadgeConfig = (role) => {
     switch (role) {
@@ -75,38 +93,60 @@ function Header() {
 
   const roleConfig = getRoleBadgeConfig(user?.role);
 
+  const isDriver = user?.role === 'driver';
+  const isFarmer = user?.role === 'farmer';
+  const isConsumer = !user || user?.role === 'customer';
+  const isAdmin = user?.role === 'admin';
+
   return (
     <header className={`modern-header ${scrolled ? 'scrolled' : ''}`}>
       {/* Top Tier: Logo, Search, Actions */}
       <div className="header-top-tier container">
         {/* LOGO */}
-        <div className="modern-logo" onClick={() => navigate('/')}>
-          <div className="logo-icon">
-            <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="45" fill="none" stroke="#FBBF24" strokeWidth="6" />
-              <path d="M50 80 C30 80, 25 55, 45 40 C45 40, 50 45, 50 55 C50 55, 55 45, 55 40 C75 55, 70 80, 50 80 Z" fill="#10B981" />
-              <path d="M50 55 Q40 25 50 15 Q60 25 50 55" fill="#FBBF24" />
-            </svg>
-          </div>
+        <div 
+          className="modern-logo flex items-center gap-2.5 cursor-pointer select-none" 
+          onClick={() => navigate(isDriver ? '/driver' : isFarmer ? '/profile' : '/')}
+          title="KisanDirect • Connecting Farmers to Consumers"
+        >
+          <img 
+            src="/kisandirect-icon.png" 
+            alt="KisanDirect Emblem" 
+            className="w-10 h-10 object-contain rounded-full border border-emerald-200/80 shadow-xs shrink-0" 
+          />
           <div className="flex flex-col">
-            <span className="logo-text">KISAN</span>
-            <span className="text-[9px] font-bold tracking-widest text-emerald-700 uppercase -mt-1">DRISHTI AI</span>
+            <span className="text-xl font-black text-slate-900 tracking-tight leading-tight">
+              Kisan<span className="text-emerald-600">Direct</span>
+            </span>
+            <span className="text-[9px] font-bold tracking-wider text-slate-500 uppercase -mt-0.5">
+              {isDriver ? 'Fleet Dispatch' : isFarmer ? 'Producer Portal' : 'Connecting Farmers to Consumers'}
+            </span>
           </div>
         </div>
         
-        {/* SEARCH BAR */}
-        <div className="modern-search-container">
-          <form className="modern-search-bar" onSubmit={handleSearch}>
-            <Search className="search-icon-left" size={18} />
-            <input 
-              type="text" 
-              placeholder="Search organic tomatoes, nendran bananas, wayanad capsicum..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit" className="modern-search-btn">Search</button>
-          </form>
-        </div>
+        {/* SEARCH BAR (Hidden for drivers) */}
+        {!isDriver ? (
+          <div className="modern-search-container">
+            <form className="modern-search-bar" onSubmit={handleSearch}>
+              <Search className="search-icon-left" size={18} />
+              <input 
+                type="text" 
+                placeholder={isFarmer ? "Search local vendors, farms, crops in your district..." : "Search organic tomatoes, nendran bananas, wayanad capsicum..."} 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button type="submit" className="modern-search-btn">Search</button>
+            </form>
+          </div>
+        ) : (
+          /* Driver Status Indicator Banner in place of search bar */
+          <div className="hidden md:flex items-center gap-3 px-4 py-2 bg-blue-50/80 border border-blue-200/80 rounded-2xl text-xs text-blue-900 font-semibold shadow-xs">
+            <div className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse" />
+            <span>Active Dispatch Unit:</span>
+            <span className="font-bold text-blue-950 font-mono">Tata Ace (250 kg Cold-Chain)</span>
+            <span className="text-blue-400">|</span>
+            <span className="text-blue-700">Zone: Kottayam Regional Hub</span>
+          </div>
+        )}
 
         {/* ACTIONS */}
         <div className="modern-actions">
@@ -130,8 +170,8 @@ function Header() {
                 </div>
 
                 <div className="text-left hidden sm:block">
-                  <p className="text-xs font-black text-slate-900 leading-tight max-w-[100px] truncate">
-                    {user?.name?.split(' ')[0] || 'Account'}
+                  <p className="text-xs font-black text-slate-900 leading-tight max-w-[120px] truncate">
+                    {user?.name?.replace(/^(farmer|driver)\s+/i, '').split(' ')[0] || 'Account'}
                   </p>
                   <p className="text-[10px] font-bold text-emerald-700 capitalize leading-none mt-0.5">
                     {user?.role || 'User'}
@@ -166,16 +206,18 @@ function Header() {
                       </div>
                     </div>
 
-                    {/* Kisan Green Credits Badge */}
-                    <div className="mt-3 pt-2.5 border-t border-emerald-200/60 flex items-center justify-between text-xs font-semibold">
-                      <span className="text-slate-600 flex items-center gap-1 text-[11px]">
-                        <Leaf className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>Kisan Green Points:</span>
-                      </span>
-                      <span className="font-mono font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md text-[11px]">
-                        140 Pts
-                      </span>
-                    </div>
+                    {/* Kisan Green Credits Badge for Consumers & Farmers */}
+                    {!isDriver && (
+                      <div className="mt-3 pt-2.5 border-t border-emerald-200/60 flex items-center justify-between text-xs font-semibold">
+                        <span className="text-slate-600 flex items-center gap-1 text-[11px]">
+                          <Leaf className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>Kisan Green Points:</span>
+                        </span>
+                        <span className="font-mono font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-md text-[11px]">
+                          140 Pts
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Quick Role Switcher for Hackathon Demo */}
@@ -226,95 +268,167 @@ function Header() {
                     </div>
                   </div>
 
-                  {/* Menu Links */}
+                  {/* Strictly Role-Scoped Menu Links */}
                   <div className="space-y-1">
+                    {/* UI & Test Studio */}
                     <button
-                      onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                      onClick={() => {
+                        const inspectorBtn = document.getElementById('btn-open-ui-inspector');
+                        if (inspectorBtn) inspectorBtn.click();
+                        setDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50/70 hover:bg-emerald-100 flex items-center justify-between transition-all cursor-pointer group"
                     >
                       <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <UserIcon size={14} />
+                        <div className="w-7 h-7 rounded-lg bg-emerald-200/80 text-emerald-800 flex items-center justify-center">
+                          <Sparkles size={14} />
                         </div>
-                        <span>My Profile & Addresses</span>
+                        <span>🧪 UI &amp; Test Studio</span>
                       </div>
-                      <ArrowRight size={12} className="text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                      <ArrowRight size={12} className="text-emerald-600 group-hover:translate-x-0.5 transition-all" />
                     </button>
 
-                    <button
-                      onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/80 flex items-center justify-between transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <Package size={14} />
-                        </div>
-                        <span>Orders & Deliveries</span>
-                      </div>
-                      <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">
-                        Active
-                      </span>
-                    </button>
-
-                    <button
-                      onClick={() => { navigate('/tracking'); setDropdownOpen(false); }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 flex items-center justify-between transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center group-hover:scale-105 transition-transform">
-                          <Truck size={14} />
-                        </div>
-                        <span>Live DRISHTI GPS Tracking</span>
-                      </div>
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                      </span>
-                    </button>
-
-                    {/* Contextual links for roles */}
-                    {user?.role === 'farmer' && (
-                      <button
-                        onClick={() => { navigate('/products'); setDropdownOpen(false); }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-amber-900 bg-amber-50/80 hover:bg-amber-100 flex items-center justify-between transition-all cursor-pointer group"
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-lg bg-amber-200/80 text-amber-800 flex items-center justify-center">
-                            <Sprout size={14} />
+                    {/* DRIVER SPECIFIC LINKS */}
+                    {isDriver && (
+                      <>
+                        <button
+                          onClick={() => { navigate('/driver'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-blue-900 bg-blue-50/80 hover:bg-blue-100 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-blue-200/80 text-blue-800 flex items-center justify-center">
+                              <Truck size={14} />
+                            </div>
+                            <span>Driver Delivery Operations</span>
                           </div>
-                          <span>Farmer Crop & Produce Portal</span>
-                        </div>
-                        <ArrowRight size={12} className="text-amber-600" />
-                      </button>
+                          <span className="text-[10px] bg-blue-200 text-blue-900 font-bold px-1.5 py-0.5 rounded-full">
+                            Active
+                          </span>
+                        </button>
+
+                        <button
+                          onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <UserIcon size={14} />
+                            </div>
+                            <span>Vehicle &amp; Fleet Specs</span>
+                          </div>
+                          <ArrowRight size={12} className="text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
+                        </button>
+                      </>
                     )}
 
-                    {user?.role === 'driver' && (
-                      <button
-                        onClick={() => { navigate('/driver'); setDropdownOpen(false); }}
-                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-blue-900 bg-blue-50/80 hover:bg-blue-100 flex items-center justify-between transition-all cursor-pointer group"
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-7 h-7 rounded-lg bg-blue-200/80 text-blue-800 flex items-center justify-center">
-                            <Truck size={14} />
+                    {/* FARMER SPECIFIC LINKS */}
+                    {isFarmer && (
+                      <>
+                        <button
+                          onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-amber-900 bg-amber-50/80 hover:bg-amber-100 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-amber-200/80 text-amber-800 flex items-center justify-center">
+                              <Sprout size={14} />
+                            </div>
+                            <span>My Farm &amp; Produce Portal</span>
                           </div>
-                          <span>Fleet Driver Dispatch Portal</span>
-                        </div>
-                        <ArrowRight size={12} className="text-blue-600" />
-                      </button>
+                          <ArrowRight size={12} className="text-amber-600" />
+                        </button>
+
+                        <button
+                          onClick={() => { navigate('/vendors'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-amber-700 hover:bg-amber-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-amber-100/70 text-amber-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <Package size={14} />
+                            </div>
+                            <span>Local Vendors &amp; Farms</span>
+                          </div>
+                          <ArrowRight size={12} className="text-slate-400 group-hover:text-amber-600 group-hover:translate-x-0.5 transition-all" />
+                        </button>
+
+                        <button
+                          onClick={() => { navigate('/products'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <Leaf size={14} />
+                            </div>
+                            <span>Produce Marketplace Catalog</span>
+                          </div>
+                          <ArrowRight size={12} className="text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                        </button>
+                      </>
                     )}
 
-                    <button
-                      onClick={() => { navigate('/logistics'); setDropdownOpen(false); }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-between transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
-                          <Compass size={14} />
+                    {/* CONSUMER SPECIFIC LINKS */}
+                    {(isConsumer || (!isDriver && !isFarmer)) && (
+                      <>
+                        <button
+                          onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <UserIcon size={14} />
+                            </div>
+                            <span>My Profile &amp; Addresses</span>
+                          </div>
+                          <ArrowRight size={12} className="text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                        </button>
+
+                        <button
+                          onClick={() => { navigate('/profile'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-emerald-100/70 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <Package size={14} />
+                            </div>
+                            <span>Orders &amp; Deliveries</span>
+                          </div>
+                          <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded-full">
+                            Active
+                          </span>
+                        </button>
+
+                        <button
+                          onClick={() => { navigate('/tracking'); setDropdownOpen(false); }}
+                          className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-blue-700 hover:bg-blue-50/80 flex items-center justify-between transition-all cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-7 h-7 rounded-lg bg-blue-100/70 text-blue-700 flex items-center justify-center group-hover:scale-105 transition-transform">
+                              <Truck size={14} />
+                            </div>
+                            <span>Live DRISHTI GPS Tracking</span>
+                          </div>
+                          <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                          </span>
+                        </button>
+                      </>
+                    )}
+
+                    {/* Admin Only */}
+                    {isAdmin && (
+                      <button
+                        onClick={() => { navigate('/logistics'); setDropdownOpen(false); }}
+                        className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-between transition-all cursor-pointer group"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center">
+                            <Compass size={14} />
+                          </div>
+                          <span>AI Logistics Command Center</span>
                         </div>
-                        <span>AI Logistics Command Center</span>
-                      </div>
-                      <ArrowRight size={12} className="text-slate-400" />
-                    </button>
+                        <ArrowRight size={12} className="text-slate-400" />
+                      </button>
+                    )}
                   </div>
 
                   <div className="border-t border-slate-100 my-2" />
@@ -353,14 +467,16 @@ function Header() {
             </div>
           )}
 
-          {/* Cart Button */}
-          <button className="action-btn cart-btn group" title="Cart" onClick={() => navigate('/cart')}>
-            <div className="cart-icon-wrapper">
-              <ShoppingCart size={20} />
-              {Number(cartCount) > 0 && <span className="modern-cart-badge">{cartCount}</span>}
-            </div>
-            <span className="cart-text">Cart</span>
-          </button>
+          {/* Cart Button: ONLY visible to consumer buyers and unauthenticated guests */}
+          {!isDriver && !isFarmer && (
+            <button className="action-btn cart-btn group" title="Cart" onClick={() => navigate('/cart')}>
+              <div className="cart-icon-wrapper">
+                <ShoppingCart size={20} />
+                {Number(cartCount) > 0 && <span className="modern-cart-badge">{cartCount}</span>}
+              </div>
+              <span className="cart-text">Cart</span>
+            </button>
+          )}
         </div>
       </div>
 

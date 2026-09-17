@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Screenshots & media
+screenshots/
+screenschots/
+

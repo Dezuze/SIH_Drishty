@@ -11,7 +11,7 @@ import { Dashboard } from './pages/Dashboard';
 import SimplifiedUI from './pages/SimplifiedUI';
 import { TrackingProvider } from './context/TrackingContext';
 import { useCart } from './context/CartContext';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { AuthModal } from './components/AuthModal';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Login } from './pages/Login';
@@ -20,6 +20,46 @@ import { Cart } from './components/Cart';
 import { Checkout } from './components/Checkout';
 import { OrderConfirmation } from './components/OrderConfirmation';
 import { Footer } from './components/Footer';
+
+// Route Guard: Blocks drivers from accessing consumer & farmer marketplace views
+function DriverBlockGuard({ children }: { children: React.ReactElement }) {
+  const { user, isAuthenticated } = useAuth();
+  if (isAuthenticated && user?.role === 'driver') {
+    return <Navigate to="/driver" replace />;
+  }
+  return children;
+}
+
+// Route Guard: Only consumer buyers can access cart and checkout flow
+function CustomerOnlyGuard({ children }: { children: React.ReactElement }) {
+  const { user, isAuthenticated } = useAuth();
+  if (isAuthenticated && user?.role === 'driver') {
+    return <Navigate to="/driver" replace />;
+  }
+  if (isAuthenticated && user?.role === 'farmer') {
+    return <Navigate to="/profile" replace />;
+  }
+  return children;
+}
+
+// Route Guard: Admin-only command center
+function AdminOnlyGuard({ children }: { children: React.ReactElement }) {
+  const { user, isAuthenticated } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (user?.role === 'driver') return <Navigate to="/driver" replace />;
+  if (user?.role === 'farmer') return <Navigate to="/profile" replace />;
+  if (user?.role !== 'admin') return <Navigate to="/" replace />;
+  return children;
+}
+
+// Fallback redirect honoring current role
+function FallbackRedirect() {
+  const { user, isAuthenticated } = useAuth();
+  if (isAuthenticated && user?.role === 'driver') {
+    return <Navigate to="/driver" replace />;
+  }
+  return <Navigate to="/" replace />;
+}
 
 /**
  * The root Application component.
@@ -40,17 +80,17 @@ function App() {
           <Header />
           <AuthModal />
           <Routes>
-            {/* Marketplace & E-commerce */}
-            <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
-            <Route path="/products" element={<Products onAddToCart={handleAddToCart} />} />
-            <Route path="/produce-market" element={<Products onAddToCart={handleAddToCart} />} />
-            <Route path="/search" element={<SearchResults onAddToCart={handleAddToCart} />} />
-            <Route path="/vendors" element={<Vendors onAddToCart={handleAddToCart} />} />
+            {/* Marketplace & E-commerce (Hidden from Drivers) */}
+            <Route path="/" element={<DriverBlockGuard><Home onAddToCart={handleAddToCart} /></DriverBlockGuard>} />
+            <Route path="/products" element={<DriverBlockGuard><Products onAddToCart={handleAddToCart} /></DriverBlockGuard>} />
+            <Route path="/produce-market" element={<DriverBlockGuard><Products onAddToCart={handleAddToCart} /></DriverBlockGuard>} />
+            <Route path="/search" element={<DriverBlockGuard><SearchResults onAddToCart={handleAddToCart} /></DriverBlockGuard>} />
+            <Route path="/vendors" element={<DriverBlockGuard><Vendors onAddToCart={handleAddToCart} /></DriverBlockGuard>} />
             
-            {/* Cart, Checkout & Confirmation */}
-            <Route path="/cart" element={<CartRouteWrapper />} />
-            <Route path="/checkout" element={<CheckoutRouteWrapper />} />
-            <Route path="/order-confirmation" element={<OrderConfirmationRouteWrapper />} />
+            {/* Cart, Checkout & Confirmation (Consumer Only) */}
+            <Route path="/cart" element={<CustomerOnlyGuard><CartRouteWrapper /></CustomerOnlyGuard>} />
+            <Route path="/checkout" element={<CustomerOnlyGuard><CheckoutRouteWrapper /></CustomerOnlyGuard>} />
+            <Route path="/order-confirmation" element={<CustomerOnlyGuard><OrderConfirmationRouteWrapper /></CustomerOnlyGuard>} />
 
             {/* Authentication & User Account */}
             <Route path="/login" element={<Login />} />
@@ -63,20 +103,36 @@ function App() {
               } 
             />
 
-            {/* DRISHTI Live Delivery Tracking & Driver Module */}
-            <Route path="/tracking" element={<DeliveryTracking />} />
-            <Route path="/tracking/:orderId" element={<DeliveryTracking />} />
-            <Route path="/customer" element={<Navigate to="/tracking" replace />} />
-            <Route path="/customer/:orderId" element={<DeliveryTracking />} />
-            <Route path="/driver" element={<DriverPortal />} />
-            <Route path="/driver/order/:orderId" element={<DriverPortal />} />
+            {/* DRISHTI Live Delivery Tracking (Consumer Only; Drivers redirected to /driver) */}
+            <Route path="/tracking" element={<DriverBlockGuard><DeliveryTracking /></DriverBlockGuard>} />
+            <Route path="/tracking/:orderId" element={<DriverBlockGuard><DeliveryTracking /></DriverBlockGuard>} />
+            <Route path="/customer" element={<DriverBlockGuard><Navigate to="/tracking" replace /></DriverBlockGuard>} />
+            <Route path="/customer/:orderId" element={<DriverBlockGuard><DeliveryTracking /></DriverBlockGuard>} />
 
-            {/* AI Logistics & Route Optimization Command Center */}
-            <Route path="/logistics" element={<Dashboard />} />
-            <Route path="/simplified" element={<SimplifiedUI />} />
+            {/* Fleet Driver Module (Driver & Admin ONLY) */}
+            <Route 
+              path="/driver" 
+              element={
+                <ProtectedRoute allowedRoles={['driver', 'admin']}>
+                  <DriverPortal />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/driver/order/:orderId" 
+              element={
+                <ProtectedRoute allowedRoles={['driver', 'admin']}>
+                  <DriverPortal />
+                </ProtectedRoute>
+              } 
+            />
+
+            {/* AI Logistics & Route Optimization Command Center (Admin Only) */}
+            <Route path="/logistics" element={<AdminOnlyGuard><Dashboard /></AdminOnlyGuard>} />
+            <Route path="/simplified" element={<AdminOnlyGuard><SimplifiedUI /></AdminOnlyGuard>} />
 
             {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<FallbackRedirect />} />
           </Routes>
           <FooterWrapper />
         </BrowserRouter>
@@ -84,6 +140,7 @@ function App() {
     </AuthProvider>
   );
 }
+
 
 function FooterWrapper() {
   const navigate = useNavigate();

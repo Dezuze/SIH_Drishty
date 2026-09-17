@@ -70,11 +70,37 @@ export const DriverPortal = () => {
     updateDriverLocation,
     resetDemoOrder,
     toggleSimulation,
-    stepForwardOnce
+    stepForwardOnce,
+    autoAssignRegionalOrders
   } = useTracking();
 
-  const activeId = orderId && orders[orderId] ? orderId : 'DR001';
-  const order = orders[activeId] || orders['DR001'];
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [assignmentNotice, setAssignmentNotice] = useState(null);
+
+  // Read driver vehicle configuration
+  const [vehicleConfig, setVehicleConfig] = useState(() => {
+    try {
+      const saved = localStorage.getItem('kisan_driver_vehicle_config');
+      return saved ? JSON.parse(saved) : {
+        serviceArea: driverProfile.serviceArea || 'Kottayam',
+        vehicleType: driverProfile.vehicleType || 'Tata Ace (1 Ton Mini Truck)',
+        isRefrigerated: driverProfile.isRefrigerated ?? true,
+        maxCapacityKg: driverProfile.maxCapacityKg || 250
+      };
+    } catch {
+      return {
+        serviceArea: 'Kottayam',
+        vehicleType: 'Tata Ace (1 Ton Mini Truck)',
+        isRefrigerated: true,
+        maxCapacityKg: 250
+      };
+    }
+  });
+
+  const allOrderKeys = Object.keys(orders);
+  const activeId = selectedOrderId && orders[selectedOrderId] ? selectedOrderId : (orderId && orders[orderId] ? orderId : allOrderKeys[0] || 'DR001');
+  const order = orders[activeId] || Object.values(orders)[0] || { id: 'DR001', product: 'Farm Fresh Harvest', status: 'Driver Assigned' };
+
 
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -107,10 +133,16 @@ export const DriverPortal = () => {
         attributionControl: false
       }).setView([midLat, midLng], 14);
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        subdomains: 'abcd'
+        attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
+
+      setTimeout(() => {
+        try {
+          map.invalidateSize();
+        } catch {}
+      }, 300);
 
       // Markers
       farmerMarkerRef.current = L.marker([order.pickupLat, order.pickupLng], {
@@ -223,9 +255,9 @@ export const DriverPortal = () => {
       }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', fontSize: '0.85rem', opacity: 0.9 }}>
-            <Link to="/" style={{ color: '#A7F3D0', textDecoration: 'none' }}>Home</Link>
+            <Link to="/driver" style={{ color: '#A7F3D0', textDecoration: 'none' }}>Driver Hub</Link>
             <ChevronRight size={14} />
-            <span>Driver Operations & Telematics</span>
+            <span>Driver Operations &amp; Telematics</span>
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
@@ -294,6 +326,160 @@ export const DriverPortal = () => {
 
       <div style={{ maxWidth: '1100px', margin: '-1.5rem auto 0', padding: '0 1.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
         
+        {/* REGIONAL ROUTE CLUSTERING & AUTO-ASSIGNMENT CARD */}
+        <div style={{
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid #BFDBFE',
+          boxShadow: '0 4px 20px rgba(2, 132, 199, 0.08)',
+          padding: '1.5rem',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', borderBottom: '1px solid #E2E8F0', paddingBottom: '1.2rem' }}>
+            <div>
+              <span style={{
+                fontSize: '0.75rem',
+                fontWeight: 800,
+                color: '#0284C7',
+                background: '#E0F2FE',
+                padding: '4px 10px',
+                borderRadius: '20px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px'
+              }}>
+                ⚡ DRISHTI AI Logistics Engine
+              </span>
+              <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0F172A', margin: '6px 0 2px' }}>
+                Regional Order Clustering & Automated Vehicle Assignment
+              </h2>
+              <p style={{ fontSize: '0.82rem', color: '#64748B', margin: 0 }}>
+                Scans all pending consumer farm orders in <strong>{vehicleConfig.serviceArea}</strong>, bundles nearby deliveries together, and respects cargo limits ({vehicleConfig.maxCapacityKg} kg max, {vehicleConfig.isRefrigerated ? 'Refrigerated Cold Box' : 'Ambient'}).
+              </p>
+            </div>
+
+            <button
+              id="btn-auto-assign-regional"
+              onClick={() => {
+                const res = autoAssignRegionalOrders();
+                setAssignmentNotice(res);
+              }}
+              style={{
+                background: '#0284C7',
+                color: '#ffffff',
+                border: 'none',
+                padding: '10px 20px',
+                borderRadius: '12px',
+                fontSize: '0.88rem',
+                fontWeight: 800,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 4px 12px rgba(2, 132, 199, 0.3)'
+              }}
+            >
+              <Activity size={18} />
+              <span>⚡ Auto-Assign Regional Orders</span>
+            </button>
+          </div>
+
+          {/* Vehicle Configuration Summary */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '1rem', alignItems: 'center' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>
+              Current Vehicle Specs:
+            </div>
+            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B' }}>
+              📍 Hub: <strong>{vehicleConfig.serviceArea}</strong>
+            </span>
+            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B' }}>
+              🚚 Type: <strong>{vehicleConfig.vehicleType}</strong>
+            </span>
+            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B' }}>
+              ⚖️ Capacity Limit: <strong>{vehicleConfig.maxCapacityKg} kg</strong>
+            </span>
+            <span style={{
+              fontSize: '0.78rem',
+              background: vehicleConfig.isRefrigerated ? '#EFF6FF' : '#F8FAFC',
+              border: `1px solid ${vehicleConfig.isRefrigerated ? '#93C5FD' : '#E2E8F0'}`,
+              padding: '4px 10px',
+              borderRadius: '8px',
+              fontWeight: 700,
+              color: vehicleConfig.isRefrigerated ? '#1D4ED8' : '#64748B'
+            }}>
+              {vehicleConfig.isRefrigerated ? '❄ Cold-Chain Active' : 'Standard Temp'}
+            </span>
+          </div>
+
+          {/* Assignment Success Alert */}
+          {assignmentNotice && (
+            <div id="assignment-success-alert" style={{
+              marginTop: '1rem',
+              padding: '12px 16px',
+              borderRadius: '12px',
+              background: '#F0FDF4',
+              border: '1px solid #86EFAC',
+              color: '#166534',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '12px'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CheckCircle2 size={20} color="#16A34A" />
+                <span>
+                  🎉 Regional Batch Complete! Assigned <strong>{assignmentNotice.assignedCount} local orders</strong> in {assignmentNotice.hub}. Combined Load: <strong>{assignmentNotice.totalWeightKg} kg / {assignmentNotice.maxCapacityKg} kg</strong>.
+                </span>
+              </div>
+              <button
+                onClick={() => setAssignmentNotice(null)}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#166534', fontWeight: 800 }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
+          {/* Grouped Regional Manifest Chips */}
+          <div style={{ marginTop: '1.2rem' }}>
+            <div style={{ fontSize: '0.78rem', fontWeight: 800, textTransform: 'uppercase', color: '#64748B', letterSpacing: '0.5px', marginBottom: '8px' }}>
+              Active Delivery Manifest ({Object.keys(orders).length} Assigned Stops) — Click Stop to View on Map:
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+              {Object.entries(orders).map(([key, ord]) => (
+                <button
+                  key={key}
+                  id={`chip-order-${key}`}
+                  onClick={() => setSelectedOrderId(key)}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: '10px',
+                    border: `1.5px solid ${activeId === key ? '#0284C7' : '#E2E8F0'}`,
+                    background: activeId === key ? '#F0F9FF' : '#ffffff',
+                    color: activeId === key ? '#0284C7' : '#334155',
+                    fontWeight: 700,
+                    fontSize: '0.8rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    transition: 'all 0.15s'
+                  }}
+                >
+                  <MapPin size={14} color={activeId === key ? '#0284C7' : '#64748B'} />
+                  <span>#{key}</span>
+                  <span style={{ opacity: 0.75 }}>• {ord.customerName?.split(' ')[0]}</span>
+                  <span style={{ fontSize: '0.72rem', background: activeId === key ? '#BAE6FD' : '#F1F5F9', padding: '2px 6px', borderRadius: '6px' }}>
+                    {ord.quantity || '5 kg'}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* 1. Statistics Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
           

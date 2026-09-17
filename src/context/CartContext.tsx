@@ -238,6 +238,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const allFarmers = Array.from(farmerSet);
     const primaryFarmer = allFarmers[0] || 'Local Kerala Farm Collective';
 
+    const totalWeightKg = cart.reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+    const requiresRefrigeration = cart.some((item) => item.product.requiresRefrigeration);
+
     const order: ConfirmedOrder = {
       orderId,
       createdAt: new Date().toLocaleDateString('en-IN', {
@@ -259,6 +262,50 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     setLastOrder(order);
+
+    // Save to global orders repository for driver assignment & order tracking
+    try {
+      const allOrdersRaw = localStorage.getItem('kisan_all_orders');
+      const allOrders = allOrdersRaw ? JSON.parse(allOrdersRaw) : [];
+      const trackingEntry = {
+        id: orderId,
+        orderId,
+        product: cart.map(i => `${i.product.name} (${i.quantity} ${i.product.unit})`).join(', '),
+        quantity: `${totalWeightKg} kg`,
+        price: grandTotal,
+        customerName: customer.fullName || 'Direct Consumer',
+        customerPhone: customer.phoneNumber || '+91 94471 23456',
+        pickupAddress: `${primaryFarmer} Farm, Kottayam`,
+        pickupLat: 9.6820,
+        pickupLng: 76.8150,
+        customerAddress: `${customer.address}, ${customer.city || 'Kottayam'}`,
+        customerCity: customer.city || 'Kottayam',
+        customerDistrict: customer.city || 'Kottayam',
+        customerLat: 9.6950 + (Math.random() * 0.04 - 0.02),
+        customerLng: 76.7820 + (Math.random() * 0.04 - 0.02),
+        status: 'Order Placed',
+        driverId: null,
+        driverName: null,
+        weightKg: totalWeightKg,
+        requiresRefrigeration,
+        lastUpdated: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true }),
+        createdAt: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true })
+      };
+
+      allOrders.unshift({ ...order, trackingEntry });
+      localStorage.setItem('kisan_all_orders', JSON.stringify(allOrders));
+
+      // Also merge into drishti_orders
+      const drishtiRaw = localStorage.getItem('drishti_orders');
+      const drishtiOrders = drishtiRaw ? JSON.parse(drishtiRaw) : {};
+      drishtiOrders[orderId] = trackingEntry;
+      localStorage.setItem('drishti_orders', JSON.stringify(drishtiOrders));
+
+      window.dispatchEvent(new Event('kisan_orders_updated'));
+    } catch (err) {
+      console.error('Failed to sync order into central pool', err);
+    }
+
     clearCart();
     addToast('🎉 Order placed successfully!', 'success');
     return order;

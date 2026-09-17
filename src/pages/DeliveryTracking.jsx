@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import L from 'leaflet';
 import { useTracking, STATUS_STAGES } from '../context/TrackingContext';
+import { useAuth } from '../context/AuthContext';
 import { 
   CheckCircle2, 
   Clock, 
@@ -60,6 +61,7 @@ function createEmojiIcon(emoji, label, bgColor = '#ffffff', borderColor = '#2E7D
 export const DeliveryTracking = () => {
   const { orderId } = useParams();
   const { orders, resetDemoOrder, isSimulating, toggleSimulation } = useTracking();
+  const { user } = useAuth();
 
   const activeId = orderId && orders[orderId] ? orderId : 'DR001';
   const order = orders[activeId] || orders['DR001'];
@@ -88,10 +90,16 @@ export const DeliveryTracking = () => {
         attributionControl: false
       }).setView([midLat, midLng], 14);
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        subdomains: 'abcd'
+        attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
+
+      setTimeout(() => {
+        try {
+          map.invalidateSize();
+        } catch {}
+      }, 300);
 
       // 1. Farmer Marker
       const farmMarker = L.marker([order.pickupLat, order.pickupLng], {
@@ -463,23 +471,25 @@ export const DeliveryTracking = () => {
                 {isSimulating ? '⏸ Pause Simulator' : '🎮 Test Route Movement'}
               </button>
 
-              <Link
-                to={`/driver/order/${order.id}`}
-                style={{
-                  background: '#0F172A',
-                  color: '#ffffff',
-                  textDecoration: 'none',
-                  borderRadius: '8px',
-                  padding: '6px 14px',
-                  fontSize: '0.82rem',
-                  fontWeight: 600,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
-                <Truck size={14} /> Open Driver Portal &rarr;
-              </Link>
+              {(user?.role === 'driver' || user?.role === 'admin') && (
+                <Link
+                  to={`/driver/order/${order.id}`}
+                  style={{
+                    background: '#0F172A',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    padding: '6px 14px',
+                    fontSize: '0.82rem',
+                    fontWeight: 600,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                >
+                  <Truck size={14} /> Open Driver Portal &rarr;
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -567,46 +577,48 @@ export const DeliveryTracking = () => {
           </div>
         </div>
 
-        {/* 4. Viva Presentation Helper Card */}
-        <div style={{
-          background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
-          border: '1px solid #FDE68A',
-          borderRadius: '12px',
-          padding: '1rem 1.25rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '1rem'
-        }}>
-          <div>
-            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#92400E' }}>
-              🎓 SIH & Viva Presentation Helper
+        {/* 4. Viva Presentation Helper Card (Drivers & Admin Only) */}
+        {(user?.role === 'driver' || user?.role === 'admin') && (
+          <div style={{
+            background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
+            border: '1px solid #FDE68A',
+            borderRadius: '12px',
+            padding: '1rem 1.25rem',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '1rem'
+          }}>
+            <div>
+              <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#92400E' }}>
+                🎓 SIH & Viva Presentation Helper
+              </div>
+              <p style={{ margin: '2px 0 0', fontSize: '0.82rem', color: '#78350F' }}>
+                Finished a test run? You can reset Order #{order.id} back to "Driver Assigned" to demonstrate the complete 7-stage workflow again.
+              </p>
             </div>
-            <p style={{ margin: '2px 0 0', fontSize: '0.82rem', color: '#78350F' }}>
-              Finished a test run? You can reset Order #{order.id} back to "Driver Assigned" to demonstrate the complete 7-stage workflow again.
-            </p>
-          </div>
 
-          <button
-            onClick={() => resetDemoOrder(order.id)}
-            style={{
-              background: '#B45309',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '6px 14px',
-              fontSize: '0.82rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
-          >
-            <RefreshCw size={14} /> Reset Demo Order
-          </button>
-        </div>
+            <button
+              onClick={() => resetDemoOrder(order.id)}
+              style={{
+                background: '#B45309',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '6px 14px',
+                fontSize: '0.82rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
+              }}
+            >
+              <RefreshCw size={14} /> Reset Demo Order
+            </button>
+          </div>
+        )}
 
       </div>
     </div>

@@ -39,9 +39,278 @@
       "pincode": "686001",
       "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
       "createdAt": "2026-02-01T09:15:00.000Z"
+    },
+    {
+      "id": "usr_1789577197899",
+      "name": "Farmer Madhavan Nair",
+      "email": "madhavan@poonjarfarms.in",
+      "password": "kisanpassword123",
+      "phone": "9447198765",
+      "role": "farmer",
+      "address": "Poonjar Hill Top Organic Estate, Kottayam",
+      "city": "Kochi",
+      "pincode": "682001",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-09-16T16:46:37.899Z"
+    },
+    {
+      "id": "usr_1789577846822",
+      "name": "Rahul Nair",
+      "email": "rahul.nair@kottayam.in",
+      "password": "rahulpassword123",
+      "phone": "9847122334",
+      "role": "customer",
+      "address": "Riverdale Heights, Central Junction, Kottayam",
+      "city": "Kochi",
+      "pincode": "682001",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-09-16T16:57:26.822Z"
+    },
+    {
+      "id": "usr_1789618905447",
+      "name": "Rahul Nair",
+      "email": "rahul.nair@kisan.in",
+      "password": "password123",
+      "phone": "9447111223",
+      "role": "customer",
+      "address": "Civil Station Road, Kottayam",
+      "city": "Kochi",
+      "pincode": "682001",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-09-17T04:21:45.447Z"
+    },
+    {
+      "id": "usr_1789619704331",
+      "name": "Meera Thomas",
+      "email": "meera.thomas@kisan.in",
+      "password": "password123",
+      "phone": "9847123987",
+      "role": "customer",
+      "address": "Baker Junction, Kottayam",
+      "city": "Kochi",
+      "pincode": "682001",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "createdAt": "2026-09-17T04:35:04.331Z"
     }
   ],
   "orders": [
+    {
+      "orderId": "KSN-2026-9877",
+      "createdAt": "17 Sept 2026, 10:07 am",
+      "items": [
+        {
+          "product": {
+            "id": "prod-custom-1789618638706",
+            "name": "Kottayam Fresh Organic Avocados",
+            "price": 120,
+            "unit": "kg",
+            "available": 50,
+            "farmer": "Green Valley Organic Farm",
+            "location": "Kottayam",
+            "image": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=400&q=80",
+            "description": "Freshly harvested straight from our organic farm beds.",
+            "category": "Fruits",
+            "organic": true
+          },
+          "quantity": 8
+        }
+      ],
+      "customer": {
+        "fullName": "Meera Thomas",
+        "phoneNumber": "9847123987",
+        "email": "meera.thomas@kisan.in",
+        "address": "Baker Junction, Kottayam",
+        "city": "Kottayam",
+        "pincode": "682001",
+        "deliverySlot": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+        "paymentMethod": "online",
+        "notes": ""
+      },
+      "subtotal": 960,
+      "deliveryFee": 0,
+      "discount": 0,
+      "grandTotal": 960,
+      "estimatedDelivery": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+      "primaryFarmer": "Green Valley Organic Farm",
+      "allFarmers": [
+        "Green Valley Organic Farm"
+      ],
+      "status": "Order Placed",
+      "timestamp": "2026-09-17T04:37:00.661Z",
+      "paymentDetails": {
+        "gateway": "Razorpay",
+        "paymentId": "pay_1789619820309_6371",
+        "status": "SUCCESS",
+        "amount": 960
+      }
+    },
+    {
+      "orderId": "KSN-2026-9376",
+      "createdAt": "17 Sept 2026, 10:00 am",
+      "items": [
+        {
+          "product": {
+            "id": "prod-custom-1789618638706",
+            "name": "Kottayam Fresh Organic Avocados",
+            "price": 120,
+            "unit": "kg",
+            "available": 50,
+            "farmer": "Green Valley Organic Farm",
+            "location": "Kottayam",
+            "image": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=400&q=80",
+            "description": "Freshly harvested straight from our organic farm beds.",
+            "category": "Fruits",
+            "organic": true
+          },
+          "quantity": 5
+        }
+      ],
+      "customer": {
+        "fullName": "Rahul Nair",
+        "phoneNumber": "9447111223",
+        "email": "rahul.nair@kisan.in",
+        "address": "Civil Station Road, Kottayam",
+        "city": "Kottayam",
+        "pincode": "682001",
+        "deliverySlot": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+        "paymentMethod": "online",
+        "notes": ""
+      },
+      "subtotal": 600,
+      "deliveryFee": 0,
+      "discount": 0,
+      "grandTotal": 600,
+      "estimatedDelivery": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+      "primaryFarmer": "Green Valley Organic Farm",
+      "allFarmers": [
+        "Green Valley Organic Farm"
+      ],
+      "status": "Order Placed",
+      "timestamp": "2026-09-17T04:30:34.065Z",
+      "paymentDetails": {
+        "gateway": "Razorpay",
+        "paymentId": "pay_1789619433756_9789",
+        "status": "SUCCESS",
+        "amount": 600
+      }
+    },
+    {
+      "orderId": "KSN-2026-1293",
+      "createdAt": "16 Sept 2026, 10:37 pm",
+      "items": [
+        {
+          "product": {
+            "id": "prod-custom-1789577455323",
+            "name": "Kottayam Organic Butter Avocados",
+            "price": 120,
+            "unit": "kg",
+            "available": 80,
+            "farmer": "Farmer Madhavan Nair Organic Farm",
+            "location": "Kochi",
+            "image": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=400&q=80",
+            "description": "Freshly harvested straight from our organic farm beds.",
+            "category": "Vegetables",
+            "organic": true
+          },
+          "quantity": 1
+        }
+      ],
+      "customer": {
+        "fullName": "Meera Thomas",
+        "phoneNumber": "9446011223",
+        "email": "meera.thomas@kottayam.in",
+        "address": "Greenfield Villa, Kanjikuzhy",
+        "city": "Kottayam",
+        "pincode": "686004",
+        "deliverySlot": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+        "paymentMethod": "cod",
+        "notes": ""
+      },
+      "subtotal": 120,
+      "deliveryFee": 35,
+      "discount": 0,
+      "grandTotal": 155,
+      "estimatedDelivery": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+      "primaryFarmer": "Farmer Madhavan Nair Organic Farm",
+      "allFarmers": [
+        "Farmer Madhavan Nair Organic Farm"
+      ],
+      "status": "Order Placed",
+      "timestamp": "2026-09-16T17:07:19.439Z",
+      "paymentDetails": {
+        "gateway": "Cash on Delivery",
+        "method": "COD",
+        "status": "PENDING_DELIVERY",
+        "amount": 155
+      }
+    },
+    {
+      "orderId": "KSN-2026-6039",
+      "createdAt": "16 Sept 2026, 10:32 pm",
+      "items": [
+        {
+          "product": {
+            "id": 3,
+            "name": "Carrot",
+            "price": 50,
+            "unit": "kg",
+            "available": 200,
+            "farmer": "Green Harvest",
+            "location": "Palakkad",
+            "image": "https://images.unsplash.com/photo-1598170845058-32b9d6a5c317?auto=format&fit=crop&w=800&q=80",
+            "description": "Sweet, crisp orange carrots grown in the cooler foothills of Palakkad. Packed with beta-carotene and natural sweetness. Freshly handpicked and washed with clean well water.",
+            "category": "Root Vegetables",
+            "organic": true
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": "prod-custom-1789577455323",
+            "name": "Kottayam Organic Butter Avocados",
+            "price": 120,
+            "unit": "kg",
+            "available": 80,
+            "farmer": "Farmer Madhavan Nair Organic Farm",
+            "location": "Kochi",
+            "image": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=400&q=80",
+            "description": "Freshly harvested straight from our organic farm beds.",
+            "category": "Vegetables",
+            "organic": true
+          },
+          "quantity": 1
+        }
+      ],
+      "customer": {
+        "fullName": "Rahul Nair",
+        "phoneNumber": "9847122334",
+        "email": "rahul.nair@kottayam.in",
+        "address": "Riverdale Heights, Central Junction, Kottayam",
+        "city": "Kochi",
+        "pincode": "682001",
+        "deliverySlot": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+        "paymentMethod": "cod",
+        "notes": ""
+      },
+      "subtotal": 170,
+      "deliveryFee": 35,
+      "discount": 0,
+      "grandTotal": 205,
+      "estimatedDelivery": "Early Morning Harvest (7:00 AM - 11:00 AM)",
+      "primaryFarmer": "Green Harvest",
+      "allFarmers": [
+        "Green Harvest",
+        "Farmer Madhavan Nair Organic Farm"
+      ],
+      "status": "Order Placed",
+      "timestamp": "2026-09-16T17:02:15.148Z",
+      "paymentDetails": {
+        "gateway": "Cash on Delivery",
+        "method": "COD",
+        "status": "PENDING_DELIVERY",
+        "amount": 205
+      }
+    },
     {
       "orderId": "KSN-2026-3083",
       "createdAt": "16 Sept 2026, 04:30 pm",
@@ -171,6 +440,24 @@
     }
   ],
   "payments": [
+    {
+      "paymentId": "pay_1789619820309_6371",
+      "orderId": "order_rzp_1789619808041_6974",
+      "method": "Razorpay Sandbox",
+      "amount": 960,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-17T04:37:00.309Z"
+    },
+    {
+      "paymentId": "pay_1789619433756_9789",
+      "orderId": "order_rzp_1789619403486_2347",
+      "method": "Razorpay Sandbox",
+      "amount": 600,
+      "currency": "INR",
+      "status": "captured",
+      "timestamp": "2026-09-17T04:30:33.756Z"
+    },
     {
       "paymentId": "pay_1789556445595_9742",
       "orderId": "order_rzp_1789556428669_2861",

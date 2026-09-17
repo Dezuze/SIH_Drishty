@@ -544,3 +544,44 @@ export const PRODUCTS_DATA = [
     description: 'Early flowering indigenous sweet table mango grown in the Palakkad gap microclimate. Fiberless orange pulp with honeyed aroma, completely chemical-free.'
   }
 ];
+
+export function getLiveProductsData(): any[] {
+  try {
+    const raw = localStorage.getItem('kisan_custom_products');
+    if (!raw) return [...PRODUCTS_DATA];
+    const customList = JSON.parse(raw);
+    const mappedCustom = customList.map((p: any) => ({
+      id: p.id,
+      lotNumber: `LOT-FARM-${String(p.id).slice(-4)}`,
+      name: p.name,
+      image: p.image || 'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=400',
+      category: p.category || 'Vegetables',
+      subCategory: `${p.category || 'Produce'} / Direct Farm Harvest`,
+      filterCategory: (p.category || 'VEGETABLES').toUpperCase(),
+      vendor: p.farmer || 'Local Organic Farmer',
+      vendorId: 'v-custom-farmer',
+      vendorVerified: true,
+      district: p.district || p.location || 'Kottayam',
+      organic: p.organic ?? true,
+      price: Number(p.price) || 50,
+      unit: p.unit || 'kg',
+      minimumOrder: 1,
+      availableQuantity: Number(p.available) || 100,
+      harvestDate: p.harvestDate || 'Harvested Fresh Today',
+      harvestStatus: 'Active Fresh Harvest',
+      statusBadge: 'VERIFIED FARM',
+      rating: p.rating || 5.0,
+      reviewCount: p.reviewsCount || 1,
+      availability: 'In Stock',
+      shelfLife: '7-14 Days',
+      deliveryTime: 'Direct Farm Dispatch in 24 hrs',
+      isFeatured: true,
+      description: p.description || `${p.name} freshly harvested from local farm.`,
+      requiresRefrigeration: !!p.requiresRefrigeration
+    }));
+    return [...mappedCustom, ...PRODUCTS_DATA];
+  } catch {
+    return [...PRODUCTS_DATA];
+  }
+}
+

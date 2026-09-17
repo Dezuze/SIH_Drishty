@@ -6,6 +6,7 @@ export interface Product {
   available: number;
   farmer: string;
   location: string;
+  district?: string;
   image: string;
   description: string;
   category: string;
@@ -15,6 +16,7 @@ export interface Product {
   reviewsCount?: number;
   minOrder?: number;
   farmStory?: string;
+  requiresRefrigeration?: boolean;
 }
 
 export const products: Product[] = [
@@ -194,3 +196,43 @@ export interface ConfirmedOrder {
   primaryFarmer: string;
   allFarmers: string[];
 }
+
+export const CUSTOM_PRODUCTS_KEY = 'kisan_custom_products';
+
+export function getCustomProducts(): Product[] {
+  try {
+    const raw = localStorage.getItem(CUSTOM_PRODUCTS_KEY);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+export function saveCustomProduct(newProduct: Product): void {
+  try {
+    const existing = getCustomProducts();
+    const updated = [newProduct, ...existing.filter(p => String(p.id) !== String(newProduct.id))];
+    localStorage.setItem(CUSTOM_PRODUCTS_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new Event('kisan_products_updated'));
+  } catch (e) {
+    console.error('Failed to save custom product', e);
+  }
+}
+
+export function deleteCustomProduct(id: string | number): void {
+  try {
+    const existing = getCustomProducts();
+    const filtered = existing.filter(p => String(p.id) !== String(id));
+    localStorage.setItem(CUSTOM_PRODUCTS_KEY, JSON.stringify(filtered));
+    window.dispatchEvent(new Event('kisan_products_updated'));
+  } catch (e) {
+    console.error('Failed to delete custom product', e);
+  }
+}
+
+export function getLiveProducts(): Product[] {
+  const custom = getCustomProducts();
+  return [...custom, ...products];
+}
+

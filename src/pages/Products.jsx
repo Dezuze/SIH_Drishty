@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { PRODUCTS_DATA } from '../data/productsData';
+import React, { useState, useEffect, useMemo } from 'react';
+import { PRODUCTS_DATA, getLiveProductsData } from '../data/productsData';
 import ProductGrid from '../components/ProductGrid';
 import './Products.css';
 
@@ -7,12 +7,19 @@ export function Products({ onAddToCart }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [sortBy, setSortBy] = useState('recommended');
+  const [rawProducts, setRawProducts] = useState(() => getLiveProductsData());
+
+  useEffect(() => {
+    const handleUpdate = () => setRawProducts(getLiveProductsData());
+    window.addEventListener('kisan_products_updated', handleUpdate);
+    return () => window.removeEventListener('kisan_products_updated', handleUpdate);
+  }, []);
 
   const categories = ['ALL', 'Vegetables', 'Fruits', 'Grains', 'Spices', 'Dairy Products'];
 
   // Filter and Sort Logic
   const filteredAndSortedProducts = useMemo(() => {
-    let list = [...PRODUCTS_DATA];
+    let list = [...rawProducts];
 
     // 1. Text Search
     if (searchQuery.trim()) {

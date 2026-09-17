@@ -4,10 +4,19 @@ import { useAuth } from '../context/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactElement;
+  allowedRoles?: ('customer' | 'farmer' | 'driver' | 'admin')[];
   requiredRole?: 'customer' | 'farmer' | 'driver' | 'admin';
+  redirectTo?: string;
+  allowGuest?: boolean;
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
+  children, 
+  allowedRoles, 
+  requiredRole,
+  redirectTo,
+  allowGuest = false
+}) => {
   const { user, isAuthenticated, isLoading } = useAuth();
   const location = useLocation();
 
@@ -20,23 +29,36 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requir
     );
   }
 
+  // If guests are allowed and user is not authenticated, let them through
+  if (allowGuest && !isAuthenticated) {
+    return children;
+  }
+
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requiredRole && user?.role !== requiredRole && user?.role !== 'admin') {
-    return (
-      <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-50 text-slate-900 p-4">
-        <div className="max-w-md bg-white border border-red-500/30 rounded-3xl p-8 text-center space-y-4 shadow-xl">
-          <h2 className="text-xl font-black text-slate-900">Access Restricted</h2>
-          <p className="text-xs text-slate-600">
-            This module requires a <span className="text-emerald-400 font-bold">{requiredRole}</span> role. You are currently logged in as a <span className="text-amber-400 font-bold">{user?.role}</span>.
-          </p>
-          <Navigate to="/profile" replace />
-        </div>
-      </div>
-    );
+  const effectiveRoles = allowedRoles || (requiredRole ? [requiredRole] : undefined);
+
+  if (effectiveRoles && effectiveRoles.length > 0) {
+    const userRole = user?.role || 'customer';
+    const hasRole = effectiveRoles.includes(userRole as any) || userRole === 'admin';
+
+    if (!hasRole) {
+      if (redirectTo) {
+        return <Navigate to={redirectTo} replace />;
+      }
+      // Intelligent role-based fallback redirect
+      if (userRole === 'driver') {
+        return <Navigate to="/driver" replace />;
+      } else if (userRole === 'farmer') {
+        return <Navigate to="/profile" replace />;
+      } else {
+        return <Navigate to="/tracking" replace />;
+      }
+    }
   }
 
   return children;
 };
+

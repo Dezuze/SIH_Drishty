@@ -110,7 +110,7 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[85vh] bg-slate-50 text-slate-900 flex items-center justify-center px-4 py-12 relative overflow-hidden">
+    <div className="min-h-[90vh] bg-slate-50 text-slate-900 flex items-center justify-center px-4 pt-28 pb-16 relative overflow-hidden">
       {/* Background decorations */}
       <div className="absolute top-1/4 -left-32 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
