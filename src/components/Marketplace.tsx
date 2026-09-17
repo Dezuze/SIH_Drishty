@@ -139,8 +139,9 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
                     <p className="text-sm font-black text-amber-400 mt-1">₹30 / kg</p>
                   </div>
                 </div>
-                <div className="text-xs text-slate-700 leading-relaxed bg-black/40 p-3 rounded-xl border border-slate-200/80">
-                  🌱 "We harvested over 500 kg of fresh vine tomatoes this morning. Thank you for supporting our farm directly!"
+                <div className="text-xs text-slate-700 leading-relaxed bg-black/40 p-3 rounded-xl border border-slate-200/80 flex items-start gap-2">
+                  <Sprout className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <span>"We harvested over 500 kg of fresh vine tomatoes this morning. Thank you for supporting our farm directly!"</span>
                 </div>
               </div>
             </div>
@@ -205,7 +206,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
                     : 'bg-slate-100/90 text-slate-700 hover:bg-slate-200 hover:text-white'
                 }`}
               >
-                {cat === 'All' ? '🌱 All Fresh Produce' : cat}
+                {cat === 'All' ? 'All Fresh Produce' : cat}
               </button>
             ))}
           </div>

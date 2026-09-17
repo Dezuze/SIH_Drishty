@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ProductGrid from '../components/ProductGrid';
 import { getLiveProducts } from '../data/products';
-import { ArrowRight, Star, TrendingUp } from 'lucide-react';
+import { ArrowRight, Star, TrendingUp, Carrot, Apple, Milk, Flame } from 'lucide-react';
 import SeasonalChart from '../components/SeasonalChart';
 import './Home.css';
 
@@ -17,23 +17,28 @@ function Home({ onAddToCart }) {
   const trendingProducts = useMemo(() => liveList.slice(0, 4), [liveList]);
   const freshArrivals = useMemo(() => liveList.slice(4, 8), [liveList]);
 
+  const categories = [
+    { name: 'Vegetables', icon: Carrot, color: 'text-emerald-600' },
+    { name: 'Fruits', icon: Apple, color: 'text-rose-500' },
+    { name: 'Dairy', icon: Milk, color: 'text-blue-500' },
+    { name: 'Spices', icon: Flame, color: 'text-amber-500' }
+  ];
+
   return (
     <div className="home-page">
       {/* Simplistic Category Buttons */}
       <section className="categories-section container">
         <div className="category-pills">
           <a href="/products" className="category-pill active">All Categories</a>
-          {[
-            { name: 'Vegetables', icon: '🥦' },
-            { name: 'Fruits', icon: '🍎' },
-            { name: 'Dairy', icon: '🥛' },
-            { name: 'Spices', icon: '🌶️' }
-          ].map(cat => (
-            <a href={`/products?category=${cat.name}`} key={cat.name} className="category-pill">
-              <span>{cat.icon}</span>
-              <span>{cat.name}</span>
-            </a>
-          ))}
+          {categories.map(cat => {
+            const Icon = cat.icon;
+            return (
+              <a href={`/products?category=${cat.name}`} key={cat.name} className="category-pill flex items-center gap-1.5">
+                <Icon size={16} className={cat.color} />
+                <span>{cat.name}</span>
+              </a>
+            );
+          })}
         </div>
       </section>
 

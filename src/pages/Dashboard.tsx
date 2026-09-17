@@ -140,7 +140,7 @@ export const Dashboard: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                 <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 shadow-md">
-                  Smart India Hackathon 2026
+                  KisanDirect Logistics AI
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-500/40">
                   Farmer-to-Consumer Direct Supply Chain
@@ -279,7 +279,7 @@ export const Dashboard: React.FC = () => {
       {/* Footer */}
       <footer className="mt-12 border-t border-slate-200 bg-slate-50/90 py-6 px-4 text-center text-xs text-slate-600">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p>┬⌐ 2026 AgriRoute AI ΓÇó Smart India Hackathon Prototype Presentation</p>
+          <p>© 2026 KisanDirect • Connecting Farmers to Consumers</p>
           <div className="flex items-center gap-4 text-slate-600">
             <span>Leaflet 1.9.4</span>
             <span>ΓÇó</span>

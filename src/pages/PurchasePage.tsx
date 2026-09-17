@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
-import { MapPin, Clock, Package, Leaf, User, Phone, FileText, ChevronRight, ArrowLeft, Check } from 'lucide-react';
+import { MapPin, Clock, Package, Leaf, User, Phone, FileText, ChevronRight, ArrowLeft, Check, Sunrise, Sun, Sunset, ShoppingBag } from 'lucide-react';
 
 type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
 
@@ -9,9 +9,9 @@ interface PurchasePageProps {
 }
 
 const SLOTS = [
-  { id: 'morning', label: '🌅 Morning Harvest', time: '7:00 AM – 10:00 AM', desc: 'Dawn Picked', highlight: true },
-  { id: 'afternoon', label: '☀️ Afternoon Express', time: '1:00 PM – 4:00 PM', desc: 'Cold-chain transit', highlight: false },
-  { id: 'evening', label: '🌆 Evening Fresh Drop', time: '6:00 PM – 9:00 PM', desc: 'Direct from farm gate', highlight: false },
+  { id: 'morning', label: 'Morning Harvest', time: '7:00 AM – 10:00 AM', desc: 'Dawn Picked', highlight: true, icon: Sunrise },
+  { id: 'afternoon', label: 'Afternoon Express', time: '1:00 PM – 4:00 PM', desc: 'Cold-chain transit', highlight: false, icon: Sun },
+  { id: 'evening', label: 'Evening Fresh Drop', time: '6:00 PM – 9:00 PM', desc: 'Direct from farm gate', highlight: false, icon: Sunset },
 ];
 
 const COUPON_VALID = 'KISANFIRST';
@@ -34,7 +34,7 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
 
   const [couponInput, setCouponInput] = useState(COUPON_VALID);
   const [couponApplied, setCouponApplied] = useState(true);
-  const [couponMsg, setCouponMsg] = useState({ text: `✓ Code ${COUPON_VALID} active: ₹${COUPON_DISCOUNT} Harvest Welcome discount applied!`, success: true });
+  const [couponMsg, setCouponMsg] = useState({ text: `Code ${COUPON_VALID} active: ₹${COUPON_DISCOUNT} Harvest Welcome discount applied!`, success: true });
 
   const discount = couponApplied ? COUPON_DISCOUNT : 0;
   const finalTotal = Math.max(0, subtotal + deliveryFee - discount);
@@ -43,7 +43,7 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
   if (cart.length === 0) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-slate-950 p-8 text-center">
-        <div className="text-5xl mb-4">🧺</div>
+        <ShoppingBag className="w-16 h-16 text-slate-600 mb-4" />
         <h2 className="text-xl font-bold text-white mb-2">Your cart is empty</h2>
         <p className="text-slate-400 text-sm mb-6">Please add items to your cart before proceeding.</p>
         <button onClick={() => onNavigate('marketplace')} className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-sm cursor-pointer transition-colors">
@@ -57,7 +57,7 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
     const code = couponInput.trim().toUpperCase();
     if (code === COUPON_VALID) {
       setCouponApplied(true);
-      setCouponMsg({ text: `✓ Code ${COUPON_VALID} active: ₹${COUPON_DISCOUNT} Harvest Welcome discount applied!`, success: true });
+      setCouponMsg({ text: `Code ${COUPON_VALID} active: ₹${COUPON_DISCOUNT} Harvest Welcome discount applied!`, success: true });
       addToast(`Coupon applied: ₹${COUPON_DISCOUNT} off!`, 'success');
     } else if (code === '') {
       setCouponApplied(false);
@@ -161,14 +161,20 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
                   Select Fresh Harvest Dispatch Window <span className="text-red-400">*</span>
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {SLOTS.map(slot => (
-                    <button key={slot.id} type="button" onClick={() => setForm(f => ({ ...f, deliverySlot: slot.id }))}
-                      className={`border rounded-xl p-3 text-left transition-all cursor-pointer ${form.deliverySlot === slot.id ? 'border-emerald-500 bg-emerald-950/60 ring-1 ring-emerald-500/30' : 'border-slate-700 bg-slate-950/40 hover:border-slate-600'}`}>
-                      <div className="font-bold text-white text-xs">{slot.label}</div>
-                      <div className="text-slate-400 text-[11px] mt-0.5">{slot.time}</div>
-                      {slot.highlight && <div className="text-emerald-400 text-[10px] font-bold mt-0.5">{slot.desc}</div>}
-                    </button>
-                  ))}
+                  {SLOTS.map(slot => {
+                    const SlotIcon = slot.icon;
+                    return (
+                      <button key={slot.id} type="button" onClick={() => setForm(f => ({ ...f, deliverySlot: slot.id }))}
+                        className={`border rounded-xl p-3 text-left transition-all cursor-pointer ${form.deliverySlot === slot.id ? 'border-emerald-500 bg-emerald-950/60 ring-1 ring-emerald-500/30' : 'border-slate-700 bg-slate-950/40 hover:border-slate-600'}`}>
+                        <div className="font-bold text-white text-xs flex items-center gap-1.5">
+                          <SlotIcon className="w-3.5 h-3.5 text-amber-400" />
+                          <span>{slot.label}</span>
+                        </div>
+                        <div className="text-slate-400 text-[11px] mt-0.5">{slot.time}</div>
+                        {slot.highlight && <div className="text-emerald-400 text-[10px] font-bold mt-0.5">{slot.desc}</div>}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -181,7 +187,7 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
                 <textarea rows={2} value={form.driverNotes} onChange={e => setForm(f => ({ ...f, driverNotes: e.target.value }))}
                   className="w-full px-3 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm resize-none focus:outline-none focus:border-emerald-500 transition-colors"
                   placeholder="e.g. Please ring doorbell; handle glass honey jars carefully." />
-                <p className="text-[11px] text-slate-500 mt-1">This note will be transmitted directly to Hanna's Driver &amp; Delivery app.</p>
+                <p className="text-[11px] text-slate-500 mt-1">This note will be transmitted directly to the Driver &amp; Delivery app.</p>
               </div>
             </div>
 
@@ -193,8 +199,9 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
               <p className="text-xs text-slate-300 mb-3">Your order is packaged in 100% biodegradable cornstarch wrapping. Zero plastic, zero corporate middlemen taking 60% margins.</p>
               <div className="flex flex-wrap gap-2">
                 {uniqueFarmers.map(farmer => (
-                  <span key={farmer} className="text-[11px] bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 px-3 py-1 rounded-full font-semibold">
-                    👨‍🌾 {farmer}
+                  <span key={farmer} className="inline-flex items-center gap-1 text-[11px] bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 px-3 py-1 rounded-full font-semibold">
+                    <User className="w-3 h-3 text-emerald-400" />
+                    <span>{farmer}</span>
                   </span>
                 ))}
               </div>
@@ -266,7 +273,7 @@ export const PurchasePage: React.FC<PurchasePageProps> = ({ onNavigate }) => {
               </div>
 
               <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-3 text-[11px] text-slate-400">
-                <strong className="text-slate-300">📌 Team Flow:</strong> Per project flowchart (Cart → Purchase → Login), clicking proceed takes you to the <strong>Login Page</strong> to authenticate before <strong>Payment</strong>.
+                <strong className="text-slate-300">Order Flow:</strong> Per project workflow (Cart → Purchase → Login), clicking proceed takes you to the <strong>Login Page</strong> to authenticate before <strong>Payment</strong>.
               </div>
             </div>
           </aside>

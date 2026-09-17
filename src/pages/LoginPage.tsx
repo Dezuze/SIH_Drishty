@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { ShoppingBag, Store, Eye, EyeOff, Check } from 'lucide-react';
+import { ShoppingBag, Store, Eye, EyeOff, Check, ShoppingCart, Sprout, Zap, User, Smartphone } from 'lucide-react';
 
 type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
 
@@ -118,7 +118,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
         {/* Checkout context banner */}
         {fromPurchase && (
           <div className="mb-6 flex items-center gap-4 bg-blue-950/60 border border-blue-500/30 rounded-2xl p-4">
-            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-lg shrink-0">🛒</div>
+            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white shrink-0">
+              <ShoppingCart className="w-5 h-5" />
+            </div>
             <div>
               <p className="font-bold text-blue-300 text-sm">Checkout in Progress</p>
               <p className="text-blue-400 text-xs">Please sign in to your consumer account to complete your purchase and continue to the Payment Page.</p>
@@ -137,7 +139,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
             <div className="relative z-10 p-8">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 py-1.5 rounded-full text-xs font-bold text-emerald-300 mb-4">
-                🌱 DIRECT FARM TO CONSUMER
+                <Sprout className="w-3.5 h-3.5" />
+                <span>DIRECT FARM TO CONSUMER</span>
               </div>
               <h2 className="text-2xl font-extrabold text-white mb-2 leading-snug">
                 Fair Profits for Farmers.<br />Fresh Produce for Consumers.
@@ -180,18 +183,23 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
 
             {/* Demo Fill Box */}
             <div className="bg-emerald-950/40 border border-dashed border-emerald-500/40 rounded-xl p-3 mb-5">
-              <p className="text-xs font-bold text-white mb-1">⚡ Quick Demo Login Fill:</p>
+              <p className="text-xs font-bold text-white mb-1 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                <span>Quick Demo Login Fill:</span>
+              </p>
               <p className="text-[11px] text-slate-400 mb-2">
                 {role === 'consumer' ? 'Consumer flow: Leads directly to Payment Page.' : 'Farmer flow: Leads to Vendor Dashboard & Analytics.'}
               </p>
               <div className="flex gap-2 flex-wrap">
                 <button type="button" onClick={() => fillDemo('consumer')}
-                  className="text-[11px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg font-semibold cursor-pointer transition-colors">
-                  👤 Fill Consumer (Ananya)
+                  className="inline-flex items-center gap-1 text-[11px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg font-semibold cursor-pointer transition-colors">
+                  <User className="w-3 h-3 text-emerald-400" />
+                  <span>Fill Consumer (Ananya)</span>
                 </button>
                 <button type="button" onClick={() => fillDemo('vendor')}
-                  className="text-[11px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg font-semibold cursor-pointer transition-colors">
-                  👨‍🌾 Fill Farmer (Ramesh)
+                  className="inline-flex items-center gap-1 text-[11px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg font-semibold cursor-pointer transition-colors">
+                  <Sprout className="w-3 h-3 text-amber-400" />
+                  <span>Fill Farmer (Ramesh)</span>
                 </button>
               </div>
             </div>
@@ -235,7 +243,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
               </button>
 
               <p id="routeIndicatorNote" className="text-center text-[11px] text-slate-500">
-                Destined for: <strong className="text-slate-300">{role === 'consumer' ? 'Payment Page (Hanna\'s module)' : 'Vendor Page & Analytics (Ihsana\'s module)'}</strong>
+                Destined for: <strong className="text-slate-300">{role === 'consumer' ? 'Payment Page (KisanDirect Gateway)' : 'Vendor Page & Analytics'}</strong>
               </p>
 
               <div className="relative flex items-center gap-3">
@@ -246,8 +254,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onNavigate }) => {
 
               <div className="grid grid-cols-2 gap-3">
                 <button type="button" onClick={() => handleExternalAuth('Mobile OTP')}
-                  className="py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl text-xs font-bold cursor-pointer transition-colors">
-                  📱 Mobile OTP
+                  className="inline-flex items-center justify-center gap-1.5 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl text-xs font-bold cursor-pointer transition-colors">
+                  <Smartphone className="w-3.5 h-3.5 text-slate-300" />
+                  <span>Mobile OTP</span>
                 </button>
                 <button type="button" onClick={() => handleExternalAuth('Google')}
                   className="py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl text-xs font-bold cursor-pointer transition-colors flex items-center justify-center gap-2">

@@ -16,7 +16,8 @@ import {
   ShoppingBag,
   ArrowLeft,
   Eye,
-  EyeOff
+  EyeOff,
+  Zap
 } from 'lucide-react';
 
 export const Login: React.FC = () => {
@@ -233,8 +234,9 @@ export const Login: React.FC = () => {
 
             {/* Quick Demo Logins */}
             <div className="pt-4 border-t border-slate-200">
-              <p className="text-[11px] font-bold text-slate-600 text-center mb-3 uppercase tracking-wider">
-                ⚡ 1-Click Demo Profiles
+              <p className="text-[11px] font-bold text-slate-600 text-center mb-3 uppercase tracking-wider flex items-center justify-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-amber-500" />
+                <span>1-Click Demo Profiles</span>
               </p>
               <div className="grid grid-cols-3 gap-2">
                 <button

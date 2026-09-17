@@ -56,7 +56,7 @@ export const Cart: React.FC<CartProps> = ({ onNavigate }) => {
   const promoOptions = [
     { code: 'KISAN10', desc: '10% Direct Discount' },
     { code: 'ORGANIC', desc: '10% Organic Special' },
-    { code: 'FARM2026', desc: 'SIH Fest 10% Off' }
+    { code: 'FARM2026', desc: 'Harvest Fest 10% Off' }
   ];
 
   /* ── EMPTY STATE ── */
@@ -102,7 +102,10 @@ export const Cart: React.FC<CartProps> = ({ onNavigate }) => {
                   </div>
                   <div>
                     <h4 style={{ fontSize: 13, fontWeight: 800, color: '#0f172a', marginBottom: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{prod.name}</h4>
-                    <p style={{ fontSize: 11, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>🌾 {prod.farmer}</p>
+                    <p style={{ fontSize: 11, color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', display: 'flex', alignItems: 'center', gap: 4 }}>
+                      <Sprout size={11} color="#059669" />
+                      <span>{prod.farmer}</span>
+                    </p>
                   </div>
                   <div style={{ paddingTop: '0.625rem', borderTop: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <span style={{ fontSize: 13, fontWeight: 900, fontFamily: 'monospace' }}>₹{prod.price}<span style={{ fontSize: 11, fontWeight: 500, color: '#94a3b8' }}>/{prod.unit}</span></span>
@@ -159,7 +162,10 @@ export const Cart: React.FC<CartProps> = ({ onNavigate }) => {
                 <Truck size={15} />
               </div>
               {subtotal >= freeDeliveryThreshold
-                ? <span style={{ color: '#047857' }}>🎉 Unlocked: FREE Express Cold-Chain Delivery!</span>
+                ? <span style={{ color: '#047857', display: 'flex', alignItems: 'center', gap: 5 }}>
+                    <CheckCircle2 size={15} color="#059669" />
+                    <span>Unlocked: FREE Express Cold-Chain Delivery!</span>
+                  </span>
                 : <span style={{ color: '#0f172a' }}>Add <strong style={{ color: '#059669', fontFamily: 'monospace' }}>₹{amountNeededForFreeDelivery}</strong> more for <strong style={{ color: '#059669' }}>FREE Delivery</strong></span>
               }
             </span>
@@ -334,10 +340,11 @@ export const Cart: React.FC<CartProps> = ({ onNavigate }) => {
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                     {promoOptions.map(opt => (
                       <button key={opt.code} onClick={() => applyPromo(opt.code)} title={opt.desc}
-                        style={{ padding: '4px 10px', borderRadius: 8, background: '#f8fafc', border: '1px solid #e2e8f0', fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: '#475569', cursor: 'pointer' }}
+                        style={{ padding: '4px 10px', borderRadius: 8, background: '#f8fafc', border: '1px solid #e2e8f0', fontSize: 11, fontWeight: 700, fontFamily: 'monospace', color: '#475569', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: 4 }}
                         onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = '#ecfdf5'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#a7f3d0'; (e.currentTarget as HTMLButtonElement).style.color = '#047857'; }}
                         onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = '#f8fafc'; (e.currentTarget as HTMLButtonElement).style.borderColor = '#e2e8f0'; (e.currentTarget as HTMLButtonElement).style.color = '#475569'; }}>
-                        🏷️ {opt.code}
+                        <Tag size={10} color="#059669" />
+                        <span>{opt.code}</span>
                       </button>
                     ))}
                   </div>

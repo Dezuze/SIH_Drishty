@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, MapPin, Phone, Mail, Compass, ShoppingBag, Sprout } from 'lucide-react';
+import { X, MapPin, Phone, Mail, Compass, ShoppingBag, Sprout, Check } from 'lucide-react';
 import VerificationBadge from './VerificationBadge';
 import GiTag from './GiTag';
 import './VendorModal.css';
@@ -108,8 +108,8 @@ export function VendorModal({ vendor, isOpen, onClose, onAddToCart }) {
               </h3>
               <div className="farming-practices-list">
                 {vendor.farmingPractices.map((practice, idx) => (
-                  <span key={idx} className="practice-pill">
-                    ✓ {practice}
+                  <span key={idx} className="practice-pill inline-flex items-center gap-1">
+                    <Check size={12} /> {practice}
                   </span>
                 ))}
               </div>

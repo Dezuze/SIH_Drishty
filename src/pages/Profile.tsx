@@ -27,7 +27,9 @@ import {
   X,
   FileText,
   QrCode,
-  Compass
+  Compass,
+  Star,
+  Check
 } from 'lucide-react';
 import './Profile.css';
 
@@ -518,7 +520,10 @@ export const Profile: React.FC = () => {
                   <span className="stat-title">
                     <ShieldCheck className="w-4 h-4" /> Driver Rating
                   </span>
-                  <p className="stat-value">4.9 ★</p>
+                  <p className="stat-value flex items-center gap-1">
+                    <span>4.9</span>
+                    <Star className="w-4 h-4 fill-amber-400 text-amber-400 inline" />
+                  </p>
                   <span className="stat-sub">Gold Partner Fleet</span>
                 </div>
               </>
@@ -708,8 +713,8 @@ export const Profile: React.FC = () => {
             <div className="content-section-card" style={{ borderColor: '#fde68a' }}>
               <div className="card-header-row">
                 <div className="card-header-left">
-                  <div className="card-header-icon" style={{ background: '#fef3c7', color: '#92400e' }}>
-                    🌾
+                  <div className="card-header-icon" style={{ background: '#fef3c7', color: '#92400e', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Sprout className="w-5 h-5" />
                   </div>
                   <div className="card-header-title">
                     <span className="badge-pill badge-farmer" style={{ marginBottom: '4px' }}>
@@ -778,8 +783,8 @@ export const Profile: React.FC = () => {
             <div className="content-section-card">
               <div className="card-header-row">
                 <div className="card-header-left">
-                  <div className="card-header-icon" style={{ background: '#ecfdf5', color: '#059669' }}>
-                    🌱
+                  <div className="card-header-icon" style={{ background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Leaf className="w-5 h-5" />
                   </div>
                   <div className="card-header-title">
                     <span className="badge-pill badge-verified" style={{ marginBottom: '4px' }}>
@@ -822,7 +827,7 @@ export const Profile: React.FC = () => {
 
                   saveCustomProduct(createdProduct);
                   setPublishedCrops(getCustomProducts());
-                  addToast(`🌾 "${createdProduct.name}" published to Marketplace!`, 'success');
+                  addToast(`"${createdProduct.name}" published to Marketplace!`, 'success');
                   setNewCrop({
                     name: '',
                     category: 'Vegetables',
@@ -1025,7 +1030,7 @@ export const Profile: React.FC = () => {
                           </span>
                           {crop.requiresRefrigeration && (
                             <span className="badge-pill badge-driver" style={{ padding: '2px 8px', fontSize: '0.7rem' }}>
-                              ❄ Cold Chain
+                              Cold Chain
                             </span>
                           )}
                           <button
@@ -1056,8 +1061,8 @@ export const Profile: React.FC = () => {
             <div className="content-section-card" style={{ borderColor: '#bfdbfe' }}>
               <div className="card-header-row">
                 <div className="card-header-left">
-                  <div className="card-header-icon" style={{ background: '#eff6ff', color: '#1d4ed8' }}>
-                    🚚
+                  <div className="card-header-icon" style={{ background: '#eff6ff', color: '#1d4ed8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Truck className="w-5 h-5" />
                   </div>
                   <div className="card-header-title">
                     <span className="badge-pill badge-driver" style={{ marginBottom: '4px' }}>
@@ -1158,7 +1163,7 @@ export const Profile: React.FC = () => {
                     } catch (e) {
                       console.error(e);
                     }
-                    addToast('🚚 Driver Vehicle & Service Area saved successfully!', 'success');
+                    addToast('Driver Vehicle & Service Area saved successfully!', 'success');
                   }}
                   className="btn-primary-action"
                   style={{ background: 'linear-gradient(135deg, #0284c7, #0369a1)' }}
@@ -1293,13 +1298,13 @@ export const Profile: React.FC = () => {
                       <div className="grid grid-cols-4 gap-2 text-center text-[10px] font-bold text-slate-600">
                         <div className="space-y-1">
                           <div className="w-6 h-6 rounded-full bg-emerald-600 text-white mx-auto flex items-center justify-center text-[10px]">
-                            ✓
+                            <Check size={12} strokeWidth={3} />
                           </div>
                           <span>Harvested</span>
                         </div>
                         <div className="space-y-1">
                           <div className="w-6 h-6 rounded-full bg-emerald-600 text-white mx-auto flex items-center justify-center text-[10px]">
-                            ✓
+                            <Check size={12} strokeWidth={3} />
                           </div>
                           <span>Quality Lab Checked</span>
                         </div>
@@ -1307,7 +1312,7 @@ export const Profile: React.FC = () => {
                           <div className={`w-6 h-6 rounded-full mx-auto flex items-center justify-center text-[10px] ${
                             isDelivered ? 'bg-emerald-600 text-white' : 'bg-blue-600 text-white animate-pulse'
                           }`}>
-                            {isDelivered ? '✓' : '3'}
+                            {isDelivered ? <Check size={12} strokeWidth={3} /> : '3'}
                           </div>
                           <span className={isDelivered ? '' : 'text-blue-700 font-bold'}>In Cold-Chain Transit</span>
                         </div>
@@ -1315,7 +1320,7 @@ export const Profile: React.FC = () => {
                           <div className={`w-6 h-6 rounded-full mx-auto flex items-center justify-center text-[10px] ${
                             isDelivered ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-500'
                           }`}>
-                            {isDelivered ? '✓' : '4'}
+                            {isDelivered ? <Check size={12} strokeWidth={3} /> : '4'}
                           </div>
                           <span>Delivered</span>
                         </div>
@@ -1339,8 +1344,9 @@ export const Profile: React.FC = () => {
                             <p className="text-[11px] text-slate-500">
                               {item.quantity} {item.product?.unit || 'kg'} × ₹{item.product?.price}
                             </p>
-                            <p className="text-[10px] text-emerald-700 font-medium truncate">
-                              🌾 {item.product?.farmer || ord.primaryFarmer}
+                            <p className="text-[10px] text-emerald-700 font-medium truncate flex items-center gap-1">
+                              <Sprout className="w-3 h-3 text-emerald-600 shrink-0" />
+                              <span>{item.product?.farmer || ord.primaryFarmer}</span>
                             </p>
                           </div>
                           <span className="font-mono font-bold text-slate-900">
@@ -1551,7 +1557,7 @@ export const Profile: React.FC = () => {
               <div className="content-section-card space-y-4" style={{ borderColor: '#bfdbfe' }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-800 flex items-center justify-center font-bold">
-                    🚚
+                    <Truck className="w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="text-base font-bold text-slate-900">Regional Fleet Base</h3>

@@ -59,15 +59,15 @@ function Header() {
   const getNavLinks = () => {
     if (user?.role === 'driver') {
       return [
-        { name: '🚚 Delivery Operations', path: '/driver' },
-        { name: '🚛 Vehicle & Fleet Specs', path: '/profile' }
+        { name: 'Delivery Operations', path: '/driver' },
+        { name: 'Vehicle & Fleet Specs', path: '/profile' }
       ];
     }
     if (user?.role === 'farmer') {
       return [
-        { name: '🌾 My Farm & Produce', path: '/profile' },
-        { name: '🏪 Local Vendors & Details', path: '/vendors' },
-        { name: '🥬 Produce Catalog', path: '/products' }
+        { name: 'My Farm & Produce', path: '/profile' },
+        { name: 'Local Vendors & Details', path: '/vendors' },
+        { name: 'Produce Catalog', path: '/products' }
       ];
     }
     return [
@@ -231,63 +231,48 @@ function Header() {
                           await quickLogin('customer');
                           setDropdownOpen(false);
                         }}
-                        className={`px-2 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer border ${
+                        className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer border ${
                           user?.role === 'customer'
                             ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
                             : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
                         }`}
                       >
-                        🛒 Buyer
+                        <ShoppingCart size={12} />
+                        <span>Buyer</span>
                       </button>
                       <button
                         onClick={async () => {
                           await quickLogin('farmer');
                           setDropdownOpen(false);
                         }}
-                        className={`px-2 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer border ${
+                        className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer border ${
                           user?.role === 'farmer'
                             ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
                             : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
                         }`}
                       >
-                        🌾 Farmer
+                        <Sprout size={12} />
+                        <span>Farmer</span>
                       </button>
                       <button
                         onClick={async () => {
                           await quickLogin('driver');
                           setDropdownOpen(false);
                         }}
-                        className={`px-2 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer border ${
+                        className={`flex items-center justify-center gap-1 px-2 py-1.5 rounded-xl text-[11px] font-bold transition-all cursor-pointer border ${
                           user?.role === 'driver'
                             ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
                             : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
                         }`}
                       >
-                        🚚 Driver
+                        <Truck size={12} />
+                        <span>Driver</span>
                       </button>
                     </div>
                   </div>
 
                   {/* Strictly Role-Scoped Menu Links */}
                   <div className="space-y-1">
-                    {/* UI & Test Studio */}
-                    <button
-                      onClick={() => {
-                        const inspectorBtn = document.getElementById('btn-open-ui-inspector');
-                        if (inspectorBtn) inspectorBtn.click();
-                        setDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50/70 hover:bg-emerald-100 flex items-center justify-between transition-all cursor-pointer group"
-                    >
-                      <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg bg-emerald-200/80 text-emerald-800 flex items-center justify-center">
-                          <Sparkles size={14} />
-                        </div>
-                        <span>🧪 UI &amp; Test Studio</span>
-                      </div>
-                      <ArrowRight size={12} className="text-emerald-600 group-hover:translate-x-0.5 transition-all" />
-                    </button>
-
                     {/* DRIVER SPECIFIC LINKS */}
                     {isDriver && (
                       <>

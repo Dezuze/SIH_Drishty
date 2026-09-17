@@ -54,7 +54,7 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
                 Official Digital Dispatch Waybill & Manifest
               </h3>
               <p className="text-xs text-slate-600">
-                Manifest Ref: <span className="font-mono text-emerald-400 font-bold">MF-SIH-2026-0829</span> G�� Trivandrum Corridor
+                Manifest Ref: <span className="font-mono text-emerald-600 font-bold">MF-KD-2026-0829</span> • Trivandrum Corridor
               </p>
             </div>
           </div>
@@ -168,7 +168,7 @@ export const ManifestModal: React.FC<ManifestModalProps> = ({
               </div>
               <div>
                 <p className="font-bold text-xs text-slate-900">Government Agri Logistics Compliance</p>
-                <p className="text-[11px] text-slate-600">Digitally signed & time-stamped for SIH 2026 Smart India Prototype.</p>
+                <p className="text-[11px] text-slate-600">Digitally signed &amp; time-stamped for KisanDirect Logistics Network.</p>
               </div>
             </div>
 

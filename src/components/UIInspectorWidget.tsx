@@ -85,7 +85,7 @@ export const UIInspectorWidget: React.FC = () => {
 
     saveCustomProduct(sampleProduct);
     setCropsCount(getCustomProducts().length);
-    addToast('🌾 Farmer Harvest Published: "Kottayam Organic Butter Avocados" (₹120/kg, 80kg)!', 'success');
+    addToast('Farmer Harvest Published: "Kottayam Organic Butter Avocados" (₹120/kg, 80kg)!', 'success');
   };
 
   // 2. Simulate Consumer Order Placement
@@ -143,7 +143,7 @@ export const UIInspectorWidget: React.FC = () => {
       localStorage.setItem('kisan_all_orders', JSON.stringify(allOrders));
       setOrdersCount(allOrders.length);
       window.dispatchEvent(new Event('kisan_orders_updated'));
-      addToast(`🛒 Consumer Order Placed: #${customOrderId} (10 kg, Kottayam Hub, Cold-Chain)!`, 'success');
+      addToast(`Consumer Order Placed: #${customOrderId} (10 kg, Kottayam Hub, Cold-Chain)!`, 'success');
     } catch (e) {
       console.error(e);
     }
@@ -163,11 +163,11 @@ export const UIInspectorWidget: React.FC = () => {
     if (autoAssignRegionalOrders) {
       const res = autoAssignRegionalOrders();
       addToast(
-        `🚚 Regional Auto-Dispatch: ${res.assignedCount} Kottayam order(s) clustered (${res.totalWeightKg}kg / ${res.maxCapacityKg}kg capacity)!`,
+        `Regional Auto-Dispatch: ${res.assignedCount} Kottayam order(s) clustered (${res.totalWeightKg}kg / ${res.maxCapacityKg}kg capacity)!`,
         'success'
       );
     } else {
-      addToast('🚚 Driver Regional Dispatch Triggered!', 'success');
+      addToast('Driver Regional Dispatch Triggered!', 'success');
     }
   };
 
@@ -180,7 +180,7 @@ export const UIInspectorWidget: React.FC = () => {
     clearCart();
     setCropsCount(0);
     setOrdersCount(0);
-    addToast('🔄 Demo state reset to initial pristine defaults!', 'info');
+    addToast('Demo state reset to initial pristine defaults!', 'info');
     setTimeout(() => {
       window.location.reload();
     }, 500);
@@ -209,7 +209,7 @@ export const UIInspectorWidget: React.FC = () => {
             <div className="ui-inspector-header">
               <div className="ui-inspector-header-left">
                 <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
-                  🧪
+                  <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="ui-inspector-title">
@@ -277,12 +277,12 @@ export const UIInspectorWidget: React.FC = () => {
                       <button 
                         onClick={async () => {
                           await quickLogin('farmer');
-                          addToast('👨‍🌾 Logged in as Farmer Madhavan Nair', 'success');
+                          addToast('Logged in as Farmer Madhavan Nair', 'success');
                           navigate('/profile');
                         }}
                         className={`persona-card-btn ${user?.role === 'farmer' ? 'active-farmer' : ''}`}
                       >
-                        <span className="persona-icon">👨‍🌾</span>
+                        <span className="persona-icon"><Sprout size={16} /></span>
                         <span className="persona-label">Farmer</span>
                         <span className="persona-sub">Madhavan Nair</span>
                       </button>
@@ -290,12 +290,12 @@ export const UIInspectorWidget: React.FC = () => {
                       <button 
                         onClick={async () => {
                           await quickLogin('customer');
-                          addToast('🛒 Logged in as Consumer Rahul Nair', 'success');
+                          addToast('Logged in as Consumer Rahul Nair', 'success');
                           navigate('/profile');
                         }}
                         className={`persona-card-btn ${user?.role === 'customer' ? 'active-consumer' : ''}`}
                       >
-                        <span className="persona-icon">🛒</span>
+                        <span className="persona-icon"><ShoppingCart size={16} /></span>
                         <span className="persona-label">Consumer</span>
                         <span className="persona-sub">Rahul Nair</span>
                       </button>
@@ -303,12 +303,12 @@ export const UIInspectorWidget: React.FC = () => {
                       <button 
                         onClick={async () => {
                           await quickLogin('driver');
-                          addToast('🚚 Logged in as Driver Suresh Pillai', 'success');
+                          addToast('Logged in as Driver Suresh Pillai', 'success');
                           navigate('/profile');
                         }}
                         className={`persona-card-btn ${user?.role === 'driver' ? 'active-driver' : ''}`}
                       >
-                        <span className="persona-icon">🚚</span>
+                        <span className="persona-icon"><Truck size={16} /></span>
                         <span className="persona-label">Driver</span>
                         <span className="persona-sub">Suresh Pillai</span>
                       </button>
@@ -331,7 +331,7 @@ export const UIInspectorWidget: React.FC = () => {
                       {/* Step 1: Farmer Publish */}
                       <div className="workflow-action-card">
                         <div className="workflow-info">
-                          <h4>🌾 1. Publish Farmer Harvest</h4>
+                          <h4>1. Publish Farmer Harvest</h4>
                           <p>Lists "Kottayam Organic Avocados" (80kg, Cold-Chain) to Marketplace</p>
                         </div>
                         <button 
@@ -347,7 +347,7 @@ export const UIInspectorWidget: React.FC = () => {
                       {/* Step 2: Consumer Order */}
                       <div className="workflow-action-card">
                         <div className="workflow-info">
-                          <h4>🛒 2. Place Consumer Order</h4>
+                          <h4>2. Place Consumer Order</h4>
                           <p>Generates real customer order (10kg, Kottayam Hub, Refrigerated)</p>
                         </div>
                         <button 
@@ -363,7 +363,7 @@ export const UIInspectorWidget: React.FC = () => {
                       {/* Step 3: Driver Dispatch */}
                       <div className="workflow-action-card">
                         <div className="workflow-info">
-                          <h4>🚚 3. Driver Regional Auto-Dispatch</h4>
+                          <h4>3. Driver Regional Auto-Dispatch</h4>
                           <p>Clusters Kottayam orders matching 250kg refrigerated vehicle</p>
                         </div>
                         <button 
@@ -379,7 +379,7 @@ export const UIInspectorWidget: React.FC = () => {
                       {/* Reset */}
                       <div className="workflow-action-card" style={{ background: '#fff1f2', borderColor: '#fecdd3' }}>
                         <div className="workflow-info">
-                          <h4 style={{ color: '#e11d48' }}>🔄 Reset Demo State</h4>
+                          <h4 style={{ color: '#e11d48' }}>Reset Demo State</h4>
                           <p>Clears test orders, custom crops, and cart back to clean defaults</p>
                         </div>
                         <button 
@@ -552,13 +552,13 @@ export const UIInspectorWidget: React.FC = () => {
 
                     <div className="page-jumper-row">
                       {[
-                        { label: '🏠 Home', path: '/' },
-                        { label: '🛒 Marketplace', path: '/products' },
-                        { label: '👤 Profile & Farm', path: '/profile' },
-                        { label: '🛍️ Cart View', path: '/cart' },
-                        { label: '🚚 Driver Portal', path: '/driver' },
-                        { label: '📍 Live Tracking', path: '/tracking' },
-                        { label: '📊 DRISHTI Command', path: '/logistics' }
+                        { label: 'Home', path: '/' },
+                        { label: 'Marketplace', path: '/products' },
+                        { label: 'Profile & Farm', path: '/profile' },
+                        { label: 'Cart View', path: '/cart' },
+                        { label: 'Driver Portal', path: '/driver' },
+                        { label: 'Live Tracking', path: '/tracking' },
+                        { label: 'DRISHTI Command', path: '/logistics' }
                       ].map((item) => (
                         <button
                           key={item.path}

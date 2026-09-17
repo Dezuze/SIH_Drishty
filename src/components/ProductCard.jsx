@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, Star } from 'lucide-react';
 import './ProductCard.css';
 
 function ProductCard({ product, onAddToCart }) {
@@ -28,7 +28,10 @@ function ProductCard({ product, onAddToCart }) {
       <div className="product-info">
         <div className="product-meta-top">
           <span className="product-category">{product.category}</span>
-          <span className="product-rating">★ {rating.toFixed(1)}</span>
+          <span className="product-rating inline-flex items-center gap-1">
+            <Star size={12} className="fill-amber-400 text-amber-400 inline" />
+            {rating.toFixed(1)}
+          </span>
         </div>
         <h3 className="product-name">{product.name}</h3>
         

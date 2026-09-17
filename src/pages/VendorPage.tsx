@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { BarChart2, Package, TrendingUp, ArrowUpRight, Star, Check, PlusCircle, Eye, ExternalLink } from 'lucide-react';
+import { BarChart2, Package, TrendingUp, ArrowUpRight, Star, Check, PlusCircle, Eye, ExternalLink, Link2, Carrot, Sparkles, Droplets, Apple, Leaf, ClipboardList, Clock } from 'lucide-react';
 
 type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
 
@@ -27,7 +27,7 @@ const STAT_CARDS = [
   { label: 'This Week\'s Revenue', value: '₹10,120', sub: '+18% vs last week', icon: <TrendingUp className="w-5 h-5" />, color: 'emerald' },
   { label: 'Orders Pending', value: '4', sub: '2 assigned to drivers', icon: <Package className="w-5 h-5" />, color: 'yellow' },
   { label: 'Products Listed', value: '5', sub: 'All active, 1 low stock', icon: <BarChart2 className="w-5 h-5" />, color: 'blue' },
-  { label: 'Avg. Buyer Rating', value: '4.7 ★', sub: 'Across 89 reviews', icon: <Star className="w-5 h-5" />, color: 'orange' },
+  { label: 'Avg. Buyer Rating', value: '4.7 / 5.0', sub: 'Across 89 reviews', icon: <Star className="w-5 h-5" />, color: 'orange' },
 ];
 
 export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
@@ -47,7 +47,7 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
           <div>
             <p className="text-[11px] text-slate-500 uppercase font-extrabold tracking-widest">Vendor Portal</p>
-            <h1 className="text-base font-extrabold text-white leading-none mt-0.5">Welcome, {farmerName} 👨‍🌾</h1>
+            <h1 className="text-base font-extrabold text-white leading-none mt-0.5">Welcome, {farmerName}</h1>
           </div>
           <div className="flex items-center gap-2">
             <button onClick={() => onNavigate('marketplace')}
@@ -65,8 +65,9 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
           <div className="flex gap-0 border-b border-transparent">
             {(['dashboard', 'products', 'orders'] as const).map(tab => (
               <button key={tab} onClick={() => setActiveTab(tab)}
-                className={`capitalize text-xs font-extrabold px-4 py-2.5 border-b-2 transition-colors cursor-pointer ${activeTab === tab ? 'border-amber-400 text-amber-300' : 'border-transparent text-slate-400 hover:text-white'}`}>
-                {tab === 'dashboard' ? '📊 Dashboard' : tab === 'products' ? '🌾 My Listings' : '📋 Recent Orders'}
+                className={`capitalize text-xs font-extrabold px-4 py-2.5 border-b-2 transition-colors cursor-pointer flex items-center gap-1.5 ${activeTab === tab ? 'border-amber-400 text-amber-300' : 'border-transparent text-slate-400 hover:text-white'}`}>
+                {tab === 'dashboard' ? <BarChart2 className="w-3.5 h-3.5" /> : tab === 'products' ? <Leaf className="w-3.5 h-3.5" /> : <ClipboardList className="w-3.5 h-3.5" />}
+                <span>{tab === 'dashboard' ? 'Dashboard' : tab === 'products' ? 'My Listings' : 'Recent Orders'}</span>
               </button>
             ))}
           </div>
@@ -76,14 +77,16 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* HANDOFF BANNER */}
         <div className="mb-5 flex items-start gap-3 bg-purple-950/40 border border-purple-500/30 rounded-2xl p-4">
-          <div className="text-2xl shrink-0 mt-0.5">🔗</div>
+          <div className="text-purple-300 shrink-0 mt-0.5">
+            <Link2 className="w-5 h-5" />
+          </div>
           <div>
-            <p className="font-extrabold text-purple-300 text-sm">Handoff Point — Ihsana's Module</p>
+            <p className="font-extrabold text-purple-300 text-sm">Handoff Point — Vendor Module</p>
             <p className="text-purple-400 text-xs mt-0.5">
-              This page is Ann's boundary. In the integrated SIH product, logged-in farmers are redirected to Ihsana's Vendor Dashboard with a secure <code className="text-purple-300/70 text-[10px]">GET /api/vendor/profile</code> call carrying the JWT token. The analytics, listing management, and order operations below are a preview of the expected interface.
+              In the integrated KisanDirect platform, logged-in farmers are redirected to the Vendor Dashboard with a secure <code className="text-purple-300/70 text-[10px]">GET /api/vendor/profile</code> call carrying the JWT token.
             </p>
           </div>
-          <button onClick={() => addToast('JWT handoff to Ihsana\'s backend initiated (demo)', 'info')}
+          <button onClick={() => addToast('JWT handoff to backend initiated (demo)', 'info')}
             className="shrink-0 text-[11px] font-bold text-purple-200 border border-purple-500/40 bg-purple-950/60 hover:bg-purple-900/60 px-3 py-1.5 rounded-lg cursor-pointer transition-colors flex items-center gap-1.5">
             <ExternalLink className="w-3 h-3" /> Simulate Handoff
           </button>
@@ -117,7 +120,11 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
                       <span className={`text-[11px] font-extrabold w-5 text-center ${i === 0 ? 'text-yellow-400' : i === 1 ? 'text-slate-300' : 'text-amber-700'}`}>#{i + 1}</span>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-bold text-white truncate">{p.name}</p>
-                        <p className="text-[11px] text-slate-400">{p.orders} orders • {p.rating} ★</p>
+                        <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
+                          <span>{p.orders} orders</span>
+                          <span>•</span>
+                          <span className="flex items-center gap-0.5 text-amber-400"><Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {p.rating}</span>
+                        </p>
                       </div>
                       <span className="text-emerald-400 font-mono text-xs font-extrabold">₹{p.revenue}</span>
                     </div>
@@ -136,7 +143,10 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
                       <div>
                         <p className="font-bold text-white">{order.id} • {order.buyer}</p>
                         <p className="text-slate-400 text-[11px] truncate max-w-[200px]">{order.items}</p>
-                        <p className="text-slate-500 text-[10px] mt-0.5">{order.time}</p>
+                        <p className="text-slate-500 text-[10px] mt-0.5 flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          <span>{order.time}</span>
+                        </p>
                       </div>
                       <span className={`ml-auto text-[10px] font-extrabold uppercase tracking-wide px-2 py-0.5 rounded-full bg-${order.color}-900/60 text-${order.color}-300 border border-${order.color}-800 whitespace-nowrap`}>
                         {order.status}
@@ -154,7 +164,7 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-extrabold text-white">My Produce Listings</h2>
-              <button onClick={() => addToast('Add New Listing → Ihsana\'s product management module', 'info')}
+              <button onClick={() => addToast('Add New Listing → Product management module', 'info')}
                 className="flex items-center gap-2 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-xl cursor-pointer transition-colors">
                 <PlusCircle className="w-3.5 h-3.5" /> Add New Product
               </button>
@@ -162,8 +172,8 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
             <div className="space-y-3">
               {DEMO_PRODUCTS.map(p => (
                 <div key={p.id} className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl p-4 flex items-center gap-4 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-xl shrink-0">
-                    {p.category === 'Vegetables' ? '🥬' : p.category === 'Honey' ? '🍯' : p.category === 'Oils' ? '🫙' : p.category === 'Fruits' ? '🍌' : '🌿'}
+                  <div className="w-10 h-10 rounded-xl bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+                    {p.category === 'Vegetables' ? <Carrot className="w-5 h-5" /> : p.category === 'Honey' ? <Sparkles className="w-5 h-5 text-amber-400" /> : p.category === 'Oils' ? <Droplets className="w-5 h-5 text-blue-400" /> : p.category === 'Fruits' ? <Apple className="w-5 h-5 text-rose-400" /> : <Leaf className="w-5 h-5" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -173,14 +183,17 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
                     <div className="flex items-center gap-3 mt-0.5 flex-wrap">
                       <span className="text-[11px] text-slate-400">₹{p.price}/unit • Stock: {p.stock}</span>
                       <span className="text-[11px] text-slate-400">{p.orders} orders</span>
-                      <span className="text-[11px] text-yellow-400">{p.rating} ★</span>
+                      <span className="text-[11px] text-amber-400 flex items-center gap-1">
+                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                        <span>{p.rating}</span>
+                      </span>
                     </div>
                   </div>
                   <div className="text-right shrink-0">
                     <p className="text-emerald-400 font-mono font-extrabold text-base">₹{p.revenue}</p>
                     <p className="text-[11px] text-slate-500">Total Revenue</p>
                   </div>
-                  <button onClick={() => addToast(`Edit ${p.name} → Ihsana's listing editor`, 'info')}
+                  <button onClick={() => addToast(`Edit ${p.name} → Listing editor`, 'info')}
                     className="ml-2 p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg cursor-pointer transition-colors">
                     <Eye className="w-4 h-4" />
                   </button>
@@ -197,7 +210,9 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
             <div className="space-y-3">
               {RECENT_ORDERS.map(order => (
                 <div key={order.id} className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl p-4 flex items-start gap-4 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg shrink-0">📋</div>
+                  <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 shrink-0">
+                    <ClipboardList className="w-5 h-5" />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-0.5">
                       <p className="font-extrabold text-white text-sm">{order.id}</p>
@@ -207,9 +222,12 @@ export const VendorPage: React.FC<VendorPageProps> = ({ onNavigate }) => {
                     </div>
                     <p className="text-xs text-slate-300"><strong className="text-slate-200">Buyer:</strong> {order.buyer}</p>
                     <p className="text-[11px] text-slate-400 mt-0.5">{order.items}</p>
-                    <p className="text-[11px] text-slate-500 mt-1">🕐 {order.time}</p>
+                    <p className="text-[11px] text-slate-500 mt-1 flex items-center gap-1">
+                      <Clock className="w-3 h-3" />
+                      <span>{order.time}</span>
+                    </p>
                   </div>
-                  <button onClick={() => addToast(`Order ${order.id} management → Hanna's delivery tracking module`, 'info')}
+                  <button onClick={() => addToast(`Order ${order.id} management → Delivery tracking module`, 'info')}
                     className="shrink-0 text-xs text-slate-300 hover:text-white border border-slate-700 hover:border-slate-600 px-3 py-1.5 rounded-lg font-semibold cursor-pointer transition-colors">
                     Manage
                   </button>

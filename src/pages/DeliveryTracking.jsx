@@ -16,11 +16,20 @@ import {
   ExternalLink,
   ChevronRight,
   Sparkles,
-  AlertCircle
+  AlertCircle,
+  Sprout,
+  Package
 } from 'lucide-react';
 
-// Custom HTML emoji markers for Leaflet
-function createEmojiIcon(emoji, label, bgColor = '#ffffff', borderColor = '#2E7D32') {
+const SVG_ICONS = {
+  farmer: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>`,
+  driver: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>`,
+  customer: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>`
+};
+
+// Custom SVG icon markers for Leaflet
+function createSvgMapIcon(type, label, bgColor = '#ffffff', borderColor = '#2E7D32') {
+  const iconSvg = SVG_ICONS[type] || SVG_ICONS.farmer;
   return L.divIcon({
     className: 'custom-map-icon',
     html: `
@@ -33,10 +42,9 @@ function createEmojiIcon(emoji, label, bgColor = '#ffffff', borderColor = '#2E7D
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.25);
         transition: transform 0.2s ease;
-      ">${emoji}</div>
+      ">${iconSvg}</div>
       <div style="
         background: rgba(15, 23, 42, 0.85);
         backdrop-filter: blur(4px);
@@ -103,24 +111,24 @@ export const DeliveryTracking = () => {
 
       // 1. Farmer Marker
       const farmMarker = L.marker([order.pickupLat, order.pickupLng], {
-        icon: createEmojiIcon('🌾', 'Farmer Field', '#E8F5E9', '#2E7D32')
+        icon: createSvgMapIcon('farmer', 'Farmer Field', '#E8F5E9', '#2E7D32')
       }).addTo(map);
-      farmMarker.bindPopup(`<b>🌾 Farm Source:</b><br>${order.pickupAddress}`);
+      farmMarker.bindPopup(`<b>Farm Source:</b><br>${order.pickupAddress}`);
       farmerMarkerRef.current = farmMarker;
 
       // 2. Customer Marker
       const custMarker = L.marker([order.customerLat, order.customerLng], {
-        icon: createEmojiIcon('📍', 'Your Doorstep', '#FFF8E1', '#E65100')
+        icon: createSvgMapIcon('customer', 'Your Doorstep', '#FFF8E1', '#E65100')
       }).addTo(map);
-      custMarker.bindPopup(`<b>📍 Delivery Address:</b><br>${order.customerName}<br>${order.customerAddress}`);
+      custMarker.bindPopup(`<b>Delivery Address:</b><br>${order.customerName}<br>${order.customerAddress}`);
       destMarkerRef.current = custMarker;
 
       // 3. Driver Marker
       const dMarker = L.marker([order.currentLat, order.currentLng], {
-        icon: createEmojiIcon('🚚', 'Driver Live', '#FFFFFF', '#0284C7'),
+        icon: createSvgMapIcon('driver', 'Driver Live', '#FFFFFF', '#0284C7'),
         zIndexOffset: 1000
       }).addTo(map);
-      dMarker.bindPopup(`<b>🚚 Driver On Route:</b><br>${order.driverName} (${order.driverPhone})`);
+      dMarker.bindPopup(`<b>Driver On Route:</b><br>${order.driverName} (${order.driverPhone})`);
       driverMarkerRef.current = dMarker;
 
       // Dashed Route Line
@@ -336,7 +344,7 @@ export const DeliveryTracking = () => {
                       boxShadow: isActive ? '0 0 0 5px rgba(34, 197, 94, 0.2)' : 'none',
                       transition: 'all 0.3s ease'
                     }}>
-                      {isCompleted ? '✓' : isActive ? '●' : idx + 1}
+                      {isCompleted ? <CheckCircle2 size={16} /> : idx + 1}
                     </div>
                     <div style={{
                       marginTop: '8px',
@@ -438,39 +446,19 @@ export const DeliveryTracking = () => {
           }}>
             {/* Legend */}
             <div style={{ display: 'flex', gap: '1.2rem', fontSize: '0.82rem', color: '#475569' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span>🌾</span> <strong>Farmer Pickup</strong>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Sprout size={16} className="text-emerald-700" /> <strong>Farmer Pickup</strong>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span>🚚</span> <strong>Driver Live Position</strong>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Truck size={16} className="text-sky-600" /> <strong>Driver Live Position</strong>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <span>📍</span> <strong>Customer Doorstep</strong>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <MapPin size={16} className="text-amber-600" /> <strong>Customer Doorstep</strong>
               </div>
             </div>
 
             {/* Action to Driver Portal */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <button
-                onClick={() => toggleSimulation(order.id)}
-                style={{
-                  background: isSimulating ? '#EF4444' : '#16A34A',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '6px 14px',
-                  fontSize: '0.82rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-                }}
-              >
-                {isSimulating ? '⏸ Pause Simulator' : '🎮 Test Route Movement'}
-              </button>
-
               {(user?.role === 'driver' || user?.role === 'admin') && (
                 <Link
                   to={`/driver/order/${order.id}`}
@@ -511,8 +499,9 @@ export const DeliveryTracking = () => {
             <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', marginBottom: '6px' }}>
               PRODUCT ORDERED
             </div>
-            <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0F172A' }}>
-              🥬 {order.product}
+            <div style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0F172A', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Package size={18} className="text-emerald-600 shrink-0" />
+              <span>{order.product}</span>
             </div>
             <div style={{ fontSize: '0.85rem', color: '#475569', marginTop: '4px' }}>
               Quantity: <strong>{order.quantity}</strong> • ₹{order.price}
@@ -527,8 +516,9 @@ export const DeliveryTracking = () => {
             border: '1px solid #E2E8F0',
             boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
           }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#16A34A', textTransform: 'uppercase', marginBottom: '6px' }}>
-              🌾 FARM SOURCE (PICKUP)
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#16A34A', textTransform: 'uppercase', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Sprout size={14} />
+              <span>FARM SOURCE (PICKUP)</span>
             </div>
             <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#0F172A' }}>
               {order.pickupAddress}
@@ -546,8 +536,9 @@ export const DeliveryTracking = () => {
             border: '1px solid #E2E8F0',
             boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
           }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0284C7', textTransform: 'uppercase', marginBottom: '6px' }}>
-              🚚 ASSIGNED DRIVER
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0284C7', textTransform: 'uppercase', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Truck size={14} />
+              <span>ASSIGNED DRIVER</span>
             </div>
             <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0F172A' }}>
               {order.driverName} ({order.driverId})
@@ -565,8 +556,9 @@ export const DeliveryTracking = () => {
             border: '1px solid #E2E8F0',
             boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
           }}>
-            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#D97706', textTransform: 'uppercase', marginBottom: '6px' }}>
-              📍 DELIVERY DESTINATION
+            <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#D97706', textTransform: 'uppercase', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <MapPin size={14} />
+              <span>DELIVERY DESTINATION</span>
             </div>
             <div style={{ fontSize: '0.95rem', fontWeight: 600, color: '#0F172A' }}>
               {order.customerName}
@@ -576,49 +568,6 @@ export const DeliveryTracking = () => {
             </div>
           </div>
         </div>
-
-        {/* 4. Viva Presentation Helper Card (Drivers & Admin Only) */}
-        {(user?.role === 'driver' || user?.role === 'admin') && (
-          <div style={{
-            background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
-            border: '1px solid #FDE68A',
-            borderRadius: '12px',
-            padding: '1rem 1.25rem',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}>
-            <div>
-              <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#92400E' }}>
-                🎓 SIH & Viva Presentation Helper
-              </div>
-              <p style={{ margin: '2px 0 0', fontSize: '0.82rem', color: '#78350F' }}>
-                Finished a test run? You can reset Order #{order.id} back to "Driver Assigned" to demonstrate the complete 7-stage workflow again.
-              </p>
-            </div>
-
-            <button
-              onClick={() => resetDemoOrder(order.id)}
-              style={{
-                background: '#B45309',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '6px 14px',
-                fontSize: '0.82rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}
-            >
-              <RefreshCw size={14} /> Reset Demo Order
-            </button>
-          </div>
-        )}
 
       </div>
     </div>

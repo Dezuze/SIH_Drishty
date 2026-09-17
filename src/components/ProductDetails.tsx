@@ -13,7 +13,8 @@ import {
   Truck, 
   Clock, 
   AlertTriangle,
-  HeartHandshake
+  HeartHandshake,
+  Info
 } from 'lucide-react';
 
 interface ProductDetailsProps {
@@ -286,8 +287,9 @@ export const ProductDetails: React.FC<ProductDetailsProps> = ({
                   )}
 
                   {alreadyInCart > 0 && (
-                    <p className="text-xs text-slate-600">
-                      ℹ️ You already have <strong className="text-emerald-400">{alreadyInCart} {product.unit}</strong> in your cart. (Remaining stock: {remainingStock} {product.unit})
+                    <p className="text-xs text-slate-600 flex items-center gap-1.5">
+                      <Info className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      <span>You already have <strong className="text-emerald-400">{alreadyInCart} {product.unit}</strong> in your cart. (Remaining stock: {remainingStock} {product.unit})</span>
                     </p>
                   )}
                 </div>

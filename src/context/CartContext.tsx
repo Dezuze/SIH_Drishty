@@ -307,7 +307,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     clearCart();
-    addToast('🎉 Order placed successfully!', 'success');
+    addToast('Order placed successfully!', 'success');
     return order;
   };
 

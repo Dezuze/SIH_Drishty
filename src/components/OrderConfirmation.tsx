@@ -13,7 +13,8 @@ import {
   Phone, 
   User, 
   HeartHandshake,
-  Truck
+  Truck,
+  Sprout
 } from 'lucide-react';
 
 interface OrderConfirmationProps {
@@ -101,8 +102,9 @@ export const OrderConfirmation: React.FC<OrderConfirmationProps> = ({ onNavigate
                 ? lastOrder.allFarmers[0]
                 : lastOrder.allFarmers.join(', ')}
             </h3>
-            <p className="text-xs text-emerald-100/80 leading-relaxed">
-              🌱 Our local growers in {lastOrder.customer.city} & nearby districts are currently handpicking and packing your items with natural protective wrapping.
+            <p className="text-xs text-emerald-100/80 leading-relaxed flex items-center gap-1.5">
+              <Sprout className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span>Our local growers in {lastOrder.customer.city} & nearby districts are currently handpicking and packing your items with natural protective wrapping.</span>
             </p>
           </div>
 

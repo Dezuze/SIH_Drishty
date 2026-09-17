@@ -19,11 +19,22 @@ import {
   Clock,
   ChevronRight,
   Shield,
-  Activity
+  Activity,
+  Sprout,
+  Info,
+  X,
+  Scale
 } from 'lucide-react';
 
-// Custom HTML emoji markers for Leaflet
-function createEmojiIcon(emoji, label, bgColor = '#ffffff', borderColor = '#2E7D32') {
+const SVG_ICONS = {
+  farmer: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>`,
+  driver: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0284C7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>`,
+  customer: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E65100" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>`
+};
+
+// Custom SVG icon markers for Leaflet
+function createSvgMapIcon(type, label, bgColor = '#ffffff', borderColor = '#2E7D32') {
+  const iconSvg = SVG_ICONS[type] || SVG_ICONS.farmer;
   return L.divIcon({
     className: 'custom-map-icon',
     html: `
@@ -36,9 +47,8 @@ function createEmojiIcon(emoji, label, bgColor = '#ffffff', borderColor = '#2E7D
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-      ">${emoji}</div>
+      ">${iconSvg}</div>
       <div style="
         background: rgba(15, 23, 42, 0.85);
         backdrop-filter: blur(4px);
@@ -146,17 +156,17 @@ export const DriverPortal = () => {
 
       // Markers
       farmerMarkerRef.current = L.marker([order.pickupLat, order.pickupLng], {
-        icon: createEmojiIcon('🌾', 'Farm Pickup', '#E8F5E9', '#2E7D32')
-      }).addTo(map).bindPopup(`<b>🌾 Farm Pickup:</b><br>${order.pickupAddress}`);
+        icon: createSvgMapIcon('farmer', 'Farm Pickup', '#E8F5E9', '#2E7D32')
+      }).addTo(map).bindPopup(`<b>Farm Pickup:</b><br>${order.pickupAddress}`);
 
       destMarkerRef.current = L.marker([order.customerLat, order.customerLng], {
-        icon: createEmojiIcon('📍', 'Customer Drop', '#FFF8E1', '#E65100')
-      }).addTo(map).bindPopup(`<b>📍 Customer Drop:</b><br>${order.customerName}<br>${order.customerAddress}`);
+        icon: createSvgMapIcon('customer', 'Customer Drop', '#FFF8E1', '#E65100')
+      }).addTo(map).bindPopup(`<b>Customer Drop:</b><br>${order.customerName}<br>${order.customerAddress}`);
 
       driverMarkerRef.current = L.marker([order.currentLat, order.currentLng], {
-        icon: createEmojiIcon('🚚', 'Your Vehicle', '#FFFFFF', '#0284C7'),
+        icon: createSvgMapIcon('driver', 'Your Vehicle', '#FFFFFF', '#0284C7'),
         zIndexOffset: 1000
-      }).addTo(map).bindPopup(`<b>🚚 Your Vehicle:</b><br>Order #${order.id}`);
+      }).addTo(map).bindPopup(`<b>Your Vehicle:</b><br>Order #${order.id}`);
 
       routeLineRef.current = L.polyline([
         [order.pickupLat, order.pickupLng],
@@ -271,10 +281,10 @@ export const DriverPortal = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '1.8rem',
-                border: '2px solid rgba(255,255,255,0.3)'
+                border: '2px solid rgba(255,255,255,0.3)',
+                color: '#ffffff'
               }}>
-                👨‍🌾
+                <Truck size={28} />
               </div>
               <div>
                 <h1 style={{ fontSize: '1.8rem', fontWeight: 800, margin: 0 }}>
@@ -346,9 +356,13 @@ export const DriverPortal = () => {
                 padding: '4px 10px',
                 borderRadius: '20px',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '0.5px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
               }}>
-                ⚡ DRISHTI AI Logistics Engine
+                <Activity size={12} />
+                <span>DRISHTI AI Logistics Engine</span>
               </span>
               <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0F172A', margin: '6px 0 2px' }}>
                 Regional Order Clustering & Automated Vehicle Assignment
@@ -380,7 +394,7 @@ export const DriverPortal = () => {
               }}
             >
               <Activity size={18} />
-              <span>⚡ Auto-Assign Regional Orders</span>
+              <span>Auto-Assign Regional Orders</span>
             </button>
           </div>
 
@@ -389,14 +403,17 @@ export const DriverPortal = () => {
             <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#475569' }}>
               Current Vehicle Specs:
             </div>
-            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B' }}>
-              📍 Hub: <strong>{vehicleConfig.serviceArea}</strong>
+            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <MapPin size={13} className="text-blue-600" />
+              <span>Hub: <strong>{vehicleConfig.serviceArea}</strong></span>
             </span>
-            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B' }}>
-              🚚 Type: <strong>{vehicleConfig.vehicleType}</strong>
+            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Truck size={13} className="text-blue-600" />
+              <span>Type: <strong>{vehicleConfig.vehicleType}</strong></span>
             </span>
-            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B' }}>
-              ⚖️ Capacity Limit: <strong>{vehicleConfig.maxCapacityKg} kg</strong>
+            <span style={{ fontSize: '0.78rem', background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '4px 10px', borderRadius: '8px', fontWeight: 600, color: '#1E293B', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <Scale size={13} className="text-blue-600" />
+              <span>Capacity Limit: <strong>{vehicleConfig.maxCapacityKg} kg</strong></span>
             </span>
             <span style={{
               fontSize: '0.78rem',
@@ -405,9 +422,13 @@ export const DriverPortal = () => {
               padding: '4px 10px',
               borderRadius: '8px',
               fontWeight: 700,
-              color: vehicleConfig.isRefrigerated ? '#1D4ED8' : '#64748B'
+              color: vehicleConfig.isRefrigerated ? '#1D4ED8' : '#64748B',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px'
             }}>
-              {vehicleConfig.isRefrigerated ? '❄ Cold-Chain Active' : 'Standard Temp'}
+              <Shield size={13} />
+              <span>{vehicleConfig.isRefrigerated ? 'Cold-Chain Active' : 'Standard Temp'}</span>
             </span>
           </div>
 
@@ -430,14 +451,14 @@ export const DriverPortal = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <CheckCircle2 size={20} color="#16A34A" />
                 <span>
-                  🎉 Regional Batch Complete! Assigned <strong>{assignmentNotice.assignedCount} local orders</strong> in {assignmentNotice.hub}. Combined Load: <strong>{assignmentNotice.totalWeightKg} kg / {assignmentNotice.maxCapacityKg} kg</strong>.
+                  Regional Batch Complete! Assigned <strong>{assignmentNotice.assignedCount} local orders</strong> in {assignmentNotice.hub}. Combined Load: <strong>{assignmentNotice.totalWeightKg} kg / {assignmentNotice.maxCapacityKg} kg</strong>.
                 </span>
               </div>
               <button
                 onClick={() => setAssignmentNotice(null)}
-                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#166534', fontWeight: 800 }}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#166534', fontWeight: 800, display: 'flex', alignItems: 'center' }}
               >
-                ✕
+                <X size={16} />
               </button>
             </div>
           )}
@@ -648,7 +669,7 @@ export const DriverPortal = () => {
                   gap: '6px'
                 }}
               >
-                🌾 2. Picked Up from Farm
+                <Sprout size={16} /> 2. Picked Up from Farm
               </button>
 
               {/* Out for Delivery */}
@@ -671,7 +692,7 @@ export const DriverPortal = () => {
                   gap: '6px'
                 }}
               >
-                🚚 3. Start Delivery (Transit)
+                <Truck size={16} /> 3. Start Delivery (Transit)
               </button>
 
               {/* Delivered */}
@@ -694,7 +715,7 @@ export const DriverPortal = () => {
                   gap: '6px'
                 }}
               >
-                ✅ 4. Confirm Delivery
+                <CheckCircle2 size={16} /> 4. Confirm Delivery
               </button>
 
             </div>
@@ -721,7 +742,7 @@ export const DriverPortal = () => {
           }}>
             <div>
               <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0284C7', textTransform: 'uppercase' }}>
-                STEP 2: GPS TELEMATICS & VIVA SIMULATOR
+                STEP 2: LIVE GPS TELEMATICS &amp; ROUTE DISPATCH
               </div>
               <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0F172A', margin: '2px 0 0' }}>
                 Broadcast Live GPS Movement to Customers
@@ -749,7 +770,7 @@ export const DriverPortal = () => {
                 }}
               >
                 {isSimulating ? <Pause size={15} /> : <Play size={15} />}
-                {isSimulating ? 'Pause Route Simulation' : 'Start Route Simulation'}
+                {isSimulating ? 'Pause Route' : 'Simulate Vehicle Route'}
               </button>
 
               <button
@@ -814,7 +835,7 @@ export const DriverPortal = () => {
 
               <button
                 onClick={() => resetDemoOrder(order.id)}
-                title="Reset order for College Viva presentation"
+                title="Reset order status"
                 style={{
                   background: '#FEF3C7',
                   color: '#B45309',
@@ -829,15 +850,16 @@ export const DriverPortal = () => {
                   gap: '6px'
                 }}
               >
-                <RotateCcw size={15} /> Reset Demo
+                <RotateCcw size={15} /> Reset Status
               </button>
             </div>
           </div>
 
           {/* GPS Banner */}
           {gpsNote && (
-            <div style={{ padding: '8px 1.5rem', background: '#F0FDF4', color: '#15803D', fontSize: '0.82rem', borderBottom: '1px solid #DCFCE7' }}>
-              💡 {gpsNote}
+            <div style={{ padding: '8px 1.5rem', background: '#F0FDF4', color: '#15803D', fontSize: '0.82rem', borderBottom: '1px solid #DCFCE7', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Info size={14} className="shrink-0" />
+              <span>{gpsNote}</span>
             </div>
           )}
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { X, Star } from 'lucide-react';
 import './FilterPanel.css';
 
 function FilterPanel({ filters, setFilters, onClearAll, isOpen, setIsOpen }) {
@@ -28,7 +29,9 @@ function FilterPanel({ filters, setFilters, onClearAll, isOpen, setIsOpen }) {
           <h3>Filters</h3>
           <div className="filter-actions">
             <button className="btn-clear" onClick={onClearAll}>Clear All</button>
-            <button className="btn-close-mobile" onClick={() => setIsOpen(false)}>✕</button>
+            <button className="btn-close-mobile" onClick={() => setIsOpen(false)} aria-label="Close filters">
+              <X size={18} />
+            </button>
           </div>
         </div>
 
@@ -62,7 +65,9 @@ function FilterPanel({ filters, setFilters, onClearAll, isOpen, setIsOpen }) {
                 checked={filters.rating?.includes(rating) || false}
                 onChange={() => handleCheckboxChange('rating', rating)}
               />
-              {rating}★ & above
+              <span className="inline-flex items-center gap-1">
+                {rating} <Star size={13} className="fill-amber-400 text-amber-400" /> & above
+              </span>
             </label>
           ))}
         </div>

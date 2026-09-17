@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
-import { ExternalLink, ShieldCheck, Clock, CreditCard, ArrowLeft, Smartphone, QrCode } from 'lucide-react';
+import { ExternalLink, ShieldCheck, Clock, CreditCard, ArrowLeft, Smartphone, QrCode, Banknote, Lock, Package, Check } from 'lucide-react';
 
 type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
 
@@ -42,7 +42,7 @@ export const PaymentPage: React.FC<PaymentPageProps> = ({ onNavigate }) => {
         notes: purchaseDetails.driverNotes || '',
       });
     } catch { /* ignore */ }
-    addToast('🎉 Payment processed! Handing off to Order Confirmation...', 'success');
+    addToast('Payment processed! Handing off to Order Confirmation...', 'success');
     setTimeout(() => onNavigate('confirmation'), 600);
   };
 
@@ -54,12 +54,11 @@ export const PaymentPage: React.FC<PaymentPageProps> = ({ onNavigate }) => {
           {['Cart', 'Purchase', 'Login', 'Payment'].map((step, idx) => {
             const isCurrent = idx === 3;
             const isDone = idx < 3;
-            const icons = ['🛒', '📦', '🔑', '💳'];
             return (
               <React.Fragment key={step}>
                 <div className={`flex items-center gap-1.5 text-xs font-bold ${isCurrent ? 'text-emerald-400' : isDone ? 'text-emerald-300' : 'text-slate-500'}`}>
                   <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-extrabold shrink-0 border ${isCurrent ? 'bg-emerald-500 border-emerald-400 text-slate-950' : isDone ? 'bg-emerald-600 border-emerald-500 text-white' : 'border-slate-700 text-slate-500'}`}>
-                    {isDone ? '✓' : idx + 1}
+                    {isDone ? <Check className="w-3.5 h-3.5" /> : idx + 1}
                   </span>
                   <span className="hidden sm:inline">{step}</span>
                 </div>
@@ -83,10 +82,12 @@ export const PaymentPage: React.FC<PaymentPageProps> = ({ onNavigate }) => {
         <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-2xl p-6 mb-6 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/5 rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="flex items-start gap-4 mb-5">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-xl shrink-0">💳</div>
+            <div className="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400 shrink-0">
+              <CreditCard className="w-6 h-6" />
+            </div>
             <div>
-              <h2 className="font-extrabold text-white text-base">Payment Processing – Hanna's Module</h2>
-              <p className="text-slate-400 text-xs mt-1">This completes Ann's checkout pipeline. In the integrated SIH product, a secure API call transfers the finalised cart, user identity, and dispatch slot to Hanna's payment microservice.</p>
+              <h2 className="font-extrabold text-white text-base">Payment Processing – KisanDirect Gateway</h2>
+              <p className="text-slate-400 text-xs mt-1">This completes the checkout pipeline. In the integrated KisanDirect platform, a secure API call transfers the finalised cart, user identity, and dispatch slot to the payment microservice.</p>
             </div>
           </div>
 
@@ -112,7 +113,7 @@ export const PaymentPage: React.FC<PaymentPageProps> = ({ onNavigate }) => {
                 { icon: <QrCode className="w-5 h-5" />, label: 'UPI / QR Code', badge: 'Most Popular', badgeColor: 'emerald' },
                 { icon: <CreditCard className="w-5 h-5" />, label: 'Debit / Credit Card', badge: 'Instant', badgeColor: 'blue' },
                 { icon: <Smartphone className="w-5 h-5" />, label: 'Mobile Wallets', badge: '0% Fee', badgeColor: 'yellow' },
-                { icon: <span className="text-lg">💵</span>, label: 'Cash on Delivery', badge: 'Always Free', badgeColor: 'slate' },
+                { icon: <Banknote className="w-5 h-5" />, label: 'Cash on Delivery', badge: 'Always Free', badgeColor: 'slate' },
               ].map(method => (
                 <div key={method.label} className="bg-slate-900 border border-slate-800 hover:border-slate-700 rounded-xl p-3 text-center cursor-default transition-colors">
                   <div className="text-slate-300 flex justify-center mb-2">{method.icon}</div>
@@ -129,7 +130,8 @@ export const PaymentPage: React.FC<PaymentPageProps> = ({ onNavigate }) => {
         {/* Order Summary */}
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 mb-6">
           <h3 className="font-extrabold text-white text-sm mb-4 flex items-center gap-2">
-            📦 Order Summary for Payment
+            <Package className="w-4 h-4 text-emerald-400" />
+            <span>Order Summary for Payment</span>
           </h3>
           <div className="space-y-2 mb-4">
             {cart.slice(0, 3).map(item => (
@@ -165,8 +167,9 @@ export const PaymentPage: React.FC<PaymentPageProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        <p className="text-center text-[11px] text-slate-500 mt-4">
-          🔒 This is a demo payment flow. In the integrated SIH product, clicking the button above will initiate Hanna's secure payment gateway API. Cart data and user session will be passed via <code className="text-slate-400 text-[10px]">POST /api/payment/initiate</code>.
+        <p className="text-center text-[11px] text-slate-500 mt-4 flex items-center justify-center gap-1.5">
+          <Lock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <span>This is a demo payment flow. In the integrated KisanDirect platform, clicking the button above will initiate the secure payment gateway API. Cart data and user session will be passed via <code className="text-slate-400 text-[10px]">POST /api/payment/initiate</code>.</span>
         </p>
       </div>
     </div>

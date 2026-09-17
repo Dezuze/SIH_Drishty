@@ -9,7 +9,8 @@ import {
   Calendar,
   X,
   SlidersHorizontal,
-  ArrowUpDown
+  ArrowUpDown,
+  Sprout
 } from 'lucide-react';
 import './SeasonalChart.css';
 
@@ -526,8 +527,9 @@ export function SeasonalChart({ isHero = false }) {
                 <div className="tooltip-status-banner">
                   {getYieldLabel(activeTooltip.crop.yields[activeTooltip.monthIndex])}
                 </div>
-                <div className="tooltip-peak-note">
-                  🌾 Typical Peak Window: <strong>{activeTooltip.crop.peakMonths}</strong>
+                <div className="tooltip-peak-note flex items-center gap-1.5">
+                  <Sprout size={12} className="text-emerald-600 shrink-0" />
+                  <span>Typical Peak Window: <strong>{activeTooltip.crop.peakMonths}</strong></span>
                 </div>
               </div>
             )}

@@ -35,7 +35,7 @@ export const RouteOptimizationPanel: React.FC<RouteOptimizationPanelProps> = ({
   const handleGenerateRoute = () => {
     onOptimize();
     
-    // Trigger confetti celebration for SIH presentation
+    // Trigger confetti celebration for route generation
     confetti({
       particleCount: 70,
       spread: 60,

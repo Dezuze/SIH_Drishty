@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Sprout, Heart, Phone, Mail,
   CheckCircle2, Send, Sparkles, ShieldCheck,
-  Clock, ThermometerSnowflake
+  Clock, ThermometerSnowflake, Leaf, Lock
 } from 'lucide-react';
 
 interface FooterProps {
@@ -31,16 +31,19 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Brand — compact horizontal layout */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
-            <button onClick={() => onNavigate('marketplace')} style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 'fit-content' }}>
-              <div style={{ width: 36, height: 36, borderRadius: 11, background: 'linear-gradient(135deg,#10b981,#059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 3px 10px rgba(5,150,105,0.28)', flexShrink: 0 }}>
-                <Sprout size={19} strokeWidth={2.5} />
-              </div>
+            <button onClick={() => onNavigate('marketplace')} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 'fit-content' }}>
+              <img 
+                src="/kisandirect-icon.png" 
+                alt="KisanDirect" 
+                style={{ width: 42, height: 42, borderRadius: '50%', objectFit: 'contain', border: '1px solid #a7f3d0', background: '#ffffff', boxShadow: '0 2px 8px rgba(16,185,129,0.2)' }} 
+              />
               <div style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <span style={{ fontSize: 18, fontWeight: 900, color: '#0f172a', letterSpacing: '-0.04em' }}>KISAN</span>
-                  <span style={{ fontSize: 9, fontWeight: 700, fontFamily: 'monospace', padding: '1px 6px', borderRadius: 5, background: '#d1fae5', color: '#065f46', border: '1px solid #a7f3d0' }}>DRISHTI</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontSize: 20, fontWeight: 900, color: '#0f172a', letterSpacing: '-0.03em' }}>
+                    Kisan<span style={{ color: '#059669' }}>Direct</span>
+                  </span>
                 </div>
-                <div style={{ fontSize: 10.5, color: '#64748b', fontWeight: 500 }}>Direct Farm Sourcing &amp; Logistics AI</div>
+                <div style={{ fontSize: 11, color: '#4b5563', fontWeight: 600 }}>Connecting Farmers to Consumers</div>
               </div>
             </button>
 
@@ -50,8 +53,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#10b981', display: 'block', flexShrink: 0 }} />
                 AgriRoute: <strong style={{ color: '#059669' }}>Live</strong>
               </span>
-              {['🌿 Organic Alliance', '🔒 ONDC', '✓ FSSAI'].map(b => (
-                <span key={b} style={{ fontSize: 10.5, fontWeight: 600, padding: '2px 8px', borderRadius: 7, background: 'rgba(255,255,255,0.9)', border: '1px solid #e2e8f0', color: '#475569' }}>{b}</span>
+              {[
+                { label: 'Organic Alliance', icon: <Leaf size={11} color="#059669" /> },
+                { label: 'ONDC', icon: <Lock size={11} color="#d97706" /> },
+                { label: 'FSSAI', icon: <CheckCircle2 size={11} color="#059669" /> }
+              ].map(b => (
+                <span key={b.label} style={{ fontSize: 10.5, fontWeight: 600, padding: '2px 8px', borderRadius: 7, background: 'rgba(255,255,255,0.9)', border: '1px solid #e2e8f0', color: '#475569', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                  {b.icon}
+                  <span>{b.label}</span>
+                </span>
               ))}
             </div>
           </div>
@@ -111,9 +121,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Bottom Bar */}
         <div style={{ paddingTop: '0.75rem', borderTop: '1px solid #d1fae5', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', flexWrap: 'wrap' }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: '#475569' }}>© 2026 Kisan Direct Farm &amp; DRISHTI Logistics AI</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: '#475569' }}>© 2026 KisanDirect</span>
             <span style={{ color: '#cbd5e1' }}>•</span>
-            <span style={{ fontSize: 11, color: '#94a3b8' }}>Smart India Hackathon Prototype</span>
+            <span style={{ fontSize: 11, color: '#64748b', fontWeight: 500 }}>Connecting Farmers Directly to Consumers</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ fontSize: 10.5, fontFamily: 'monospace', color: '#94a3b8' }}>Simulated:</span>

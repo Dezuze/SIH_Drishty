@@ -1,4 +1,5 @@
 import React from 'react';
+import { Leaf } from 'lucide-react';
 import ProductCard from './ProductCard';
 import './ProductGrid.css';
 
@@ -6,7 +7,9 @@ function ProductGrid({ products, onAddToCart }) {
   if (!products || products.length === 0) {
     return (
       <div className="empty-state">
-        <div className="empty-icon">🍃</div>
+        <div className="empty-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Leaf size={40} className="text-emerald-500" />
+        </div>
         <h3>No matching products found.</h3>
         <p>Try adjusting your search or filters to find what you're looking for.</p>
       </div>

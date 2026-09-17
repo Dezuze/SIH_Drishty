@@ -22,7 +22,9 @@ import {
   Leaf,
   Clock,
   Compass,
-  Package
+  Package,
+  Zap,
+  Smartphone
 } from 'lucide-react';
 
 interface CheckoutProps {
@@ -384,8 +386,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                     <h2 className="checkout-section-title">Buyer Contact Details</h2>
                   </div>
                   {isAuthenticated && (
-                    <span className="text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                      ✓ Profile Auto-filled
+                    <span className="inline-flex items-center gap-1 text-[11px] text-emerald-800 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      <Check className="w-3 h-3" /> Profile Auto-filled
                     </span>
                   )}
                 </div>
@@ -566,8 +568,9 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                     <div className="checkout-step-number">3</div>
                     <h2 className="checkout-section-title">Zero-Plastic Packaging Selection</h2>
                   </div>
-                  <span className="checkout-secure-badge" style={{ background: '#F0FDF4', color: '#047857', border: '1px solid #A7F3D0' }}>
-                    🌿 100% Eco-Friendly
+                  <span className="checkout-secure-badge" style={{ background: '#F0FDF4', color: '#047857', border: '1px solid #A7F3D0', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                    <Leaf className="w-3.5 h-3.5" />
+                    <span>100% Eco-Friendly</span>
                   </span>
                 </div>
 
@@ -681,35 +684,38 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                       <button
                         type="button"
                         onClick={() => setOnlinePayTab('razorpay')}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                        className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                           onlinePayTab === 'razorpay' 
                             ? 'bg-emerald-600 text-white shadow-xs' 
                             : 'text-slate-600 hover:bg-white'
                         }`}
                       >
-                        ⚡ Razorpay Sandbox
+                        <Zap size={13} />
+                        <span>Razorpay Sandbox</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => setOnlinePayTab('upi')}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                        className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                           onlinePayTab === 'upi' 
                             ? 'bg-emerald-600 text-white shadow-xs' 
                             : 'text-slate-600 hover:bg-white'
                         }`}
                       >
-                        📱 Instant UPI QR
+                        <Smartphone size={13} />
+                        <span>Instant UPI QR</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => setOnlinePayTab('card')}
-                        className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                        className={`text-xs font-bold px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                           onlinePayTab === 'card' 
                             ? 'bg-emerald-600 text-white shadow-xs' 
                             : 'text-slate-600 hover:bg-white'
                         }`}
                       >
-                        💳 Debit / Credit Card
+                        <CreditCard size={13} />
+                        <span>Debit / Credit Card</span>
                       </button>
                     </div>
 
@@ -776,7 +782,13 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                               }}
                               className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
                             >
-                              {upiVerified ? '✓ Verified' : 'Verify'}
+                              {upiVerified ? (
+                                <span className="inline-flex items-center gap-1">
+                                  <Check className="w-3 h-3" /> Verified
+                                </span>
+                              ) : (
+                                'Verify'
+                              )}
                             </button>
                           </div>
                         </div>
