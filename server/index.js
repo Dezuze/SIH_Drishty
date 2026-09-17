@@ -6,7 +6,9 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DB_PATH = path.join(__dirname, 'db.json');
+const IS_VERCEL = !!process.env.VERCEL;
+const SEED_DB_PATH = path.join(__dirname, 'db.json');
+const DB_PATH = IS_VERCEL ? path.join('/tmp', 'kisan_db.json') : SEED_DB_PATH;
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,12 +20,20 @@ app.use(express.json());
 function readDb() {
   try {
     if (!fs.existsSync(DB_PATH)) {
-      return { users: [], orders: [], payments: [] };
+      if (IS_VERCEL && fs.existsSync(SEED_DB_PATH)) {
+        try {
+          fs.copyFileSync(SEED_DB_PATH, DB_PATH);
+        } catch (copyErr) {
+          console.warn('Could not copy seed DB to /tmp:', copyErr);
+        }
+      } else if (!fs.existsSync(DB_PATH)) {
+        return { users: [], orders: [], payments: [] };
+      }
     }
     const data = fs.readFileSync(DB_PATH, 'utf8');
     return JSON.parse(data);
   } catch (err) {
-    console.error('Error reading db.json:', err);
+    console.error('Error reading db:', err);
     return { users: [], orders: [], payments: [] };
   }
 }
@@ -33,7 +43,7 @@ function writeDb(data) {
   try {
     fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf8');
   } catch (err) {
-    console.error('Error writing db.json:', err);
+    console.error('Error writing db:', err);
   }
 }
 
@@ -290,9 +300,26 @@ app.post('/api/payment/verify', (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'Kisan Drishti Backend API', timestamp: new Date().toISOString() });
+  res.json({ status: 'ok', service: 'KisanDirect Backend API', timestamp: new Date().toISOString() });
 });
 
-app.listen(PORT, () => {
-  console.log(`[KISAN-BACKEND] Server listening on http://localhost:${PORT}`);
-});
+// Serve static production frontend when dist/ exists (for Render / standalone hosting)
+const DIST_PATH = path.join(__dirname, '../dist');
+if (fs.existsSync(DIST_PATH)) {
+  app.use(express.static(DIST_PATH));
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return res.status(404).json({ error: 'API endpoint not found' });
+    }
+    res.sendFile(path.join(DIST_PATH, 'index.html'));
+  });
+}
+
+// Only start listener if run directly (standalone server / Render), not in Vercel serverless functions
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`[KISAN-BACKEND] Server listening on http://localhost:${PORT}`);
+  });
+}
+
+export default app;

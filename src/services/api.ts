@@ -3,7 +3,8 @@
  * Handles API calls to Express backend (/api) with graceful local-storage fallback
  */
 
-const API_BASE = '/api';
+const rawApiUrl = import.meta.env.VITE_API_URL;
+const API_BASE = rawApiUrl ? `${rawApiUrl.replace(/\/+$/, '')}/api` : '/api';
 const TOKEN_KEY = 'kisan_auth_token';
 
 export interface User {
