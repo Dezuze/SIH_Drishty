@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import L from 'leaflet';
 import { useTracking, STATUS_STAGES } from '../context/TrackingContext';
 import { useAuth } from '../context/AuthContext';
+import { fetchRoadRoute, findClosestRouteIndex, calculateHaversineDistance } from '../services/routingService';
 import { 
   CheckCircle2, 
   Clock, 
@@ -80,10 +81,12 @@ export const DeliveryTracking = () => {
   const farmerMarkerRef = useRef(null);
   const destMarkerRef = useRef(null);
   const routeLineRef = useRef(null);
+  const routeGlowRef = useRef(null);
   const driverPathRef = useRef(null);
 
   const [distanceKm, setDistanceKm] = useState('3.2');
   const [etaMinutes, setEtaMinutes] = useState('12');
+  const [roadRoute, setRoadRoute] = useState(null);
 
   // Initialize Leaflet Map
   useEffect(() => {
@@ -131,23 +134,6 @@ export const DeliveryTracking = () => {
       dMarker.bindPopup(`<b>Driver On Route:</b><br>${order.driverName} (${order.driverPhone})`);
       driverMarkerRef.current = dMarker;
 
-      // Dashed Route Line
-      const routeLine = L.polyline([
-        [order.pickupLat, order.pickupLng],
-        [order.customerLat, order.customerLng]
-      ], {
-        color: '#16A34A',
-        weight: 4,
-        opacity: 0.8,
-        dashArray: '8, 8'
-      }).addTo(map);
-      routeLineRef.current = routeLine;
-
-      map.fitBounds(L.latLngBounds([
-        [order.pickupLat, order.pickupLng],
-        [order.customerLat, order.customerLng]
-      ]), { padding: [50, 50] });
-
       mapInstanceRef.current = map;
     }
 
@@ -156,7 +142,57 @@ export const DeliveryTracking = () => {
     };
   }, []);
 
-  // Update markers and bounds when order changes or updates
+  // Fetch and draw actual driving road route (turn-by-turn road network)
+  useEffect(() => {
+    if (!order) return;
+    let cancelled = false;
+
+    fetchRoadRoute(order.pickupLat, order.pickupLng, order.customerLat, order.customerLng)
+      .then((routeResult) => {
+        if (cancelled) return;
+        setRoadRoute(routeResult);
+
+        if (mapInstanceRef.current) {
+          if (routeLineRef.current) {
+            routeLineRef.current.remove();
+            routeLineRef.current = null;
+          }
+          if (routeGlowRef.current) {
+            routeGlowRef.current.remove();
+            routeGlowRef.current = null;
+          }
+
+          // Outer glowing route outline for visual clarity
+          routeGlowRef.current = L.polyline(routeResult.coordinates, {
+            color: '#86EFAC',
+            weight: 9,
+            opacity: 0.45,
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(mapInstanceRef.current);
+
+          // Crisp foreground driving road polyline
+          routeLineRef.current = L.polyline(routeResult.coordinates, {
+            color: '#16A34A',
+            weight: 5,
+            opacity: 0.95,
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(mapInstanceRef.current);
+
+          mapInstanceRef.current.fitBounds(routeLineRef.current.getBounds(), { padding: [50, 50] });
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load driving road route:', err);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [order?.pickupLat, order?.pickupLng, order?.customerLat, order?.customerLng]);
+
+  // Update markers and road-following distance/ETA when driver moves
   useEffect(() => {
     if (!order || !mapInstanceRef.current) return;
 
@@ -172,18 +208,33 @@ export const DeliveryTracking = () => {
       destMarkerRef.current.setLatLng([order.customerLat, order.customerLng]);
     }
 
-    // Calculate approximate remaining distance
-    const distToCustomer = Math.hypot(
-      (order.customerLat - order.currentLat) * 111,
-      (order.customerLng - order.currentLng) * 111 * Math.cos((order.customerLat * Math.PI) / 180)
-    );
-
-    const formattedDist = distToCustomer < 0.1 ? 'Arrived' : `${distToCustomer.toFixed(1)} km`;
-    const formattedEta = distToCustomer < 0.1 ? '0 min' : `${Math.max(1, Math.round(distToCustomer * 3.5))} mins`;
-
-    setDistanceKm(formattedDist);
-    setEtaMinutes(formattedEta);
-  }, [order?.currentLat, order?.currentLng, order?.status]);
+    // Calculate road-following remaining distance along the actual driving path
+    if (roadRoute && roadRoute.coordinates && roadRoute.coordinates.length > 0) {
+      const closestIdx = findClosestRouteIndex(roadRoute.coordinates, order.currentLat, order.currentLng);
+      let remKm = 0;
+      for (let i = closestIdx; i < roadRoute.coordinates.length - 1; i++) {
+        remKm += calculateHaversineDistance(
+          roadRoute.coordinates[i][0],
+          roadRoute.coordinates[i][1],
+          roadRoute.coordinates[i + 1][0],
+          roadRoute.coordinates[i + 1][1]
+        );
+      }
+      const formattedDist = remKm < 0.08 ? 'Arrived' : `${remKm.toFixed(1)} km`;
+      const formattedEta = remKm < 0.08 ? '0 min' : `${Math.max(1, Math.round(remKm * 2.8))} mins`;
+      setDistanceKm(formattedDist);
+      setEtaMinutes(formattedEta);
+    } else {
+      const distToCustomer = Math.hypot(
+        (order.customerLat - order.currentLat) * 111,
+        (order.customerLng - order.currentLng) * 111 * Math.cos((order.customerLat * Math.PI) / 180)
+      );
+      const formattedDist = distToCustomer < 0.1 ? 'Arrived' : `${distToCustomer.toFixed(1)} km`;
+      const formattedEta = distToCustomer < 0.1 ? '0 min' : `${Math.max(1, Math.round(distToCustomer * 3.5))} mins`;
+      setDistanceKm(formattedDist);
+      setEtaMinutes(formattedEta);
+    }
+  }, [order?.currentLat, order?.currentLng, order?.status, roadRoute]);
 
   if (!order) {
     return (

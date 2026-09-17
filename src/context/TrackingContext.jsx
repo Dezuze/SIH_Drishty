@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from 'react';
+import { fetchRoadRoute, getPositionAlongRoute, findClosestRouteIndex } from '../services/routingService';
 
 export const STATUS_STAGES = [
   'Order Placed',
@@ -291,8 +292,8 @@ export const TrackingProvider = ({ children }) => {
     });
   };
 
-  // Route simulation runner
-  const toggleSimulation = (orderId = 'DR001') => {
+  // Route simulation runner following exact driving road coordinates
+  const toggleSimulation = async (orderId = 'DR001') => {
     const order = orders[orderId];
     if (!order) return;
 
@@ -307,64 +308,69 @@ export const TrackingProvider = ({ children }) => {
 
     setIsSimulating(true);
 
-    const pLat = order.pickupLat;
-    const pLng = order.pickupLng;
-    const cLat = order.customerLat;
-    const cLng = order.customerLng;
-    const totalSteps = 24;
-    let step = 0;
-
     // Automatically set status to Out for Delivery if not already
     if (order.status !== 'Out for Delivery' && order.status !== 'Delivered') {
       updateOrderStatus(orderId, 'Out for Delivery');
     }
 
-    simulationRef.current = setInterval(() => {
-      step += 1;
-      const progress = step / totalSteps;
+    try {
+      const roadRoute = await fetchRoadRoute(
+        order.pickupLat,
+        order.pickupLng,
+        order.customerLat,
+        order.customerLng
+      );
 
-      // Realistic path interpolation with slight curve offset
-      const curve = Math.sin(progress * Math.PI) * 0.006;
-      const curLat = pLat + (cLat - pLat) * progress + curve;
-      const curLng = pLng + (cLng - pLng) * progress - curve * 0.5;
+      const totalSteps = Math.min(48, Math.max(20, Math.round(roadRoute.coordinates.length / 3)));
+      const currentIdx = findClosestRouteIndex(roadRoute.coordinates, order.currentLat, order.currentLng);
+      let step = Math.round((currentIdx / (roadRoute.coordinates.length - 1)) * totalSteps);
 
-      updateDriverLocation(orderId, curLat, curLng);
+      simulationRef.current = setInterval(() => {
+        step += 1;
+        const progress = Math.min(1, step / totalSteps);
+        const [curLat, curLng] = getPositionAlongRoute(roadRoute.coordinates, progress);
 
-      if (step >= totalSteps) {
-        clearInterval(simulationRef.current);
-        simulationRef.current = null;
-        setIsSimulating(false);
-        updateOrderStatus(orderId, 'Delivered');
-      }
-    }, 800);
+        updateDriverLocation(orderId, curLat, curLng);
+
+        if (progress >= 1 || step >= totalSteps) {
+          clearInterval(simulationRef.current);
+          simulationRef.current = null;
+          setIsSimulating(false);
+          updateOrderStatus(orderId, 'Delivered');
+        }
+      }, 700);
+    } catch (err) {
+      console.error('Simulation road route error:', err);
+      setIsSimulating(false);
+    }
   };
 
-  const stepForwardOnce = (orderId = 'DR001') => {
+  const stepForwardOnce = async (orderId = 'DR001') => {
     const order = orders[orderId];
     if (!order) return;
 
-    const pLat = order.pickupLat;
-    const pLng = order.pickupLng;
-    const cLat = order.customerLat;
-    const cLng = order.customerLng;
+    try {
+      const roadRoute = await fetchRoadRoute(
+        order.pickupLat,
+        order.pickupLng,
+        order.customerLat,
+        order.customerLng
+      );
 
-    // Calculate current progress based on distance
-    const totalDist = Math.hypot(cLat - pLat, cLng - pLng);
-    const curDist = Math.hypot(order.currentLat - pLat, order.currentLng - pLng);
-    let progress = Math.min(1, Math.max(0, curDist / totalDist)) + 0.1;
+      const closestIdx = findClosestRouteIndex(roadRoute.coordinates, order.currentLat, order.currentLng);
+      const stepJump = Math.max(1, Math.round(roadRoute.coordinates.length / 15));
+      const nextIdx = Math.min(roadRoute.coordinates.length - 1, closestIdx + stepJump);
+      const nextCoord = roadRoute.coordinates[nextIdx];
 
-    if (progress > 1) progress = 0;
+      updateDriverLocation(orderId, nextCoord[0], nextCoord[1]);
 
-    const curve = Math.sin(progress * Math.PI) * 0.006;
-    const nextLat = pLat + (cLat - pLat) * progress + curve;
-    const nextLng = pLng + (cLng - pLng) * progress - curve * 0.5;
-
-    updateDriverLocation(orderId, nextLat, nextLng);
-
-    if (progress >= 0.95) {
-      updateOrderStatus(orderId, 'Delivered');
-    } else if (order.status !== 'Out for Delivery') {
-      updateOrderStatus(orderId, 'Out for Delivery');
+      if (nextIdx >= roadRoute.coordinates.length - 2) {
+        updateOrderStatus(orderId, 'Delivered');
+      } else if (order.status !== 'Out for Delivery') {
+        updateOrderStatus(orderId, 'Out for Delivery');
+      }
+    } catch (err) {
+      console.error('stepForward road route error:', err);
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import L from 'leaflet';
 import { useTracking, STATUS_STAGES } from '../context/TrackingContext';
+import { fetchRoadRoute, findClosestRouteIndex, calculateHaversineDistance } from '../services/routingService';
 import {
   Truck,
   User,
@@ -118,7 +119,9 @@ export const DriverPortal = () => {
   const farmerMarkerRef = useRef(null);
   const destMarkerRef = useRef(null);
   const routeLineRef = useRef(null);
+  const routeGlowRef = useRef(null);
 
+  const [roadRoute, setRoadRoute] = useState(null);
   const [clickToMove, setClickToMove] = useState(false);
   const [gpsActive, setGpsActive] = useState(false);
   const [gpsNote, setGpsNote] = useState('');
@@ -168,21 +171,6 @@ export const DriverPortal = () => {
         zIndexOffset: 1000
       }).addTo(map).bindPopup(`<b>Your Vehicle:</b><br>Order #${order.id}`);
 
-      routeLineRef.current = L.polyline([
-        [order.pickupLat, order.pickupLng],
-        [order.customerLat, order.customerLng]
-      ], {
-        color: '#16A34A',
-        weight: 4,
-        opacity: 0.8,
-        dashArray: '8, 8'
-      }).addTo(map);
-
-      map.fitBounds(L.latLngBounds([
-        [order.pickupLat, order.pickupLng],
-        [order.customerLat, order.customerLng]
-      ]), { padding: [50, 50] });
-
       map.on('click', (e) => {
         if (clickToMove) {
           updateDriverLocation(order.id, e.latlng.lat, e.latlng.lng);
@@ -193,20 +181,73 @@ export const DriverPortal = () => {
     }
   }, []);
 
-  // Update marker position on location changes
+  // Fetch and draw actual driving road route (OSRM turn-by-turn road network)
+  useEffect(() => {
+    if (!order) return;
+    let cancelled = false;
+
+    fetchRoadRoute(order.pickupLat, order.pickupLng, order.customerLat, order.customerLng)
+      .then((routeResult) => {
+        if (cancelled) return;
+        setRoadRoute(routeResult);
+
+        if (mapInstanceRef.current) {
+          if (routeLineRef.current) {
+            routeLineRef.current.remove();
+            routeLineRef.current = null;
+          }
+          if (routeGlowRef.current) {
+            routeGlowRef.current.remove();
+            routeGlowRef.current = null;
+          }
+
+          // Outer glowing road polyline
+          routeGlowRef.current = L.polyline(routeResult.coordinates, {
+            color: '#86EFAC',
+            weight: 9,
+            opacity: 0.45,
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(mapInstanceRef.current);
+
+          // Real driving road polyline
+          routeLineRef.current = L.polyline(routeResult.coordinates, {
+            color: '#16A34A',
+            weight: 5,
+            opacity: 0.95,
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(mapInstanceRef.current);
+
+          mapInstanceRef.current.fitBounds(routeLineRef.current.getBounds(), { padding: [50, 50] });
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load driving road route in DriverPortal:', err);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [order?.id, order?.pickupLat, order?.pickupLng, order?.customerLat, order?.customerLng]);
+
+  // Update marker position on location changes or order switch
   useEffect(() => {
     if (!order || !mapInstanceRef.current) return;
 
     if (driverMarkerRef.current) {
       driverMarkerRef.current.setLatLng([order.currentLat, order.currentLng]);
+      driverMarkerRef.current.setPopupContent(`<b>Your Vehicle:</b><br>Order #${order.id}`);
     }
     if (farmerMarkerRef.current) {
       farmerMarkerRef.current.setLatLng([order.pickupLat, order.pickupLng]);
+      farmerMarkerRef.current.setPopupContent(`<b>Farm Pickup:</b><br>${order.pickupAddress}`);
     }
     if (destMarkerRef.current) {
       destMarkerRef.current.setLatLng([order.customerLat, order.customerLng]);
+      destMarkerRef.current.setPopupContent(`<b>Customer Drop:</b><br>${order.customerName}<br>${order.customerAddress}`);
     }
-  }, [order?.currentLat, order?.currentLng, order?.status]);
+  }, [order?.id, order?.currentLat, order?.currentLng, order?.pickupLat, order?.pickupLng, order?.customerLat, order?.customerLng]);
 
   // Handle click-to-move toggle listener
   useEffect(() => {
@@ -882,14 +923,26 @@ export const DriverPortal = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
             fontSize: '0.82rem',
             color: '#64748B'
           }}>
             <div>
               Current Position: <strong style={{ color: '#0F172A', fontFamily: 'monospace' }}>{order.currentLat.toFixed(5)}, {order.currentLng.toFixed(5)}</strong>
+              {roadRoute && (
+                <span style={{ marginLeft: '12px', color: '#16A34A', fontWeight: 700 }}>
+                  • Road Route: {roadRoute.distanceKm} km (~{roadRoute.durationMinutes} mins)
+                </span>
+              )}
             </div>
-            <div>
-              Broadcasting Channel: <strong style={{ color: '#16A34A' }}>drishti_tracking_channel (Live Multi-Tab)</strong>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                <Navigation size={11} /> Turn-by-Turn Road Network
+              </span>
+              <span>
+                Channel: <strong style={{ color: '#16A34A' }}>drishti_tracking_channel</strong>
+              </span>
             </div>
           </div>
         </div>
