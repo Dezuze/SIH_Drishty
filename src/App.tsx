@@ -20,6 +20,12 @@ import { Cart } from './components/Cart';
 import { Checkout } from './components/Checkout';
 import { OrderConfirmation } from './components/OrderConfirmation';
 import { Footer } from './components/Footer';
+import Terms from './pages/Terms';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import CookiePolicy from './pages/CookiePolicy';
+import NotFound from './pages/NotFound';
+import ThankYou from './pages/ThankYou';
+import CookieBanner from './components/CookieBanner';
 
 // Route Guard: Blocks drivers from accessing consumer & farmer marketplace views
 function DriverBlockGuard({ children }: { children: React.ReactElement }) {
@@ -131,9 +137,18 @@ function App() {
             <Route path="/logistics" element={<AdminOnlyGuard><Dashboard /></AdminOnlyGuard>} />
             <Route path="/simplified" element={<AdminOnlyGuard><SimplifiedUI /></AdminOnlyGuard>} />
 
-            {/* Fallback */}
-            <Route path="*" element={<FallbackRedirect />} />
+            {/* Legal, Information & Compliance Pages (Accessible to all) */}
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="/404" element={<NotFound />} />
+
+            {/* Fallback 404 for unmatched routes */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieBanner />
           <FooterWrapper />
         </BrowserRouter>
       </TrackingProvider>

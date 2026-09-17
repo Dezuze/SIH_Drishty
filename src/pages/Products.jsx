@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { PRODUCTS_DATA, getLiveProductsData } from '../data/productsData';
 import ProductGrid from '../components/ProductGrid';
+import SEOHead from '../components/SEOHead';
 import './Products.css';
 
 export function Products({ onAddToCart }) {
@@ -52,6 +53,11 @@ export function Products({ onAddToCart }) {
 
   return (
     <main className="shop-page container">
+      <SEOHead 
+        title="Shop Fresh Farm Produce • KisanDirect" 
+        description="Browse certified organic fruits, vegetables, native spices, and raw farm dairy dispatched directly from local Kerala cultivators."
+        canonicalPath="/products"
+      />
       {/* Page Header */}
       <div className="shop-header">
         <h1 className="shop-title">Shop All Products</h1>

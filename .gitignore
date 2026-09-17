@@ -27,3 +27,6 @@ dist-ssr
 screenshots/
 screenschots/
 
+# Deployment
+.vercel
+

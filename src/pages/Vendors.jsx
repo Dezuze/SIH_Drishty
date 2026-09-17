@@ -5,6 +5,7 @@ import VendorCard from '../components/vendors/VendorCard';
 import VendorFilters from '../components/vendors/VendorFilters';
 import VendorModal from '../components/vendors/VendorModal';
 import BecomeVendorModal from '../components/vendors/BecomeVendorModal';
+import SEOHead from '../components/SEOHead';
 import './Vendors.css';
 
 export function Vendors({ onAddToCart }) {
@@ -146,6 +147,11 @@ export function Vendors({ onAddToCart }) {
 
   return (
     <main className="vendors-page">
+      <SEOHead 
+        title="Verified Kerala Farmers & Cultivators • KisanDirect" 
+        description="Meet our verified agricultural growers, organic farms, and cooperative vendors across Wayanad, Idukki, and Kottayam districts."
+        canonicalPath="/vendors"
+      />
       {/* 1. Page Header */}
       <header className="vendors-hero-header">
         <div className="vendors-content-container">

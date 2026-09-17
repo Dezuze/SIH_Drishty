@@ -3,7 +3,13 @@ import { Leaf } from 'lucide-react';
 import ProductCard from './ProductCard';
 import './ProductGrid.css';
 
-function ProductGrid({ products, onAddToCart }) {
+import { ProductGridSkeleton } from './SkeletonLoader';
+
+function ProductGrid({ products, onAddToCart, isLoading = false }) {
+  if (isLoading) {
+    return <ProductGridSkeleton count={8} />;
+  }
+
   if (!products || products.length === 0) {
     return (
       <div className="empty-state">

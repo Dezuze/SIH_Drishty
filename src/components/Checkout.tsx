@@ -512,6 +512,11 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate, onOrderSuccess }
                       onChange={(e) => handleInputChange('pincode', e.target.value)}
                       className={`kisan-input ${errors.pincode ? 'border-rose-500 bg-rose-50/20' : ''}`}
                     />
+                    {errors.pincode && (
+                      <p className="text-[11px] text-rose-600 font-semibold flex items-center gap-1 mt-0.5">
+                        <AlertCircle className="w-3 h-3" /> {errors.pincode}
+                      </p>
+                    )}
                   </div>
                 </div>
 

@@ -19,6 +19,7 @@ import {
   EyeOff,
   Zap
 } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead';
 
 export const Login: React.FC = () => {
   const { user, isAuthenticated, login, register, quickLogin } = useAuth();
@@ -111,45 +112,45 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[90vh] bg-slate-50 text-slate-900 flex items-center justify-center px-4 pt-28 pb-16 relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute top-1/4 -left-32 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-md w-full bg-white/90 border border-emerald-500/30 rounded-3xl p-8 shadow-2xl backdrop-blur-xl relative z-10 space-y-6">
+    <div className="min-h-[85vh] bg-slate-50 flex items-center justify-center p-4">
+      <SEOHead 
+        title="Sign In & Register - KisanDirect" 
+        description="Sign in or register for KisanDirect. Connect farmers directly to conscious consumers with smart logistics." 
+      />
+      <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         
         {/* Top Back navigation */}
         <div className="flex items-center justify-between">
           <button
             onClick={() => navigate('/')}
-            className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-emerald-400 font-bold transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-emerald-600 font-bold transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Marketplace</span>
           </button>
-          <span className="text-[10px] font-black tracking-widest text-emerald-400 uppercase bg-emerald-950/80 px-2.5 py-1 rounded-full border border-emerald-500/30">
+          <span className="text-[10px] font-black tracking-widest text-emerald-700 uppercase bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
             Secure Portal
           </span>
         </div>
 
         {/* Brand header */}
         <div className="text-center space-y-2">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400 shadow-lg shadow-emerald-500/10">
+          <div className="w-14 h-14 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-600 shadow-lg shadow-emerald-500/10">
             <Sparkles className="w-7 h-7" />
           </div>
-          <h1 className="text-2xl font-black text-slate-900 tracking-tight">KISAN DRISHTI</h1>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">KisanDirect</h1>
           <p className="text-xs text-slate-600">
             Empowering Farmers, Logistics, and Consumers with Direct Fresh Harvests
           </p>
         </div>
 
         {/* Tab switch */}
-        <div className="flex bg-slate-50 p-1 rounded-2xl border border-slate-200">
+        <div className="flex bg-slate-100 p-1 rounded-2xl border border-slate-200">
           <button
             type="button"
             onClick={() => { setActiveTab('login'); setErrorMsg(''); }}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === 'login' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-600 hover:text-white'
+              activeTab === 'login' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Sign In
@@ -158,7 +159,7 @@ export const Login: React.FC = () => {
             type="button"
             onClick={() => { setActiveTab('register'); setErrorMsg(''); }}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all cursor-pointer ${
-              activeTab === 'register' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-600 hover:text-white'
+              activeTab === 'register' ? 'bg-emerald-600 text-white shadow-md' : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             Sign Up
@@ -167,8 +168,8 @@ export const Login: React.FC = () => {
 
         {/* Error notification */}
         {errorMsg && (
-          <div className="p-3 rounded-xl bg-red-950/60 border border-red-500/40 text-red-200 text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+          <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2.5 shadow-xs animate-shake">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
             <span>{errorMsg}</span>
           </div>
         )}

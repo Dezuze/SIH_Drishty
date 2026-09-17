@@ -163,7 +163,7 @@ function Header() {
                 <div className="relative">
                   <img
                     src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80"}
-                    alt={user?.name}
+                    alt={user?.name || "User Profile Avatar"}
                     className="w-8 h-8 rounded-full object-cover border-2 border-emerald-500 shadow-xs"
                   />
                   <span className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full border-2 border-white ${roleConfig.dot}`} />
@@ -189,7 +189,7 @@ function Header() {
                     <div className="flex items-center gap-3 relative z-10">
                       <img
                         src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"}
-                        alt={user?.name}
+                        alt={user?.name || "User Profile"}
                         className="w-12 h-12 rounded-xl object-cover border-2 border-emerald-500 shadow-sm"
                       />
                       <div className="flex-1 min-w-0">

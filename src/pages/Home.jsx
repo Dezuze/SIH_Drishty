@@ -3,6 +3,7 @@ import ProductGrid from '../components/ProductGrid';
 import { getLiveProducts } from '../data/products';
 import { ArrowRight, Star, TrendingUp, Carrot, Apple, Milk, Flame } from 'lucide-react';
 import SeasonalChart from '../components/SeasonalChart';
+import SEOHead from '../components/SEOHead';
 import './Home.css';
 
 function Home({ onAddToCart }) {
@@ -26,6 +27,11 @@ function Home({ onAddToCart }) {
 
   return (
     <div className="home-page">
+      <SEOHead 
+        title="KisanDirect • Connecting Farmers Directly to Consumers" 
+        description="Buy fresh organic produce directly from local verified farmers. Transparent pricing, zero middleman commission, cold-chain doorstep delivery, and live GPS tracking."
+        canonicalPath="/"
+      />
       {/* Simplistic Category Buttons */}
       <section className="categories-section container">
         <div className="category-pills">

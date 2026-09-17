@@ -12,14 +12,18 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const [emailInput, setEmailInput] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [emailError, setEmailError] = useState('');
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailInput.trim() && emailInput.includes('@')) {
-      setSubscribed(true);
-      setEmailInput('');
-      setTimeout(() => setSubscribed(false), 5000);
+    setEmailError('');
+    if (!emailInput.trim() || !emailInput.includes('@') || !emailInput.includes('.')) {
+      setEmailError('Please enter a valid email address (e.g. name@example.com)');
+      return;
     }
+    setSubscribed(true);
+    setEmailInput('');
+    setTimeout(() => setSubscribed(false), 5000);
   };
 
   return (
@@ -34,7 +38,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <button onClick={() => onNavigate('marketplace')} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: 'fit-content' }}>
               <img 
                 src="/kisandirect-icon.png" 
-                alt="KisanDirect" 
+                alt="KisanDirect - Direct Farm-to-Consumer Platform Logo" 
                 style={{ width: 42, height: 42, borderRadius: '50%', objectFit: 'contain', border: '1px solid #a7f3d0', background: '#ffffff', boxShadow: '0 2px 8px rgba(16,185,129,0.2)' }} 
               />
               <div style={{ textAlign: 'left' }}>
@@ -101,17 +105,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <span style={{ fontSize: 11, fontWeight: 700, color: '#374151', display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
                 <Sparkles size={11} color='#f59e0b' /> Updates
               </span>
-              <input type='email' placeholder='Your email' value={emailInput} onChange={e => setEmailInput(e.target.value)}
-                style={{ flex: 1, padding: '6px 10px', borderRadius: 8, border: '1px solid #d1d5db', fontSize: 12, color: '#0f172a', background: 'rgba(255,255,255,0.9)', outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif" }}
-                onFocus={e => { e.target.style.borderColor = '#10b981'; e.target.style.boxShadow = '0 0 0 2px rgba(16,185,129,0.1)'; }}
-                onBlur={e => { e.target.style.borderColor = '#d1d5db'; e.target.style.boxShadow = 'none'; }}
+              <input type='email' placeholder='Your email' value={emailInput} onChange={e => { setEmailInput(e.target.value); setEmailError(''); }}
+                style={{ flex: 1, padding: '6px 10px', borderRadius: 8, border: emailError ? '1px solid #ef4444' : '1px solid #d1d5db', fontSize: 12, color: '#0f172a', background: emailError ? '#fef2f2' : 'rgba(255,255,255,0.9)', outline: 'none', fontFamily: "'Plus Jakarta Sans',sans-serif" }}
+                onFocus={e => { e.target.style.borderColor = emailError ? '#ef4444' : '#10b981'; e.target.style.boxShadow = '0 0 0 2px rgba(16,185,129,0.1)'; }}
+                onBlur={e => { e.target.style.borderColor = emailError ? '#ef4444' : '#d1d5db'; e.target.style.boxShadow = 'none'; }}
               />
-              <button type='submit' style={{ padding: '6px 10px', borderRadius: 8, background: 'linear-gradient(135deg,#10b981,#059669)', border: 'none', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }} aria-label='Subscribe'>
+              <button type='submit' style={{ padding: '6px 10px', borderRadius: 8, background: 'linear-gradient(135deg,#10b981,#059669)', border: 'none', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }} aria-label='Subscribe to harvest updates'>
                 <Send size={12} />
               </button>
             </form>
+            {emailError && (
+              <div style={{ fontSize: 11, color: '#dc2626', fontWeight: 600 }}>
+                {emailError}
+              </div>
+            )}
             {subscribed && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11.5, color: '#059669' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11.5, color: '#059669', fontWeight: 600 }}>
                 <CheckCircle2 size={12} /> Subscribed to harvest drops!
               </div>
             )}
@@ -124,15 +133,20 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <span style={{ fontSize: 12, fontWeight: 600, color: '#475569' }}>© 2026 KisanDirect</span>
             <span style={{ color: '#cbd5e1' }}>•</span>
             <span style={{ fontSize: 11, color: '#64748b', fontWeight: 500 }}>Connecting Farmers Directly to Consumers</span>
+            <span style={{ color: '#cbd5e1' }}>•</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: 11 }}>
+              <a href="/terms" style={{ color: '#059669', textDecoration: 'none', fontWeight: 600 }}>Terms</a>
+              <span style={{ color: '#cbd5e1' }}>·</span>
+              <a href="/privacy" style={{ color: '#059669', textDecoration: 'none', fontWeight: 600 }}>Privacy</a>
+              <span style={{ color: '#cbd5e1' }}>·</span>
+              <a href="/cookies" style={{ color: '#059669', textDecoration: 'none', fontWeight: 600 }}>Cookies</a>
+            </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ fontSize: 10.5, fontFamily: 'monospace', color: '#94a3b8' }}>Simulated:</span>
             {['UPI QR', 'Razorpay', 'RuPay'].map(gw => (
               <span key={gw} style={{ fontSize: 10, fontFamily: 'monospace', fontWeight: 700, padding: '2px 7px', borderRadius: 5, background: '#f1f5f9', border: '1px solid #e2e8f0', color: '#475569' }}>{gw}</span>
             ))}
-            <span style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, color: '#94a3b8', marginLeft: 4 }}>
-              Crafted with <Heart size={12} color='#ef4444' fill='#ef4444' /> for Kerala farmers
-            </span>
           </div>
         </div>
       </div>

@@ -1,0 +1,21 @@
+# KisanDirect Robots Exclusion File
+User-agent: *
+Allow: /
+Allow: /products
+Allow: /vendors
+Allow: /tracking
+Allow: /terms
+Allow: /privacy
+Allow: /cookies
+Allow: /search
+
+# Restrict authenticated portals & internal endpoints
+Disallow: /driver
+Disallow: /profile
+Disallow: /logistics
+Disallow: /simplified
+Disallow: /checkout
+Disallow: /order-confirmation
+Disallow: /api/
+
+Sitemap: https://kisandirect.in/sitemap.xml
