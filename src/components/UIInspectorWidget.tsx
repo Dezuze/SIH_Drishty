@@ -517,26 +517,26 @@ export const UIInspectorWidget: React.FC = () => {
                     <div className="diagnostic-stats-grid">
                       <div className="diagnostic-stat-card">
                         <label>Current Role</label>
-                        <value style={{ textTransform: 'capitalize', color: '#059669' }}>
+                        <span className="diagnostic-stat-value" style={{ textTransform: 'capitalize', color: '#059669' }}>
                           {user?.role || 'Guest'}
-                        </value>
+                        </span>
                       </div>
 
                       <div className="diagnostic-stat-card">
                         <label>Active User</label>
-                        <value style={{ fontSize: '0.85rem' }}>
+                        <span className="diagnostic-stat-value" style={{ fontSize: '0.85rem' }}>
                           {user?.name || 'Not Logged In'}
-                        </value>
+                        </span>
                       </div>
 
                       <div className="diagnostic-stat-card">
                         <label>Total Orders</label>
-                        <value>{ordersCount}</value>
+                        <span className="diagnostic-stat-value">{ordersCount}</span>
                       </div>
 
                       <div className="diagnostic-stat-card">
                         <label>Market Crops</label>
-                        <value>{cropsCount}</value>
+                        <span className="diagnostic-stat-value">{cropsCount}</span>
                       </div>
                     </div>
                   </div>

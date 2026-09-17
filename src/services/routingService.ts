@@ -89,7 +89,7 @@ function checkPrecomputedRoute(
   endLat: number,
   endLng: number
 ): RouteResult | null {
-  const routes = precomputedRoutes as Record<string, { coordinates: [number, number][]; distanceKm: number; durationMinutes: number }>;
+  const routes = (precomputedRoutes as unknown) as Record<string, { coordinates: [number, number][]; distanceKm: number; durationMinutes: number }>;
 
   for (const key of Object.keys(routes)) {
     const r = routes[key];

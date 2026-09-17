@@ -1,4 +1,4 @@
-﻿import { LocationPoint, ClusterInfo, RouteMetrics, VehicleInfo, WeatherInfo, ActivityEvent } from '../types';
+import { LocationPoint, ClusterInfo, RouteMetrics, VehicleInfo, WeatherInfo, ActivityEvent } from '../types/dashboardTypes';
 
 export const FARM_LOCATION: LocationPoint = {
   id: 'farm-hub-01',

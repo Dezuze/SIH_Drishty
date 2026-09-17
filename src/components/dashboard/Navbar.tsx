@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { 
   Sprout, 
@@ -7,13 +7,13 @@ import {
   FileText, 
   PlusCircle, 
   Wifi, 
-  Radio,
-  Clock,
-  Award,
-  Map,
-  ShoppingBag,
-  Store,
-  BarChart2
+  Radio, 
+  Clock, 
+  Award, 
+  Map, 
+  ShoppingBag, 
+  Store, 
+  BarChart2 
 } from 'lucide-react';
 
 export type MainViewType = 'marketplace' | 'details' | 'cart' | 'checkout' | 'confirmation' | 'logistics' | 'purchase' | 'login' | 'payment' | 'vendor';
@@ -22,19 +22,32 @@ interface NavbarProps {
   onOpenManifest: () => void;
   onOpenAddOrder: () => void;
   isSimulating: boolean;
-  activeView: MainViewType;
-  onNavigate: (view: MainViewType, productId?: number) => void;
+  activeView?: MainViewType;
+  onNavigate?: (view: MainViewType, productId?: number) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   onOpenManifest, 
   onOpenAddOrder,
   isSimulating,
-  activeView,
+  activeView = 'logistics',
   onNavigate
 }) => {
+  const navigate = useNavigate();
   const { cartCount, grandTotal } = useCart();
   const [timeStr, setTimeStr] = useState<string>('');
+
+  const handleNavigate = (view: MainViewType, productId?: number) => {
+    if (onNavigate) {
+      onNavigate(view, productId);
+    } else {
+      if (view === 'marketplace' || view === 'details') navigate('/products');
+      else if (view === 'cart') navigate('/cart');
+      else if (view === 'checkout') navigate('/checkout');
+      else if (view === 'logistics') navigate('/logistics');
+      else navigate('/');
+    }
+  };
 
   useEffect(() => {
     const updateClock = () => {
@@ -56,7 +69,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Left: Branding */}
         <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
           <div 
-            onClick={() => onNavigate('marketplace')}
+            onClick={() => handleNavigate('marketplace')}
             className="flex items-center gap-3 cursor-pointer group"
           >
             <img 
@@ -83,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* View Mode Switcher Pills (Mobile Quick Toggle) */}
           <div className="flex items-center gap-1.5 md:hidden">
             <button
-              onClick={() => onNavigate('marketplace')}
+              onClick={() => handleNavigate('marketplace')}
               className={`p-2 rounded-xl text-xs font-bold transition-all ${
                 isMarketplaceActive
                   ? 'bg-emerald-600 text-white'
@@ -94,7 +107,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Store className="w-4 h-4" />
             </button>
             <button
-              onClick={() => onNavigate('logistics')}
+              onClick={() => handleNavigate('logistics')}
               className={`p-2 rounded-xl text-xs font-bold transition-all ${
                 isLogisticsActive
                   ? 'bg-emerald-600 text-white'
@@ -105,7 +118,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Truck className="w-4 h-4" />
             </button>
             <button
-              onClick={() => onNavigate('cart')}
+              onClick={() => handleNavigate('cart')}
               className="relative p-2 rounded-xl bg-white border border-emerald-500/40 text-emerald-300"
             >
               <ShoppingBag className="w-4 h-4" />
@@ -121,7 +134,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Center: Top Main Navigation Switcher (Desktop) */}
         <div className="hidden md:flex items-center gap-2 bg-white/90 p-1.5 rounded-2xl border border-slate-200 shadow-inner">
           <button
-            onClick={() => onNavigate('marketplace')}
+            onClick={() => handleNavigate('marketplace')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               isMarketplaceActive
                 ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-emerald-400/40'
@@ -133,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
 
           <button
-            onClick={() => onNavigate('logistics')}
+            onClick={() => handleNavigate('logistics')}
             className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
               isLogisticsActive
                 ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-900/40 ring-1 ring-emerald-400/40'
@@ -151,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Cart Quick Button */}
           <button
-            onClick={() => onNavigate('cart')}
+            onClick={() => handleNavigate('cart')}
             className={`relative hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeView === 'cart' || activeView === 'checkout'
                 ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'

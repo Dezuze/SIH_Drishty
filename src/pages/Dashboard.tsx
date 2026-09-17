@@ -128,6 +128,7 @@ export const Dashboard: React.FC = () => {
         onOpenManifest={() => setIsManifestOpen(true)}
         onOpenAddOrder={() => setIsAddOrderOpen(true)}
         isSimulating={isSimulating}
+        activeView="logistics"
       />
 
       {/* Main Container */}

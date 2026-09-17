@@ -18,7 +18,7 @@ import {
 
 interface MarketplaceProps {
   products: Product[];
-  onViewProduct: (productId: number) => void;
+  onViewProduct: (productId: number | string) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
@@ -32,7 +32,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
   const { addToCart } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'availability'>('featured');
-  const [addedAnimationId, setAddedAnimationId] = useState<number | null>(null);
+  const [addedAnimationId, setAddedAnimationId] = useState<number | string | null>(null);
 
   // Extract available categories
   const categories = useMemo(() => {
@@ -58,7 +58,7 @@ export const Marketplace: React.FC<MarketplaceProps> = ({
         if (sortBy === 'price-asc') return a.price - b.price;
         if (sortBy === 'price-desc') return b.price - a.price;
         if (sortBy === 'availability') return b.available - a.available;
-        return a.id - b.id; // featured default
+        return String(a.id).localeCompare(String(b.id), undefined, { numeric: true }); // featured default
       });
   }, [products, selectedCategory, searchQuery, sortBy]);
 
